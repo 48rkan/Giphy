@@ -111,15 +111,17 @@ extension SearchController: UITableViewDataSource {
 
 extension SearchController: CustomSearchViewDelegate {
     func view(_ searchView: CustomSearchView, editingChangedTextField text: String) {
+        viewModel.currentText = text
         viewModel.fetchRelativeChannel(query: text)
-        
-        viewModel.fetchRelatedTags(tags: text)
+//        viewModel.fetchRelatedTags(tags: text)
 
     }
     
     func searchIconClicked(_ view: CustomSearchView) {
 //        print(view.backgroundColor)
         let controller = SearchDetailController()
+        controller.viewModel = SearchDetailViewModel(items: viewModel.items)
+        controller.viewModel?.text = viewModel.currentText
         navigationController?.show(controller, sender: nil)
     }
     

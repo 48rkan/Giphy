@@ -9,6 +9,8 @@ class SearchViewModel {
     var items = [Datums]()
     var successCallBack: (()->())?
     
+    var currentText = String()
+    
     func fetchRelativeChannel(query: String) {
         SearchManager.fetchRelativeChannel(query: query) { items, error in
             if error != nil { print(error?.localizedDescription)}

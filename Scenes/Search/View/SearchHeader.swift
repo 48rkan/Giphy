@@ -8,6 +8,14 @@ import UIKit
 
 class SearchHeader: UICollectionReusableView {
     
+    var viewModel: SearchHeaderViewModel? {
+        didSet {
+            collection.reloadData()
+            configure()
+
+        }
+    }
+    
     private lazy var collection: CustomCollectionView = {
         let c = CustomCollectionView(scroll: .horizontal, spacing: 4)
         c.backgroundColor = .black
@@ -19,10 +27,12 @@ class SearchHeader: UICollectionReusableView {
     
     private lazy var customView: HorizontalCollectionInUIView = {
         let cv = HorizontalCollectionInUIView()
-        cv.backgroundColor = .green
-//        cv.delegate = self
-        return cv
+            cv.backgroundColor = .green
+    //        cv.delegate = self
+            return cv
+        
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .blue
@@ -41,18 +51,24 @@ class SearchHeader: UICollectionReusableView {
         addSubview(customView)
         customView.anchor(top: collection.bottomAnchor,left: leftAnchor,bottom: bottomAnchor,right: rightAnchor,paddingTop: 4,paddingLeft: 4,paddingBottom: 4,paddingRight: 4)
     }
+    
+    func configure() {
+        guard let items = viewModel?.allDatas else { return }
+        customView.items = items
+        customView.collection.reloadData()
+    }
 }
 
 extension SearchHeader: UICollectionViewDelegate { }
 
 extension SearchHeader: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        24
+        viewModel?.accountDatas.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(LeftImageRightTwoLabelCell.self)", for: indexPath) as! LeftImageRightTwoLabelCell
-        
+        cell.viewModel = LeftImageRightTwoLabelViewModel(items: (viewModel?.accountDatas[indexPath.row])!)
         return cell
     }
     
@@ -61,6 +77,6 @@ extension SearchHeader: UICollectionViewDataSource {
 
 extension SearchHeader: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 120, height: 80)
+        CGSize(width: frame.width / 2 - 20, height: 80)
     }
 }
