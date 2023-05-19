@@ -3,7 +3,7 @@
 //  Giphy
 //
 //  Created by Erkan Emir on 19.05.23.
-//
+//  
 
 import Foundation
 
