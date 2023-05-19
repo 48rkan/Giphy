@@ -1,9 +1,6 @@
-//
 //  SearchViewModel.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 19.05.23.
-//
 
 import Foundation
 
@@ -12,9 +9,6 @@ class SearchViewModel {
     var items = [Datums]()
     var successCallBack: (()->())?
     
-    init() {
-//        fetchRelativeChannel(query: "tiktok")
-    }
     func fetchRelativeChannel(query: String) {
         SearchManager.fetchRelativeChannel(query: query) { items, error in
             if error != nil { print(error?.localizedDescription)}

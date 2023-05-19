@@ -8,7 +8,7 @@ class TableInUIView: UIView {
     
     //MARK: - Properties
     
-    var viewModel = TableInUIViewModel()
+//    var viewModel = TableInUIViewModel()
     
     private lazy var table: UITableView = {
         let t = UITableView()

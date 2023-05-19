@@ -16,11 +16,11 @@ class SearchController: UIViewController {
         return iv
     }()
     
-    private lazy var tableInUIView: TableInUIView = {
-        let tv = TableInUIView()
-        
-        return tv
-    }()
+//    private lazy var tableInUIView: TableInUIView = {
+//        let tv = TableInUIView()
+//
+//        return tv
+//    }()
     
     private lazy var table: UITableView = {
         let t = UITableView()
@@ -28,7 +28,7 @@ class SearchController: UIViewController {
         t.delegate   = self
         t.dataSource = self
         t.rowHeight = 56
-        t.backgroundColor = .red
+        t.backgroundColor = .black
         
         return t
     }()
@@ -47,13 +47,13 @@ class SearchController: UIViewController {
         searchView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor)
         searchView.setHeight(48)
         
-        view.addSubview(tableInUIView)
-        tableInUIView.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
-        tableInUIView.setHeight(80)
+//        view.addSubview(tableInUIView)
+//        tableInUIView.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
+//        tableInUIView.setHeight(80)
 
         
         view.addSubview(table)
-        table.anchor(top: tableInUIView.bottomAnchor,left: view.leftAnchor,bottom: view.bottomAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
+        table.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,bottom: view.bottomAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
     }
 }
 
@@ -114,7 +114,7 @@ extension SearchController: CustomSearchViewDelegate {
         viewModel.fetchRelativeChannel(query: text)
         
         viewModel.fetchRelatedTags(tags: text)
-//        tableInUIView.viewModel.fetchRelatedTags(tags: text)
+
     }
     
     func searchIconClicked(_ view: CustomSearchView) {

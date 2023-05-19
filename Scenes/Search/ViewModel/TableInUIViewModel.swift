@@ -7,14 +7,14 @@
 
 import Foundation
 
-class TableInUIViewModel {
-    func fetchRelatedTags(tags: String) {
-        TableInUIViewManager.fetchRelatedTags(tags: tags) { items, error in
-            
-            if error != nil { print(error?.localizedDescription)}
-            
-            guard let items = items else { return }
-            print(items.meta)
-        }
-    }
-}
+//class TableInUIViewModel {
+//    func fetchRelatedTags(tags: String) {
+//        TableInUIViewManager.fetchRelatedTags(tags: tags) { items, error in
+//            
+//            if error != nil { print(error?.localizedDescription)}
+//            
+//            guard let items = items else { return }
+//            print(items.meta)
+//        }
+//    }
+//}
