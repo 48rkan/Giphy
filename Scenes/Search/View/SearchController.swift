@@ -118,7 +118,9 @@ extension SearchController: CustomSearchViewDelegate {
     }
     
     func searchIconClicked(_ view: CustomSearchView) {
-        print(view.backgroundColor)
+//        print(view.backgroundColor)
+        let controller = SearchDetailController()
+        navigationController?.show(controller, sender: nil)
     }
     
   
