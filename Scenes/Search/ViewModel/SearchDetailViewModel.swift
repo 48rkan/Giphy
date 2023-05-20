@@ -1,4 +1,3 @@
-//
 //  SearchDetailViewModel.swift
 //  Giphy
 //  Created by Erkan Emir on 20.05.23.
@@ -8,8 +7,8 @@ import Foundation
 class SearchDetailViewModel {
     var accountDatas: [Datums]
     var text = String()
-    
     var items = [Datum]()
+    
     var succesCallBack: (()->())?
     
     init(items: [Datums] = [Datums]()) {

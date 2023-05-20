@@ -4,12 +4,16 @@
 
 import UIKit
 
+protocol HorizontalCollectionViewDelegate: AnyObject {
+    func view(_ view: HorizontalCollectionInUIView, wantsToShowDetail data: CommonData )
+}
+
 class HorizontalCollectionInUIView: UIView {
     
     //MARK: - Properties
     var items = [CommonData]()
         
-    weak var delegate: CustomViewDelegate?
+    weak var delegate: HorizontalCollectionViewDelegate?
     
     lazy var collection: CustomCollectionView = {
         let c = CustomCollectionView(scroll: .horizontal, spacing: 4)
@@ -43,8 +47,7 @@ class HorizontalCollectionInUIView: UIView {
 
 extension HorizontalCollectionInUIView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(indexPath.item)")
-//        delegate?.category(array[indexPath.item])
+        delegate?.view(self, wantsToShowDetail: items[indexPath.row])
     }
 }
 
@@ -62,7 +65,6 @@ extension HorizontalCollectionInUIView: UICollectionViewDataSource {
 
 extension HorizontalCollectionInUIView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: 150, height: 80)
+        return CGSize(width: 100, height: 80)
     }
 }

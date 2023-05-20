@@ -4,9 +4,17 @@
 
 import UIKit
 
+protocol SearchHeaderDelegate: AnyObject {
+    func header(_ header: SearchHeader, wantsToShowAccount data: Datums )
+    func header(_ header: SearchHeader, wantsToShowDetail data: CommonData )
+}
+
 class SearchHeader: UICollectionReusableView {
     
     //MARK: - Lifecycle
+    
+    weak var delegate: SearchHeaderDelegate?
+    
     var viewModel: SearchHeaderViewModel? {
         didSet {
             collection.reloadData()
@@ -25,6 +33,7 @@ class SearchHeader: UICollectionReusableView {
     
     private lazy var customView: HorizontalCollectionInUIView = {
         let cv = HorizontalCollectionInUIView()
+        cv.delegate = self
         return cv
     }()
     
@@ -70,7 +79,14 @@ class SearchHeader: UICollectionReusableView {
     }
 }
 
-extension SearchHeader: UICollectionViewDelegate { }
+extension SearchHeader: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.header(self, wantsToShowAccount: (viewModel?.accountDatas[indexPath.row])!)
+       
+        
+//        navigationcontroller.show
+    }
+}
 
 extension SearchHeader: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -89,5 +105,13 @@ extension SearchHeader: UICollectionViewDelegateFlowLayout {
         let width = dynamicWidthCalculator(text: (viewModel?.accountDatas[indexPath.row].user?.displayName)!, height: 66) + 132
         
         return CGSize(width: width , height: 66)
+    }
+}
+
+
+extension SearchHeader: HorizontalCollectionViewDelegate {
+    func view(_ view: HorizontalCollectionInUIView, wantsToShowDetail data: CommonData) {
+        delegate?.header(self, wantsToShowDetail: data)
+        
     }
 }

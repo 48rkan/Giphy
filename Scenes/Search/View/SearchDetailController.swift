@@ -9,7 +9,6 @@ class SearchDetailController: UIViewController {
     //MARK: - Properties
     var viewModel: SearchDetailViewModel? {
         didSet {
-            configure()
             collection.reloadData()
         }
     }
@@ -39,9 +38,7 @@ class SearchDetailController: UIViewController {
         viewModel?.fetchMatchesGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
     }
-    
-    func configure() { }
-    
+        
     //MARK: - Helper
     func configureUI() {
         view.addSubview(searchView)
@@ -58,7 +55,15 @@ class SearchDetailController: UIViewController {
 
 //MARK: - UICollectionViewDelegate
 
-extension SearchDetailController: UICollectionViewDelegate { }
+extension SearchDetailController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { return }
+        let controller = GiphyDetailController()
+        controller.viewModel = GiphyDetailViewModel(items: viewModel.items[indexPath.row])
+        
+        navigationController?.show(controller, sender: nil)
+    }
+}
 
 //MARK: - UICollectionViewDataSource
 extension SearchDetailController: UICollectionViewDataSource {
@@ -77,6 +82,7 @@ extension SearchDetailController: UICollectionViewDataSource {
         guard let viewModel = viewModel else { return  UICollectionReusableView() }
         
         let header = collection.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(SearchHeader.self)", for: indexPath) as! SearchHeader
+        header.delegate = self
         header.viewModel = SearchHeaderViewModel(accountDatas: viewModel.accountDatas,
                                                  allDatas: viewModel.items )
         return header
@@ -97,5 +103,22 @@ extension SearchDetailController: UICollectionViewDelegateFlowLayout {
 //        let randomHeight = CGFloat(arc4random_uniform(3) + 1)
 //
 //        return CGSize(width: randomWidth , height: randomHeight)
+    }
+}
+
+extension SearchDetailController: SearchHeaderDelegate {
+    func header(_ header: SearchHeader, wantsToShowDetail data: CommonData) {
+        let controller = GiphyDetailController()
+        controller.viewModel =  GiphyDetailViewModel(items: data)
+        
+        navigationController?.show(controller, sender: nil)
+
+    }
+    
+    func header(_ header: SearchHeader, wantsToShowAccount data: Datums) {
+        let controller = AccountController()
+        controller.viewModel = AccountViewModel(items: data)
+        
+        navigationController?.show(controller, sender: nil)
     }
 }

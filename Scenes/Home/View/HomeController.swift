@@ -33,9 +33,9 @@ class HomeController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureUI()
         configureNavigationBar()
+        
         viewModel.getGifs(type: .trending)
         viewModel.successCallBack = {
             self.showLoader(false)

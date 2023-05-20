@@ -14,13 +14,7 @@ class SearchController: UIViewController {
         iv.delegate = self
         return iv
     }()
-    
-//    private lazy var tableInUIView: TableInUIView = {
-//        let tv = TableInUIView()
-//
-//        return tv
-//    }()
-    
+        
     private lazy var table: UITableView = {
         let t = UITableView()
         t.register(ProfileCell.self, forCellReuseIdentifier: "\(ProfileCell.self)")
@@ -35,7 +29,7 @@ class SearchController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        
+        configureNavigationBar()
         viewModel.successCallBack = { self.table.reloadData() }
     }
     
@@ -49,6 +43,14 @@ class SearchController: UIViewController {
 //        tableInUIView.setHeight(80)
         view.addSubview(table)
         table.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,bottom: view.bottomAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
+    }
+    
+    func configureNavigationBar() {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "searchFilter"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.setDimensions(height: 32, width: 32)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
 }
 
@@ -105,11 +107,9 @@ extension SearchController: CustomSearchViewDelegate {
     func view(_ searchView: CustomSearchView, editingChangedTextField text: String) {
         viewModel.currentText = text
         viewModel.fetchRelativeChannel(query: text)
-        viewModel.fetchRelatedTags(tags: text)
     }
     
     func searchIconClicked(_ view: CustomSearchView) {
-//        print(view.backgroundColor)
         let controller = SearchDetailController()
         controller.viewModel = SearchDetailViewModel(items: viewModel.items)
         controller.viewModel?.text = viewModel.currentText

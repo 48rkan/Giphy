@@ -23,7 +23,6 @@ class GiphyDetailViewModel {
     
     var displayNameText: String { items.displayName_ ?? ""}
 
-    
     func fetchRelatedGifs() {
         GiphyDetailManager.fetchRelatedGifs(query: items.userName ?? "") { items, error in
             if error != nil { return }

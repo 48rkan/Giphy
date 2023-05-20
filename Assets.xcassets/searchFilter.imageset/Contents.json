@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "Ekran Resmi 2023-05-20 19.00.18.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

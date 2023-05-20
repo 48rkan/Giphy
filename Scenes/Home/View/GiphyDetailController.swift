@@ -16,15 +16,6 @@ class GiphyDetailController: UIViewController {
         }
     }
     
-    private let scrollView: UIScrollView = {
-        let sv = UIScrollView()
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.isDirectionalLockEnabled = true
-        sv.showsVerticalScrollIndicator = false
-        
-        return sv
-    }()
-    
     private let giphyImageView = UIImageView()
     
     private lazy var userNamePhoto: UIImageView = {

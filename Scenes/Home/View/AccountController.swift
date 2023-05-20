@@ -92,7 +92,6 @@ class AccountController: UIViewController {
 
         userNameLabel.text = viewModel?.userName
         displayNameLabel.text = viewModel?.displaName
-        
     }
 }
 

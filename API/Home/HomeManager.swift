@@ -27,15 +27,11 @@ class HomeManager {
             url = CoreHelper.shared.url(path: "/gifs/search") + "&q=\(query)"
         case .memes:
             url = CoreHelper.shared.url(path: "/gifs/search") + "&q=\(query)"
-
         }
-        
         
         CoreManager.request(type: Trending.self,
                             url: url ) { items, error in
             completion(items,error)
         }
-        
     }
-    
 }

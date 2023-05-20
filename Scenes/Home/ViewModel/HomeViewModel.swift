@@ -9,13 +9,8 @@ class HomeViewModel {
     public var items = [Datum]()
     
     public var successCallBack: (()->())?
- 
-    public init() {
-//        getGifs(type: .trending)
-    }
-    
+     
     public func getGifs(type: GifsType, query: String = "") {
-        items.removeAll()
         HomeManager.fetchGifs(limit: 100,
                               type: type,
                               query: query) { items, error in
