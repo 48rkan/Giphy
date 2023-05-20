@@ -5,7 +5,7 @@
 import UIKit
 
 protocol HorizontalCollectionViewDelegate: AnyObject {
-    func view(_ view: HorizontalCollectionInUIView, wantsToShowDetail data: CommonData )
+    func view(wantsToShowDetail data: CommonData)
 }
 
 class HorizontalCollectionInUIView: UIView {
@@ -15,7 +15,7 @@ class HorizontalCollectionInUIView: UIView {
         
     weak var delegate: HorizontalCollectionViewDelegate?
     
-    lazy var collection: CustomCollectionView = {
+    private lazy var collection: CustomCollectionView = {
         let c = CustomCollectionView(scroll: .horizontal, spacing: 4)
         c.register(GiphyCell.self, forCellWithReuseIdentifier: "\(GiphyCell.self)")
         c.backgroundColor = UIColor(hexString: "#191919")
@@ -43,11 +43,15 @@ class HorizontalCollectionInUIView: UIView {
                           paddingBottom: 4,paddingRight: 4)
         
     }
+    
+    func reload() {
+        self.collection.reloadData()
+    }
 }
 
 extension HorizontalCollectionInUIView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.view(self, wantsToShowDetail: items[indexPath.row])
+        delegate?.view(wantsToShowDetail: items[indexPath.row])
     }
 }
 

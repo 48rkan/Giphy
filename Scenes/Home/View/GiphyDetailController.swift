@@ -121,7 +121,7 @@ class GiphyDetailController: UIViewController {
         guard let gifURL = viewModel?.gifURL else { return }
         guard let userPhotoURL = viewModel?.userNamePhotoURL else { return }
         
-        giphyImageView.setGifFromURL(gifURL)
+        giphyImageView.setGifFromURL(gifURL,levelOfIntegrity: .highestNoFrameSkipping)
         userNamePhoto.sd_setImage(with: userPhotoURL)
         userNameLabel.text = viewModel?.userNameText
         displayNameLabel.text = viewModel?.displayNameText

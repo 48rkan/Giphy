@@ -37,6 +37,6 @@ class GiphyCell: UICollectionViewCell {
     
     func configure() {
         guard let url = viewModel?.gifURL else { return }
-        gifView.setGifFromURL(url,showLoader: false)
+        gifView.setGifFromURL(url,levelOfIntegrity: .highestNoFrameSkipping,showLoader: false)
     }
 }

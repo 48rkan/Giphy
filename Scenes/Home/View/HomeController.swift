@@ -127,9 +127,9 @@ extension HomeController: UICollectionViewDataSource {
 extension HomeController: CustomViewDelegate {
     func category(_ name: String) {
         showLoader(true)
-//        collection.scrollToItem(at: IndexPath(item: self.viewModel.items.count - 1, section: 0),
-//                                at: .centeredVertically,
-//                                animated: true)
+        collection.scrollToItem(at: IndexPath(item: self.viewModel.items.count - 1, section: 0),
+                                at: .centeredVertically,
+                                animated: true)
         
         viewModel.getGifs(type: GifsType(rawValue: name) ?? .trending,
                           query: name)

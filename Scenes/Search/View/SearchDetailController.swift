@@ -15,9 +15,10 @@ class SearchDetailController: UIViewController {
     
     private lazy var searchView: CustomSearchView = {
         let iv = CustomSearchView()
-//        iv.delegate = self
+        iv.delegate = self
         return iv
     }()
+    
     private lazy var collection: CustomCollectionView = {
         let c = CustomCollectionView(scroll: .vertical, spacing: 4)
         c.register(SearchHeader.self,
@@ -33,10 +34,14 @@ class SearchDetailController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let viewModel else { return }
+
         configureUI()
-        
-        viewModel?.fetchMatchesGifs()
-        viewModel?.succesCallBack = { self.collection.reloadData() }
+        viewModel.fetchMatchesGifs(text: viewModel.text)
+        viewModel.succesCallBack = {
+            self.collection.reloadData()
+            self.showLoader(false)
+        }
     }
         
     //MARK: - Helper
@@ -97,12 +102,7 @@ extension SearchDetailController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width / 2 - 2 , height: 100)
-
-//        let randomWidth = CGFloat(arc4random_uniform(3) + 1)
-//        let randomHeight = CGFloat(arc4random_uniform(3) + 1)
-//
-//        return CGSize(width: randomWidth , height: randomHeight)
+        CGSize(width: view.frame.width / 2 - 2 , height: 100)
     }
 }
 
@@ -112,7 +112,6 @@ extension SearchDetailController: SearchHeaderDelegate {
         controller.viewModel =  GiphyDetailViewModel(items: data)
         
         navigationController?.show(controller, sender: nil)
-
     }
     
     func header(_ header: SearchHeader, wantsToShowAccount data: Datums) {
@@ -120,5 +119,17 @@ extension SearchDetailController: SearchHeaderDelegate {
         controller.viewModel = AccountViewModel(items: data)
         
         navigationController?.show(controller, sender: nil)
+    }
+}
+
+extension SearchDetailController: CustomSearchViewDelegate {
+    func view(_ searchView: CustomSearchView, editingChangedTextField text: String) {
+        viewModel?.text = text
+    }
+    
+    func searchIconClicked(_ view: CustomSearchView) {
+        guard let viewModel else { return }
+        showLoader(true)
+        viewModel.fetchMatchesGifs(text: viewModel.text)
     }
 }

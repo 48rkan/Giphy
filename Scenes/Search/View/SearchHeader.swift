@@ -5,8 +5,8 @@
 import UIKit
 
 protocol SearchHeaderDelegate: AnyObject {
-    func header(_ header: SearchHeader, wantsToShowAccount data: Datums )
-    func header(_ header: SearchHeader, wantsToShowDetail data: CommonData )
+    func header(_ header: SearchHeader, wantsToShowAccount data: Datums)
+    func header(_ header: SearchHeader, wantsToShowDetail data: CommonData)
 }
 
 class SearchHeader: UICollectionReusableView {
@@ -46,7 +46,6 @@ class SearchHeader: UICollectionReusableView {
                                            textColor: .white,
                                            size: 17,
                                            font: "Poppins-Medium")
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,14 +67,12 @@ class SearchHeader: UICollectionReusableView {
         
         addSubview(customView)
         customView.anchor(top: giphyClipsTitle.bottomAnchor,left: leftAnchor,bottom: allGifsTitle.topAnchor,right: rightAnchor,paddingTop: 4,paddingLeft: 4,paddingBottom: 4,paddingRight: 4)
-        
-     
     }
     
     func configure() {
         guard let items = viewModel?.allDatas else { return }
         customView.items = items
-        customView.collection.reloadData() // bunu configure funksiyasina cixart
+        customView.reload()
     }
 }
 
@@ -83,8 +80,6 @@ extension SearchHeader: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.header(self, wantsToShowAccount: (viewModel?.accountDatas[indexPath.row])!)
        
-        
-//        navigationcontroller.show
     }
 }
 
@@ -110,8 +105,7 @@ extension SearchHeader: UICollectionViewDelegateFlowLayout {
 
 
 extension SearchHeader: HorizontalCollectionViewDelegate {
-    func view(_ view: HorizontalCollectionInUIView, wantsToShowDetail data: CommonData) {
+    func view(wantsToShowDetail data: CommonData) {
         delegate?.header(self, wantsToShowDetail: data)
-        
     }
 }

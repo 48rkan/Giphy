@@ -20,4 +20,5 @@ class SearchViewModel {
             self.successCallBack?()
         }
     }
+
 }

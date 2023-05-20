@@ -88,7 +88,7 @@ class AccountController: UIViewController {
         guard let profileUrl = viewModel?.profileImageURL else { return }
         
         bannerImageView.sd_setImage(with: bannerUrl)
-        profileImageView.setGifFromURL(profileUrl)
+        profileImageView.setGifFromURL(profileUrl,levelOfIntegrity: .highestNoFrameSkipping)
 
         userNameLabel.text = viewModel?.userName
         displayNameLabel.text = viewModel?.displaName

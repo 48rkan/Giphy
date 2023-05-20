@@ -54,7 +54,7 @@ class LeftImageRightTwoLabelCell: UICollectionViewCell {
     
     func configure() {
         guard let gifUrl = viewModel?.gifURL else { return }
-        imageView.setGifFromURL(gifUrl, showLoader: true)
+        imageView.setGifFromURL(gifUrl,levelOfIntegrity: .highestNoFrameSkipping ,showLoader: true)
         userNameLabel.text = viewModel?.userName
         displayNameLabel.text = viewModel?.displayName
     }
