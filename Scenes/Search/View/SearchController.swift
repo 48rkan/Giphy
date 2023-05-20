@@ -1,4 +1,3 @@
-//
 //  SearchController.swift
 //  Giphy
 //  Created by Erkan Emir on 13.05.23.
@@ -38,8 +37,6 @@ class SearchController: UIViewController {
         configureUI()
         
         viewModel.successCallBack = { self.table.reloadData() }
-    
-        
     }
     
     func configureUI() {
@@ -50,8 +47,6 @@ class SearchController: UIViewController {
 //        view.addSubview(tableInUIView)
 //        tableInUIView.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
 //        tableInUIView.setHeight(80)
-
-        
         view.addSubview(table)
         table.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,bottom: view.bottomAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
     }
@@ -88,11 +83,8 @@ extension SearchController: UITableViewDelegate {
             return headerView
 
         }
-        
         return UIView()
-            
         }
-    
 }
 
 extension SearchController: UITableViewDataSource {
@@ -113,8 +105,7 @@ extension SearchController: CustomSearchViewDelegate {
     func view(_ searchView: CustomSearchView, editingChangedTextField text: String) {
         viewModel.currentText = text
         viewModel.fetchRelativeChannel(query: text)
-//        viewModel.fetchRelatedTags(tags: text)
-
+        viewModel.fetchRelatedTags(tags: text)
     }
     
     func searchIconClicked(_ view: CustomSearchView) {
@@ -124,6 +115,4 @@ extension SearchController: CustomSearchViewDelegate {
         controller.viewModel?.text = viewModel.currentText
         navigationController?.show(controller, sender: nil)
     }
-    
-  
 }

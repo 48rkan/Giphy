@@ -1,16 +1,12 @@
-//
 //  SearchDetailController.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 19.05.23.
-//
 
 import UIKit
 
 class SearchDetailController: UIViewController {
    
     //MARK: - Properties
-    
     var viewModel: SearchDetailViewModel? {
         didSet {
             configure()
@@ -25,11 +21,13 @@ class SearchDetailController: UIViewController {
     }()
     private lazy var collection: CustomCollectionView = {
         let c = CustomCollectionView(scroll: .vertical, spacing: 4)
-        c.register(SearchHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(SearchHeader.self)")
+        c.register(SearchHeader.self,
+                   forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                   withReuseIdentifier: "\(SearchHeader.self)")
         c.register(GiphyCell.self, forCellWithReuseIdentifier: "\(GiphyCell.self)")
         c.delegate = self
         c.dataSource = self
-        c.backgroundColor = .red
+        c.backgroundColor = .black
         return c
     }()
     
@@ -39,7 +37,7 @@ class SearchDetailController: UIViewController {
         configureUI()
         
         viewModel?.fetchMatchesGifs()
-        viewModel?.succesCallBack = { self.collection.reloadData()}
+        viewModel?.succesCallBack = { self.collection.reloadData() }
     }
     
     func configure() { }
@@ -47,10 +45,14 @@ class SearchDetailController: UIViewController {
     //MARK: - Helper
     func configureUI() {
         view.addSubview(searchView)
-        searchView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor)
+        searchView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          left: view.leftAnchor,right: view.rightAnchor)
         searchView.setHeight(48)
         view.addSubview(collection)
-        collection.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,bottom: view.safeAreaLayoutGuide.bottomAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
+        collection.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                          right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,
+                          paddingBottom: 0,paddingRight: 0)
     }
 }
 
@@ -61,24 +63,24 @@ extension SearchDetailController: UICollectionViewDelegate { }
 //MARK: - UICollectionViewDataSource
 extension SearchDetailController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        viewModel?.items.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let viewModel else { return UICollectionViewCell()}
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)", for: indexPath) as! GiphyCell
-        
+        cell.viewModel = GiphyCellViewModel(items: viewModel.items[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let viewModel = viewModel else { return  UICollectionReusableView()}
+        guard let viewModel = viewModel else { return  UICollectionReusableView() }
         
         let header = collection.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(SearchHeader.self)", for: indexPath) as! SearchHeader
-        header.viewModel = SearchHeaderViewModel(accountDatas: viewModel.accountDatas,allDatas: viewModel.items )
+        header.viewModel = SearchHeaderViewModel(accountDatas: viewModel.accountDatas,
+                                                 allDatas: viewModel.items )
         return header
     }
-    
-    
 }
 
 //MARK:- UICollectionViewDelegateFlowLayout
@@ -89,6 +91,11 @@ extension SearchDetailController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: view.frame.width, height: 20)
+        return CGSize(width: view.frame.width / 2 - 2 , height: 100)
+
+//        let randomWidth = CGFloat(arc4random_uniform(3) + 1)
+//        let randomHeight = CGFloat(arc4random_uniform(3) + 1)
+//
+//        return CGSize(width: randomWidth , height: randomHeight)
     }
 }

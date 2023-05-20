@@ -18,5 +18,5 @@ class LeftImageRightTwoLabelViewModel {
     
     var userName: String { items.user?.username ?? "" }
     
-    var displayName: String { items.user?.displayName ?? ""}
+    var displayName: String { "@\(items.user?.displayName ?? "")"}
 }

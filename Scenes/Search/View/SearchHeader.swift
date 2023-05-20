@@ -1,18 +1,16 @@
-//
 //  SearchHeader.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 19.05.23.
 
 import UIKit
 
 class SearchHeader: UICollectionReusableView {
     
+    //MARK: - Lifecycle
     var viewModel: SearchHeaderViewModel? {
         didSet {
             collection.reloadData()
             configure()
-
         }
     }
     
@@ -27,35 +25,48 @@ class SearchHeader: UICollectionReusableView {
     
     private lazy var customView: HorizontalCollectionInUIView = {
         let cv = HorizontalCollectionInUIView()
-            cv.backgroundColor = .green
-    //        cv.delegate = self
-            return cv
-        
+        return cv
     }()
+    
+    private let giphyClipsTitle = CustomLabel(text: "GIPHY Clips",
+                                           textColor: .white,
+                                           size: 17,
+                                           font: "Poppins-Medium")
+    
+    private let allGifsTitle = CustomLabel(text: "All the GIFs",
+                                           textColor: .white,
+                                           size: 17,
+                                           font: "Poppins-Medium")
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
         configureUI()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) {fatalError("init(coder:) has not been")}
     
     func configureUI() {
         addSubview(collection)
         collection.anchor(top: topAnchor,left: leftAnchor,right: rightAnchor,paddingTop: 4,paddingLeft: 4,paddingRight: 4)
-        collection.setHeight(100)
+        collection.setHeight(72)
+        
+        addSubview(giphyClipsTitle)
+        giphyClipsTitle.anchor(top: collection.bottomAnchor,left: leftAnchor,paddingTop: 4,paddingLeft: 4)
+        
+        addSubview(allGifsTitle)
+        allGifsTitle.anchor(left: leftAnchor,bottom: bottomAnchor,paddingLeft: 8,paddingBottom: 8)
         
         addSubview(customView)
-        customView.anchor(top: collection.bottomAnchor,left: leftAnchor,bottom: bottomAnchor,right: rightAnchor,paddingTop: 4,paddingLeft: 4,paddingBottom: 4,paddingRight: 4)
+        customView.anchor(top: giphyClipsTitle.bottomAnchor,left: leftAnchor,bottom: allGifsTitle.topAnchor,right: rightAnchor,paddingTop: 4,paddingLeft: 4,paddingBottom: 4,paddingRight: 4)
+        
+     
     }
     
     func configure() {
         guard let items = viewModel?.allDatas else { return }
         customView.items = items
-        customView.collection.reloadData()
+        customView.collection.reloadData() // bunu configure funksiyasina cixart
     }
 }
 
@@ -71,12 +82,12 @@ extension SearchHeader: UICollectionViewDataSource {
         cell.viewModel = LeftImageRightTwoLabelViewModel(items: (viewModel?.accountDatas[indexPath.row])!)
         return cell
     }
-    
-    
 }
 
 extension SearchHeader: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: frame.width / 2 - 20, height: 80)
+        let width = dynamicWidthCalculator(text: (viewModel?.accountDatas[indexPath.row].user?.displayName)!, height: 66) + 132
+        
+        return CGSize(width: width , height: 66)
     }
 }

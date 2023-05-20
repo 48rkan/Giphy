@@ -1,18 +1,8 @@
-//
 //  SearchControllerInUIView.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 19.05.23.
-//
-
-import Foundation
-
 
 import UIKit
-//
-//protocol CustomViewDelegate: AnyObject {
-//    func category(_ name: String)
-//}
 
 class HorizontalCollectionInUIView: UIView {
     
@@ -37,8 +27,7 @@ class HorizontalCollectionInUIView: UIView {
         configureUI()
     }
     
-    
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been") }
+    required init?(coder: NSCoder) {fatalError("init(coder:) has not been")}
     
     //MARK: - Helper
 
@@ -73,6 +62,7 @@ extension HorizontalCollectionInUIView: UICollectionViewDataSource {
 
 extension HorizontalCollectionInUIView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        
+        return CGSize(width: 150, height: 80)
     }
 }

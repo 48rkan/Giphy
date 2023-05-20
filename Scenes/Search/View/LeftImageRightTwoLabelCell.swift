@@ -1,9 +1,6 @@
-//
 //  LeftImageRightTwoLabelCell.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 19.05.23.
-//
 
 import UIKit
 
@@ -17,25 +14,27 @@ class LeftImageRightTwoLabelCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .blue
-        
+        iv.backgroundColor = UIColor(hexString: "8050D7")
         return iv
     }()
     
-    private let userNameLabel = CustomLabel(text: "MotoGP",
-                                            size: 14)
+    private let userNameLabel = CustomLabel(text: "GIPHY Clips",
+                                            textColor: .white,
+                                            size: 17,
+                                            font: "Poppins-Medium")
     
-    private let displayNameLabel = CustomLabel(text: "@motoGP",
-                                               size: 14)
-    
+    private let displayNameLabel = CustomLabel(text: "GIPHY Clips",
+                                               hexCode: "#B2BEB5",
+                                               size: 12,
+                                               font: "Poppins-ExtraLight")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+        backgroundColor = .black
         configureUI()
     }
     
-    required init?(coder: NSCoder) {fatalError("init(coder:) has not been ")}
+    required init?(coder: NSCoder) {fatalError("init(coder:) has not been")}
     
     func configureUI() {
         addSubview(imageView)
@@ -44,11 +43,13 @@ class LeftImageRightTwoLabelCell: UICollectionViewCell {
         
         let stack = UIStackView(arrangedSubviews: [userNameLabel,displayNameLabel])
         addSubview(stack)
+        userNameLabel.numberOfLines = 0
+        displayNameLabel.numberOfLines = 0
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .leading
-        stack.centerY(inView: imageView,leftAnchor: imageView.rightAnchor,paddingLeft: 4)
-        stack.anchor(right: rightAnchor,paddingRight: 4)
+        
+        stack.anchor(top: topAnchor,left: imageView.rightAnchor,bottom: bottomAnchor,right: rightAnchor,paddingTop: 12,paddingLeft: 4,paddingBottom: 12,paddingRight: 0)
     }
     
     func configure() {
@@ -56,6 +57,5 @@ class LeftImageRightTwoLabelCell: UICollectionViewCell {
         imageView.setGifFromURL(gifUrl, showLoader: true)
         userNameLabel.text = viewModel?.userName
         displayNameLabel.text = viewModel?.displayName
-        
     }
 }

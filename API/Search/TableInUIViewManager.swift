@@ -8,9 +8,10 @@ class TableInUIViewManager {
     static func fetchRelatedTags(tags: String,
                                  completion: @escaping (RelativeSuggestion?,Error?)->()) {
         
+        let url = CoreHelper.shared.url(path: "/tags/related/\(tags)") + "&term=\(tags)"
         CoreManager.request(type: RelativeSuggestion.self,
-                            url: CoreHelper.shared.url(path: "/related/\(tags)") + "&term=\(tags)",method: .get) { items, error in
-            print(CoreHelper.shared.url(path: "/tags/related/<\(tags)>") + "&term=\(tags)")
+                            url: url,
+                            method: .get) { items, error in
             completion(items,error)
             print(error?.localizedDescription)
         }
