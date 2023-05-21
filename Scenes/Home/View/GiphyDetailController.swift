@@ -30,10 +30,9 @@ class GiphyDetailController: UIViewController {
     private let displayNameLabel = CustomLabel(text: "@motoGP",
                                                size: 14)
     
-    private let favouriteButton: UIButton = {
+    private lazy var favouriteButton: UIButton = {
         let iv = UIButton()
-        iv.setImage(.add, for: .normal)
-        
+        iv.addTarget(self, action: #selector(tappedFavouriteButton), for: .touchUpInside)
         return iv
     }()
     
@@ -60,10 +59,37 @@ class GiphyDetailController: UIViewController {
         configureUI()
         
         viewModel?.fetchRelatedGifs()
+        viewModel?.fetchFavouritesGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
+        configFavouriteButton()
     }
-        
+    
     //MARK: - Actions
+    
+    private func configFavouriteButton() {
+        viewModel?.checkGifsIfFavourite(completion: { isFavourite in
+            
+            isFavourite ? self.favouriteButton.setImage(UIImage(named: "favourite")  ,for: .normal)
+                        : self.favouriteButton.setImage(UIImage(named: "unFavourite"),for: .normal)
+        })
+    }
+    
+    @objc fileprivate func tappedFavouriteButton() {
+        guard let viewModel = viewModel else { return }
+        guard let gifURL = viewModel.gifURL else { return }
+        guard let gifID = viewModel.items.gifID else { return }
+
+        if viewModel.isFavourite {
+            favouriteButton.setImage(UIImage(named: "unFavourite"), for: .normal)
+            FavouriteManager.unFavouriteGif(gifID: gifID)
+        } else {
+            favouriteButton.setImage(UIImage(named: "favourite"), for: .normal)
+            FavouriteManager.favouriteGif(gifID: gifID, gifURL: "\(gifURL)")
+        }
+        
+        viewModel.isFavourite.toggle()
+    }
+    
     @objc fileprivate func showAccount() {
         guard let viewModel = viewModel else { return }
         
@@ -95,12 +121,13 @@ class GiphyDetailController: UIViewController {
         stack.axis = .vertical
         userNameLabel.textAlignment = .left
         displayNameLabel.textAlignment = .left
-
+        
         stack.anchor(top: giphyImageView.bottomAnchor,left: userNamePhoto.rightAnchor,paddingTop: 8,paddingLeft: 4)
         stack.setDimensions(height: 48, width: view.frame.width)
         
         view.addSubview(favouriteButton)
         favouriteButton.anchor(top: giphyImageView.bottomAnchor,right: view.rightAnchor,paddingTop: 8,paddingRight: 28)
+        favouriteButton.setDimensions(height: 36, width: 36)
         
         view.addSubview(titleLabel)
         titleLabel.anchor(top: stack.bottomAnchor,left: view.leftAnchor,paddingTop: 20,paddingLeft: 4)

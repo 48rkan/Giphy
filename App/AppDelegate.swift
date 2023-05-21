@@ -6,7 +6,7 @@
 import UIKit
 import FirebaseCore
 import GoogleSignIn
-import GiphyUISDK
+//import GiphyUISDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        Giphy.configure(apiKey: "Q2iBbB8Ny4bNBxHKES4oqjKB5oltjOz4")
+//        Giphy.configure(apiKey: "Q2iBbB8Ny4bNBxHKES4oqjKB5oltjOz4")
 
         return true
     }

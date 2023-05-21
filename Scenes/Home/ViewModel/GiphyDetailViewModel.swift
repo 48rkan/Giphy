@@ -9,12 +9,16 @@ class GiphyDetailViewModel {
     let items: CommonData
     var relatedItems = [CommonData]()
     
+    var favouritesGifData = [Gif]()
+    
     var succesCallBack: (()->())?
     
     init(items: CommonData) {
         self.items = items
     }
     
+    var isFavourite = false
+
     var gifURL: URL? { URL(string: items.gifURL ?? "" ) }
     
     var userNamePhotoURL: URL? { URL(string: items.imageURL ?? "")}
@@ -31,6 +35,24 @@ class GiphyDetailViewModel {
             self.relatedItems = items
             
             self.succesCallBack?()
+            
+            self.fetchFavouritesGifs()
+        }
+    }
+    
+    
+    func fetchFavouritesGifs() {
+        FavouriteManager.fetchFavouritesGifs { gifs in
+            print(gifs)
+            self.favouritesGifData = gifs
+        }
+    }
+    
+    func checkGifsIfFavourite(completion: @escaping ((Bool)->()))  {
+        FavouriteManager.checkFavourite(id: items.gifID ?? "") { isFavourite in
+            print(isFavourite)
+            self.isFavourite = isFavourite
+            completion(isFavourite)
         }
     }
 }

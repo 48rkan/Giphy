@@ -1,9 +1,6 @@
-//
 //  UserService.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 21.05.23.
-//
 
 import Foundation
 import FirebaseAuth
@@ -18,12 +15,11 @@ struct UserService {
             guard let dictionary = documentSnapshot?.data() else { return }
             
             guard let email = dictionary["email"] as? String else { return }
-            guard let gif   = dictionary["gif"] as? String else { return }
+            guard let gif = dictionary["gif"] as? String else { return }
             guard let username = dictionary["username"] as? String else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             guard let banner = dictionary["banner"] as? String else { return }
 
-            
             completion(Account(email: email, username: username, profilimage: gif, uid: uid, banner: banner))
         }
     }

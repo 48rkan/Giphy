@@ -1,9 +1,6 @@
-//
 //  Account.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 21.05.23.
-//
 
 import Foundation
 
@@ -16,26 +13,12 @@ struct Account {
 }
 
 extension Account: CommonData {
-    var bannerURL: String? {
-        banner
-    }
+    var isFavourite: Bool? { false }
     
-    var imageURL: String? {
-        profilimage
-    }
-    
-    var userName: String? {
-        username
-    }
-    
-    var displayName_: String? {
-        username
-    }
-    
-    var gifURL: String? {
-        profilimage
-    }
-    
-    
+    var gifID: String? { "" }
+    var gifURL: String? { profilimage }
+    var imageURL: String? { profilimage }
+    var userName: String? { username }
+    var bannerURL: String? { banner }
+    var displayName_: String? { username }
 }
-

@@ -10,6 +10,8 @@ struct RelativeChannel: Codable {
 
 // MARK: - Datum
 struct Datums: Codable,CommonData {
+    var gifID: String? { "\(id)" }
+    
     
     var gifURL: String? { user?.avatarURL ?? ""}
     

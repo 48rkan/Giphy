@@ -10,6 +10,7 @@ protocol CommonData {
     var userName: String? { get }
     var displayName_: String? { get }
     var gifURL: String? { get }
+    var gifID: String? { get }
 }
 
 // MARK: - Trending
@@ -21,6 +22,9 @@ struct Trending: Codable {
 
 // MARK: - Datum
 struct Datum: Codable,CommonData {
+    
+    var gifID: String? { id ?? ""}
+    
     var gifURL: String? { images?.original?.url ?? ""}
     
     var bannerURL: String? { user?.bannerURL ?? ""}
