@@ -58,7 +58,7 @@ class AccountController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel?.type == .own ? viewModel?.fetchFavouritedGifs() : nil
+        viewModel?.fetchFavouritedGifs()
     }
     
     //MARK: - Helper
