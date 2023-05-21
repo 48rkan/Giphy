@@ -15,7 +15,7 @@ class AccountController: UIViewController {
         }
     }
     
-    private let bannerImageView: UIImageView = {
+    let bannerImageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = UIColor(hexString: "#6a18ff")
         return iv
@@ -27,7 +27,7 @@ class AccountController: UIViewController {
         return iv
     }()
     
-    private let userNameLabel = CustomLabel(text: "MotoGP",
+    public let userNameLabel = CustomLabel(text: "MotoGP",
                                             size: 18)
     
     private let displayNameLabel = CustomLabel(text: "@motoGP",
@@ -46,6 +46,10 @@ class AccountController: UIViewController {
         return c
     }()
     
+//    init() {
+//        self.viewModel = Acc
+//    }
+    
     //MARK: - Lifecylce
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +60,7 @@ class AccountController: UIViewController {
     }
     
     //MARK: - Helper
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(bannerImageView)
         bannerImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
         bannerImageView.setHeight(100)

@@ -25,11 +25,14 @@ struct AuthService {
             
             guard let uid = result?.user.uid else { return }
             
+            let defaultPhotoGif = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjQ2Yzg5YzcxNTRhM2FhNjYzMjg2ZWE0ZmZlMGZkZmFlNGM4YTBjZSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/Fc0krhDnpoMw2TWYoz/giphy.gif"
+            
             let data: [String:Any] = [
                 "email": credential.email,
-                "password": credential.password,
                 "username": credential.username.lowercased(),
-                "uid": uid
+                "uid": uid,
+                "gif" : defaultPhotoGif,
+                "banner": defaultPhotoGif
             ]
     
             Firestore.firestore().collection("user").document(uid).setData(data,completion: completion)

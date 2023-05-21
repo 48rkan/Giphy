@@ -4,23 +4,26 @@
 
 import Foundation
 
+enum AccountType {
+    case own
+    case other
+}
+
 class AccountViewModel {
     var items: CommonData
-    
     var ownerGifs = [Datum]()
     
     var successCallBack: (()->())?
+    
+    var type: AccountType?
     
     init(items: CommonData) {
         self.items = items
     }
         
     var bannerURL: URL? { URL(string: items.bannerURL ?? "")}
-
     var profileImageURL: URL? { URL(string: items.imageURL ?? "")}
-
     var userName: String { items.userName ?? ""}
-
     var displaName: String { items.displayName_ ?? ""}
 
     func fetchOwnerGifs() {
@@ -35,5 +38,4 @@ class AccountViewModel {
             self.successCallBack?()
         }
     }
-
 }
