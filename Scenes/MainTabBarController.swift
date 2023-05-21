@@ -35,7 +35,9 @@ class MainTabBarController: UITabBarController {
                                                   selectedImage: UIImage(named: "home_selected")!,
                                                   unselectedImage: UIImage(named: "home_selected")!)
         
-        viewControllers = [feed , search]
+        let profile = templateNavigationController(viewController: ProfileController(), selectedImage: UIImage(named: "home_selected")!, unselectedImage: UIImage(named: "home_selected")!)
+        
+        viewControllers = [feed , search, profile]
     }
     
     func templateNavigationController(viewController:UIViewController,selectedImage: UIImage ,unselectedImage: UIImage) -> UINavigationController {
