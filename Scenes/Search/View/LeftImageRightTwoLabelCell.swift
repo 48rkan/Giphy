@@ -27,7 +27,6 @@ class LeftImageRightTwoLabelCell: UICollectionViewCell {
                                                hexCode: "#B2BEB5",
                                                size: 12,
                                                font: "Poppins-ExtraLight")
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black

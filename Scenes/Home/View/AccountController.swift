@@ -8,7 +8,6 @@ import SDWebImage
 class AccountController: UIViewController {
     
     //MARK: - Properties
-    
     var viewModel: AccountViewModel? {
         didSet {
             configure()
@@ -53,13 +52,11 @@ class AccountController: UIViewController {
         configureUI()
         
         viewModel?.fetchOwnerGifs()
-        
         viewModel?.successCallBack = { self.collection.reloadData() }
     }
     
     //MARK: - Helper
     func configureUI() {
-        
         view.addSubview(bannerImageView)
         bannerImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
         bannerImageView.setHeight(100)
@@ -96,7 +93,6 @@ class AccountController: UIViewController {
 }
 
 //MARK: - PinterestLayoutDelegate
-
 extension AccountController: PinterestLayoutDelegate {
     func collectionView(collectionView: UICollectionView, heightForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let random = arc4random_uniform(3) + 1
@@ -113,7 +109,6 @@ extension AccountController: UICollectionViewDelegate {
     }
 }
 
-
 extension AccountController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel?.ownerGifs.count ?? 0
@@ -123,7 +118,7 @@ extension AccountController: UICollectionViewDataSource {
         guard let viewModel = viewModel else { return UICollectionViewCell()}
         
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)", for: indexPath) as! GiphyCell
-        cell.viewModel = GiphyCellViewModel(items: viewModel.ownerGifs[indexPath.row] )
+        cell.viewModel = GiphyCellViewModel(items: viewModel.ownerGifs[indexPath.row])
         return cell
     }
 }

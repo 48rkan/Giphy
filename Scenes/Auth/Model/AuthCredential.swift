@@ -1,4 +1,3 @@
-//
 //  AuthCredential.swift
 //  Giphy
 //  Created by Erkan Emir on 13.05.23.

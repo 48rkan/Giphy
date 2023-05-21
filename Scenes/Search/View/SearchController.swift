@@ -7,6 +7,7 @@ import SwiftyGif
 
 class SearchController: UIViewController {
     
+    //MARK: - Properties
     var viewModel = SearchViewModel()
     
     private lazy var searchView: CustomSearchView = {
@@ -26,6 +27,7 @@ class SearchController: UIViewController {
         return t
     }()
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -33,14 +35,12 @@ class SearchController: UIViewController {
         viewModel.successCallBack = { self.table.reloadData() }
     }
     
+    //MARK: - Helpers
     func configureUI() {
         view.addSubview(searchView)
         searchView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor)
         searchView.setHeight(48)
         
-//        view.addSubview(tableInUIView)
-//        tableInUIView.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
-//        tableInUIView.setHeight(80)
         view.addSubview(table)
         table.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,bottom: view.bottomAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
     }
@@ -54,6 +54,7 @@ class SearchController: UIViewController {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension SearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = AccountController()
@@ -61,9 +62,7 @@ extension SearchController: UITableViewDelegate {
         navigationController?.show(controller, sender: nil)
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 50
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 50 }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -83,12 +82,12 @@ extension SearchController: UITableViewDelegate {
             headerView.addSubview(label)
             
             return headerView
-
         }
         return UIView()
         }
 }
 
+//MARK: - UITableViewDataSource
 extension SearchController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.items.count
@@ -102,7 +101,6 @@ extension SearchController: UITableViewDataSource {
 }
 
 //MARK: - CustomSearchViewDelegate
-
 extension SearchController: CustomSearchViewDelegate {
     func view(_ searchView: CustomSearchView, editingChangedTextField text: String) {
         viewModel.currentText = text

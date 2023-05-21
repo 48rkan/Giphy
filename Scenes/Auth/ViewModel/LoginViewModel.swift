@@ -1,4 +1,3 @@
-//
 //  LoginViewModel.swift
 //  Giphy
 //  Created by Erkan Emir on 14.05.23.
@@ -48,11 +47,10 @@ struct LoginViewModel {
             
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
             
-            AuthService.registerUser(credential: AuthCredential(email: user.fetcherAuthorizer.userEmail ?? "" , password: "***************", username: "User-49545")) { error in
+            AuthService.registerUser(credential: AuthCredential(email: user.fetcherAuthorizer.userEmail ?? "" , password: "***************", username: "User-\(Int.random(in: 1000...5000))")) { error in
                 if error != nil { print("\(error?.localizedDescription)")}
                 return
             }
-            
             
             Auth.auth().signIn(with: credential) { result, error in
                 if error != nil { return }
@@ -62,4 +60,3 @@ struct LoginViewModel {
         }
     }
 }
-

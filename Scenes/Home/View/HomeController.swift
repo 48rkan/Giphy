@@ -134,10 +134,6 @@ extension HomeController: CustomViewDelegate {
         viewModel.getGifs(type: GifsType(rawValue: name) ?? .trending,
                           query: name)
         collection.reloadData()
-//        Timer.scheduledTimer(withTimeInterval: 5,
-//                             repeats: false) { _ in
-//            self.showLoader(false)
-//        }
     }
 }
 

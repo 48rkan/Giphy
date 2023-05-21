@@ -8,7 +8,6 @@ import SDWebImage
 class GiphyDetailController: UIViewController {
     
     //MARK: - Properties
-    
     var viewModel: GiphyDetailViewModel? {
         didSet {
             configure()
@@ -47,13 +46,8 @@ class GiphyDetailController: UIViewController {
         l.delegate = self
         
         let c = UICollectionView(frame: .zero, collectionViewLayout: l)
-        
         c.register(GiphyCell.self,
                    forCellWithReuseIdentifier: "\(GiphyCell.self)")
-        
-        c.register(GiphyDetailHeader.self,
-                   forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                   withReuseIdentifier: "\(GiphyDetailHeader.self)")
         c.delegate   = self
         c.dataSource = self
         c.backgroundColor = .black
@@ -68,9 +62,7 @@ class GiphyDetailController: UIViewController {
         viewModel?.fetchRelatedGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
     }
-    
-
-    
+        
     //MARK: - Actions
     @objc fileprivate func showAccount() {
         guard let viewModel = viewModel else { return }
@@ -130,11 +122,9 @@ class GiphyDetailController: UIViewController {
 
 extension GiphyDetailController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(indexPath.row)")
         let controller = GiphyDetailController()
         controller.viewModel = GiphyDetailViewModel(items: (viewModel?.relatedItems[indexPath.row])!)
         navigationController?.show(controller, sender: nil)
-        
     }
 }
 
@@ -144,15 +134,14 @@ extension GiphyDetailController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)", for: indexPath) as! GiphyCell
         cell.viewModel = GiphyCellViewModel(items: (viewModel?.relatedItems[indexPath.row])!)
+        
         return cell
     }
 }
 
 //MARK: - PinterestLayoutDelegate
-
 extension GiphyDetailController: PinterestLayoutDelegate {
     func collectionView(collectionView: UICollectionView, heightForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let random = arc4random_uniform(3) + 1

@@ -42,7 +42,6 @@ class CollectionInUIView: UIView {
                           bottom: bottomAnchor,right: rightAnchor,
                           paddingTop: 4,paddingLeft: 4,
                           paddingBottom: 4,paddingRight: 4)
-        
     }
 }
 
@@ -71,4 +70,3 @@ extension CollectionInUIView: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: 36)
     }
 }
-

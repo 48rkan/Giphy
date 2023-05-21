@@ -45,7 +45,6 @@ class ProfileCell: UITableViewCell {
         stack.axis = .vertical
         stack.alignment = .leading
         stack.distribution = .fillEqually
-//        stack.setDimensions(height: 48, width: 200)
     }
     
     func configure() {

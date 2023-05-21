@@ -76,13 +76,14 @@ class SearchHeader: UICollectionReusableView {
     }
 }
 
+//MARK: - UICollectionViewDelegate
 extension SearchHeader: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.header(self, wantsToShowAccount: (viewModel?.accountDatas[indexPath.row])!)
-       
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension SearchHeader: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel?.accountDatas.count ?? 0
@@ -94,7 +95,7 @@ extension SearchHeader: UICollectionViewDataSource {
         return cell
     }
 }
-
+//MARK: - UICollectionViewDelegateFlowLayout
 extension SearchHeader: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = dynamicWidthCalculator(text: (viewModel?.accountDatas[indexPath.row].user?.displayName)!, height: 66) + 132
@@ -103,7 +104,7 @@ extension SearchHeader: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
+//MARK: - HorizontalCollectionViewDelegate
 extension SearchHeader: HorizontalCollectionViewDelegate {
     func view(wantsToShowDetail data: CommonData) {
         delegate?.header(self, wantsToShowDetail: data)

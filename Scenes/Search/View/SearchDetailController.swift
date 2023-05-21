@@ -108,6 +108,7 @@ extension SearchDetailController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: - SearchHeaderDelegate
 extension SearchDetailController: SearchHeaderDelegate {
     func header(_ header: SearchHeader, wantsToShowDetail data: CommonData) {
         let controller = GiphyDetailController()
@@ -124,6 +125,7 @@ extension SearchDetailController: SearchHeaderDelegate {
     }
 }
 
+//MARK: - CustomSearchViewDelegate
 extension SearchDetailController: CustomSearchViewDelegate {
     func view(_ searchView: CustomSearchView, editingChangedTextField text: String) {
         viewModel?.text = text

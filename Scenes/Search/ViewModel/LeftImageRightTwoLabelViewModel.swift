@@ -1,9 +1,7 @@
 //
 //  LeftImageRightTwoLabelViewModel.swift
 //  Giphy
-//
 //  Created by Erkan Emir on 20.05.23.
-//
 
 import Foundation
 

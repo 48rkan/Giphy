@@ -18,7 +18,6 @@ class CategoryCell: UICollectionViewCell {
                                               font: "Poppins-SemiBold")
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = UIColor(hexString: "#333333")
         layer.cornerRadius = 12
         configureUI()

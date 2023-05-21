@@ -4,13 +4,6 @@
 
 import Foundation
 
-//(string: items.user?.bannerURL ?? "")}
-//
-//var profileImageURL: URL? { URL(string: items.user?.avatarURL ?? "")}
-//
-//var userName: String { items.user?.username ?? ""}
-//
-//var displaName: String { items.user?.displayName ?? ""}
 protocol CommonData {
     var bannerURL: String? { get }
     var imageURL: String? { get }
