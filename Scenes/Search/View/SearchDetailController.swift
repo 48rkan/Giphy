@@ -34,10 +34,12 @@ class SearchDetailController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let viewModel else { return }
-
         configureUI()
+
+        guard let viewModel else { return }
         viewModel.fetchMatchesGifs(text: viewModel.text)
+        viewModel.fetchRelativeChannel(query: viewModel.text)
+        
         viewModel.succesCallBack = {
             self.collection.reloadData()
             self.showLoader(false)
@@ -78,6 +80,7 @@ extension SearchDetailController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let viewModel else { return UICollectionViewCell()}
+        
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)", for: indexPath) as! GiphyCell
         cell.viewModel = GiphyCellViewModel(items: viewModel.items[indexPath.row])
         return cell
@@ -87,9 +90,8 @@ extension SearchDetailController: UICollectionViewDataSource {
         guard let viewModel = viewModel else { return  UICollectionReusableView() }
         
         let header = collection.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(SearchHeader.self)", for: indexPath) as! SearchHeader
-        header.delegate = self
-        header.viewModel = SearchHeaderViewModel(accountDatas: viewModel.accountDatas,
-                                                 allDatas: viewModel.items )
+        header.delegate  = self
+        header.viewModel = SearchHeaderViewModel(accountDatas: viewModel.accountDatas, allDatas: viewModel.items )
         return header
     }
 }
@@ -129,7 +131,10 @@ extension SearchDetailController: CustomSearchViewDelegate {
     
     func searchIconClicked(_ view: CustomSearchView) {
         guard let viewModel else { return }
-        showLoader(true)
+
         viewModel.fetchMatchesGifs(text: viewModel.text)
+        viewModel.fetchRelativeChannel(query: viewModel.text)
+        self.collection.reloadData()
+        showLoader(true)
     }
 }

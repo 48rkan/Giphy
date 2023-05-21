@@ -7,12 +7,11 @@ import Foundation
 class SearchDetailViewModel {
     var accountDatas: [Datums]
     var items = [Datum]()
-
     var text = String()
     
     var succesCallBack: (()->())?
     
-    init(items: [Datums] = [Datums]()) {
+    init(items: [Datums]) {
         self.accountDatas = items
     }
     
@@ -22,6 +21,16 @@ class SearchDetailViewModel {
             
             guard let items = items?.data else { return }
             self.items = items
+            self.succesCallBack?()
+        }
+    }
+    
+    func fetchRelativeChannel(query: String) {
+        SearchManager.fetchRelativeChannel(query: query) { items, error in
+            if error != nil { return }
+
+            guard let items = items?.data else { return }
+            self.accountDatas = items
             self.succesCallBack?()
         }
     }

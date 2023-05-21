@@ -13,12 +13,11 @@ class SearchViewModel {
     
     func fetchRelativeChannel(query: String) {
         SearchManager.fetchRelativeChannel(query: query) { items, error in
-            if error != nil { print(error?.localizedDescription)}
+            if error != nil { print(error?.localizedDescription) }
             
             guard let items = items?.data else { return }
             self.items = items
             self.successCallBack?()
         }
     }
-
 }
