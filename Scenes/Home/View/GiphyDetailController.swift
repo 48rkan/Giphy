@@ -59,7 +59,7 @@ class GiphyDetailController: UIViewController {
         configureUI()
         
         viewModel?.fetchRelatedGifs()
-        viewModel?.fetchFavouritesGifs()
+//        viewModel?.fetchFavouritesGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
         configFavouriteButton()
     }
@@ -75,9 +75,9 @@ class GiphyDetailController: UIViewController {
     }
     
     @objc fileprivate func tappedFavouriteButton() {
-        guard let viewModel = viewModel else { return }
-        guard let gifURL = viewModel.gifURL else { return }
-        guard let gifID = viewModel.items.gifID else { return }
+        guard let viewModel = viewModel             else { return }
+        guard let gifURL    = viewModel.gifURL      else { return }
+        guard let gifID     = viewModel.items.gifID_ else { return }
 
         if viewModel.isFavourite {
             favouriteButton.setImage(UIImage(named: "unFavourite"), for: .normal)
@@ -94,7 +94,7 @@ class GiphyDetailController: UIViewController {
         guard let viewModel = viewModel else { return }
         
         let controller = AccountController()
-        controller.viewModel = AccountViewModel(items: viewModel.items)
+        controller.viewModel = AccountViewModel(items: viewModel.items,type: .other)
         navigationController?.show(controller, sender: nil)
     }
     

@@ -58,7 +58,7 @@ class SearchController: UIViewController {
 extension SearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = AccountController()
-        controller.viewModel = AccountViewModel(items: viewModel.items[indexPath.row])
+        controller.viewModel = AccountViewModel(items: viewModel.items[indexPath.row], type: .other)
         navigationController?.show(controller, sender: nil)
     }
     

@@ -119,7 +119,7 @@ extension SearchDetailController: SearchHeaderDelegate {
     
     func header(_ header: SearchHeader, wantsToShowAccount data: Datums) {
         let controller = AccountController()
-        controller.viewModel = AccountViewModel(items: data)
+        controller.viewModel = AccountViewModel(items: data,type: .other)
         
         navigationController?.show(controller, sender: nil)
     }

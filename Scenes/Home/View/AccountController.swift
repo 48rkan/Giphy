@@ -46,17 +46,19 @@ class AccountController: UIViewController {
         return c
     }()
     
-//    init() {
-//        self.viewModel = Acc
-//    }
-    
     //MARK: - Lifecylce
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         
         viewModel?.fetchOwnerGifs()
+        viewModel?.fetchFavouritedGifs()
         viewModel?.successCallBack = { self.collection.reloadData() }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.type == .own ? viewModel?.fetchFavouritedGifs() : nil
     }
     
     //MARK: - Helper
@@ -108,21 +110,34 @@ extension AccountController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
         let controller = GiphyDetailController()
-        controller.viewModel = GiphyDetailViewModel(items: viewModel.ownerGifs[indexPath.row])
+        if viewModel.type == .other {
+            controller.viewModel = GiphyDetailViewModel(items: viewModel.ownerGifs[indexPath.row])
+        } else {
+            controller.viewModel = GiphyDetailViewModel(items: viewModel.favouritedGifs[indexPath.row])
+        }
+        
         navigationController?.show(controller, sender: nil)
     }
 }
 
 extension AccountController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel?.ownerGifs.count ?? 0
+        guard let viewModel = viewModel else { return 0 }
+        
+        return viewModel.type == .other ? viewModel.ownerGifs.count
+                                  : viewModel.favouritedGifs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let viewModel = viewModel else { return UICollectionViewCell()}
         
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)", for: indexPath) as! GiphyCell
-        cell.viewModel = GiphyCellViewModel(items: viewModel.ownerGifs[indexPath.row])
+        
+        if viewModel.type == .other {
+            cell.viewModel = GiphyCellViewModel(items: viewModel.ownerGifs[indexPath.row])
+        } else {
+            cell.viewModel = GiphyCellViewModel(items: viewModel.favouritedGifs[indexPath.row])
+        }
         return cell
     }
 }

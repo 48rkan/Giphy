@@ -9,8 +9,8 @@ protocol CommonData {
     var imageURL: String? { get }
     var userName: String? { get }
     var displayName_: String? { get }
-    var gifURL: String? { get }
-    var gifID: String? { get }
+    var gifURL_: String? { get }
+    var gifID_: String? { get }
 }
 
 // MARK: - Trending
@@ -23,9 +23,9 @@ struct Trending: Codable {
 // MARK: - Datum
 struct Datum: Codable,CommonData {
     
-    var gifID: String? { id ?? ""}
+    var gifID_: String? { id ?? ""}
     
-    var gifURL: String? { images?.original?.url ?? ""}
+    var gifURL_: String? { images?.original?.url ?? ""}
     
     var bannerURL: String? { user?.bannerURL ?? ""}
     

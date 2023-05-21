@@ -11,5 +11,5 @@ class GiphyCellViewModel {
         self.items = items
     }
     
-    var gifURL: URL? { URL(string: items.gifURL ?? "") }
+    var gifURL: URL? { URL(string: items.gifURL_ ?? "") }
 }

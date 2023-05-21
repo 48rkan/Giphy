@@ -12,13 +12,15 @@ enum AccountType {
 class AccountViewModel {
     var items: CommonData
     var ownerGifs = [Datum]()
+    var favouritedGifs = [Gif]()
     
     var successCallBack: (()->())?
     
-    var type: AccountType?
+    var type: AccountType
     
-    init(items: CommonData) {
+    init(items: CommonData,type: AccountType) {
         self.items = items
+        self.type = type
     }
         
     var bannerURL: URL? { URL(string: items.bannerURL ?? "")}
@@ -35,6 +37,13 @@ class AccountViewModel {
             guard let items = items?.data else { return }
             self.ownerGifs = items
             
+            self.successCallBack?()
+        }
+    }
+    
+    func fetchFavouritedGifs() {
+        FavouriteManager.fetchFavouritesGifs { gifs in
+            self.favouritedGifs = gifs
             self.successCallBack?()
         }
     }
