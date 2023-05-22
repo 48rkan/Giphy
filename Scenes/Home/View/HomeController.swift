@@ -48,6 +48,7 @@ class HomeController: UIViewController {
     @objc private func tappedLogOutButton() {
         do {
             let controller = LoginController()
+            controller.delegate = tabBarController as? MainTabBarController
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .fullScreen
             self.present(nav , animated: false)

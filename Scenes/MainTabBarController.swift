@@ -24,6 +24,7 @@ class MainTabBarController: UITabBarController {
         DispatchQueue.main.async {
             if Auth.auth().currentUser == nil {
                 let controller = LoginController()
+                controller.delegate = self
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: false)
@@ -63,5 +64,11 @@ class MainTabBarController: UITabBarController {
         nav.tabBarItem.image = unselectedImage
         
         return nav
+    }
+}
+
+extension MainTabBarController: LoginControllerDelegate {
+    func authenticationDidComplete() {
+        fetchOwnAccount()
     }
 }

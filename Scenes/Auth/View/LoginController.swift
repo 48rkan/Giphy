@@ -8,11 +8,18 @@ import GoogleSignIn
 import FirebaseCore
 import FirebaseAuth
 
+protocol LoginControllerDelegate: AnyObject {
+    func authenticationDidComplete()
+}
+
+
 class LoginController: UIViewController {
     
     //MARK: - Properties
     var viewModel = LoginViewModel()
         
+    weak var delegate: LoginControllerDelegate?
+    
     private lazy var titleLabel = CustomLabel(text: viewModel.titleOne,
                                          textColor: .white,
                                          size: 32,font: "Poppins-Bold")
@@ -227,13 +234,17 @@ class LoginController: UIViewController {
                     self.showLoader(false)
                     return
                 }
+                self.delegate?.authenticationDidComplete()
+
                 self.dismiss(animated: true)
+                
             }
         }
     }
     
     @objc func tappedGoggle() {
         viewModel.tappedGoggle(view: self) {
+            self.delegate?.authenticationDidComplete()
             self.dismiss(animated: true)
         }
     }
