@@ -64,7 +64,7 @@ class EditChannelController: UIViewController {
         guard let gifURL = viewModel?.gifURL else { return }
         
         if gifURL.pathComponents.contains("media") {
-            profileImageView.setGifFromURL(gifURL,levelOfIntegrity: .highestNoFrameSkipping)
+            profileImageView.setGifFromURL(gifURL)
         } else {
             profileImageView.sd_setImage(with: gifURL)
         }
@@ -89,18 +89,25 @@ class EditChannelController: UIViewController {
     
     func configureUI() {
         view.addSubview(defaultBannerImageView)
-        defaultBannerImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
+        defaultBannerImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                                      left: view.leftAnchor,right: view.rightAnchor,
+                                      paddingTop: 0,paddingLeft: 0,paddingRight: 0)
         defaultBannerImageView.setHeight(120)
         
         view.addSubview(profileImageView)
-        profileImageView.centerX(inView: view,topAnchor: defaultBannerImageView.bottomAnchor,paddingTop: -12)
+        profileImageView.centerX(inView: view,
+                                 topAnchor: defaultBannerImageView.bottomAnchor,paddingTop: -12)
         profileImageView.setDimensions(height: 96, width: 96)
         
         view.addSubview(usernameTitle)
-        usernameTitle.anchor(top: profileImageView.bottomAnchor,left: view.leftAnchor,paddingTop: 12,paddingLeft: 8)
+        usernameTitle.anchor(top: profileImageView.bottomAnchor,
+                             left: view.leftAnchor,
+                             paddingTop: 12,paddingLeft: 8)
         
         view.addSubview(userNameTextField)
-        userNameTextField.anchor(top: usernameTitle.bottomAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 4,paddingLeft: 8,paddingRight: 8)
+        userNameTextField.anchor(top: usernameTitle.bottomAnchor,
+                                 left: view.leftAnchor,right: view.rightAnchor,
+                                 paddingTop: 4,paddingLeft: 8,paddingRight: 8)
         userNameTextField.setHeight(60)
     }
 }

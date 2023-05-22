@@ -5,12 +5,12 @@
 import Foundation
 
 protocol CommonData {
-    var bannerURL: String? { get }
-    var imageURL: String? { get }
-    var userName: String? { get }
+    var bannerURL   : String? { get }
+    var imageURL    : String? { get }
+    var userName    : String? { get }
     var displayName_: String? { get }
-    var gifURL_: String? { get }
-    var gifID_: String? { get }
+    var gifURL_     : String? { get }
+    var gifID_      : String? { get }
 }
 
 // MARK: - Trending
@@ -23,18 +23,13 @@ struct Trending: Codable {
 // MARK: - Datum
 struct Datum: Codable,CommonData {
     
-    var gifID_: String? { id ?? ""}
-    
-    var gifURL_: String? { images?.original?.url ?? ""}
-    
-    var bannerURL: String? { user?.bannerURL ?? ""}
-    
-    var imageURL: String? { user?.avatarURL ?? ""}
-    
-    var userName: String? { user?.username ?? ""}
-    
+    var gifID_      : String? { id ?? ""}
+    var bannerURL   : String? { user?.bannerURL ?? ""  }
+    var imageURL    : String? { user?.avatarURL ?? ""  }
+    var userName    : String? { user?.username ?? ""   }
     var displayName_: String? { user?.displayName ?? ""}
-    
+    var gifURL_     : String? { images?.original?.url ?? ""}
+
     let type: String?
     let id: String?
     let url: String?

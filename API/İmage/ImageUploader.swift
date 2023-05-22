@@ -8,7 +8,8 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct ImageUploader {
-    static func uploadImage(image: UIImage,completion: @escaping (String) -> ()) {
+    static func uploadImage(image: UIImage,
+                            completion: @escaping (String) -> ()) {
         
         guard let imageData = image.jpegData(compressionQuality: 0.75) else { return }
         let fileName = NSUUID().uuidString

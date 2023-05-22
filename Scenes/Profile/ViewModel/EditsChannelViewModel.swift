@@ -15,9 +15,8 @@ class EditsChannelViewModel {
         self.items = items
     }
     
-    var gifURL: URL? { URL(string: items.gifURL_ ?? "")}
-    
-    var userName: String { items.userName ?? ""}
+    var gifURL  : URL?   { URL(string: items.gifURL_ ?? "") }
+    var userName: String { items.userName ?? "" }
     
     func imagePickerConfiguration(completion: (YPImagePicker)->()) {
         // Burda konfiqurasiya veririk,pickerimiz ucun.Hansi formada acilsin,nece olsun kimi
@@ -36,18 +35,5 @@ class EditsChannelViewModel {
         let picker = YPImagePicker(configuration: config)
         
         completion(picker)
-//        present(picker, animated: true)
-        
-//        didFinishPickingMedia(picker: picker)
     }
-    
-//    func didFinishPickingMedia(picker: YPImagePicker) {
-//        picker.didFinishPicking { items, cancelled in
-//            self.dismiss(animated: false) {
-//                // secdiyimiz tek sekile bele catiriq
-//                guard let image = items.singlePhoto?.image else { return }
-//                
-//            }
-//        }
-//    }
 }
