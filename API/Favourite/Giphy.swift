@@ -7,7 +7,7 @@ import Foundation
 
 struct Gif {
     let gifURL: String
-    let gifID: String
+    let gifID : String
     var isFavourite = false
     
     init(dictionary: [String : Any]) {
@@ -17,7 +17,7 @@ struct Gif {
 
 extension Gif: CommonData {
     var gifURL_     : String? { gifURL }
-    var gifID_      : String? { gifID }
+    var gifID_      : String? { gifID  }
     var bannerURL   : String? { nil }
     var imageURL    : String? { nil }
     var userName    : String? { nil }

@@ -53,7 +53,9 @@ class MainTabBarController: UITabBarController {
         let account = AccountController()
         account.viewModel = AccountViewModel(items: ownAccount, type: .own)
         
-        let profile = templateNavigationController(viewController: account, selectedImage: UIImage(named: "home_selected")!, unselectedImage: UIImage(named: "home_selected")!)
+        let profile = templateNavigationController(viewController: account,
+                                                   selectedImage: UIImage(named: "home_selected")!,
+                                                   unselectedImage: UIImage(named: "home_selected")!)
         
         viewControllers = [ feed , search, profile ]
     }

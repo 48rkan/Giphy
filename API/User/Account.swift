@@ -5,11 +5,11 @@
 import Foundation
 
 struct Account {
-    var email: String
-    var username: String
+    var email      : String
+    var username   : String
     var profilimage: String
-    var uid: String
-    var banner: String
+    var uid        : String
+    var banner     : String
     
     init(dictionary: [String:Any]) {
         self.email       = dictionary["email"]    as? String ?? ""

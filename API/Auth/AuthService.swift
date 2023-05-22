@@ -8,14 +8,16 @@ import FirebaseFirestore
 
 struct AuthService {
     
-    static func logUserIn(email: String,password: String,completion: @escaping (AuthDataResult?,Error?) ->()) {
+    static func logUserIn(email: String,password: String,
+                          completion: @escaping (AuthDataResult?,Error?) ->()) {
         
         Auth.auth().signIn(withEmail: email, password: password) { authDataResult, error in
             completion(authDataResult,error)
         }
     }
     
-    static func registerUser(credential: AuthCredential, completion: @escaping (Error?) -> ()) {
+    static func registerUser(credential: AuthCredential,
+                             completion: @escaping (Error?) -> ()) {
         
         Auth.auth().createUser(withEmail: credential.email, password: credential.password) { result, error in
             if error != nil {
@@ -35,7 +37,9 @@ struct AuthService {
                 "banner": defaultPhotoGif
             ]
     
-            Firestore.firestore().collection("user").document(uid).setData(data,completion: completion)
+            Firestore.firestore().collection("user")
+                .document(uid)
+                .setData(data,completion: completion)
         }
     }
 }
