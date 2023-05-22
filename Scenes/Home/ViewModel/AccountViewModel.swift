@@ -31,7 +31,7 @@ class AccountViewModel {
     func fetchOwnerGifs() {
         guard let username = items.userName else { return }
         
-        GiphyDetailManager.fetchRelatedGifs(query: "@\(username)") { items, error in
+        HomeManager.fetchRelatedGifs(query: "@\(username)") { items, error in
             if error != nil { return }
             
             guard let items = items?.data else { return }

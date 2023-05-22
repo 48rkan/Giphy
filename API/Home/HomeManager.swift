@@ -4,7 +4,7 @@
 
 import Foundation
 
-class HomeManager {
+class HomeManager: HomeManagerProtocol {
     
     static func fetchGifs(limit: Int,
                           type: GifsType,
@@ -14,23 +14,32 @@ class HomeManager {
                 
         switch type {
         case .trending:
-            url = CoreHelper.shared.url(path: "/gifs/trending") + "&limit=\(limit)"
+            url = HomeEndPoint.trending.path() + "&limit=\(limit)"
         case .stickers:
-            url = CoreHelper.shared.url(path: "/stickers/trending") + "&limit=\(limit)"
+            url = HomeEndPoint.stickers.path() + "&limit=\(limit)"
         case .emoji:
-            url = CoreHelper.shared.url(path: "/emoji") + "&next_cursor=\(limit)"
+            url = HomeEndPoint.emoji.path()    + "&limit=\(limit)"
         case .cats:
-            url = CoreHelper.shared.url(path: "/gifs/search") + "&q=\(query)"
+            url = HomeEndPoint.common.path() + "&q=\(query)"
         case .dogs:
-            url = CoreHelper.shared.url(path: "/gifs/search") + "&q=\(query)"
+            url = HomeEndPoint.common.path() + "&q=\(query)"
         case .reactions:
-            url = CoreHelper.shared.url(path: "/gifs/search") + "&q=\(query)"
+            url = HomeEndPoint.common.path() + "&q=\(query)"
         case .memes:
-            url = CoreHelper.shared.url(path: "/gifs/search") + "&q=\(query)"
+            url = HomeEndPoint.common.path() + "&q=\(query)"
         }
         
         CoreManager.request(type: Trending.self,
                             url: url ) { items, error in
+            completion(items,error)
+        }
+    }
+    
+    static func fetchRelatedGifs(query: String,
+                                 completion: @escaping (Trending?,Error?)->()) {
+        
+        CoreManager.request(type: Trending.self,
+                            url: HomeEndPoint.common.path() + "&q=\(query)") { items, error in
             completion(items,error)
         }
     }

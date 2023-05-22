@@ -23,7 +23,7 @@ class GiphyDetailViewModel {
     var gifURL: URL?            { URL(string: items.gifURL_ ?? "" )}
     
     func fetchRelatedGifs() {
-        GiphyDetailManager.fetchRelatedGifs(query: items.userName ?? "") { items, error in
+        HomeManager.fetchRelatedGifs(query: items.userName ?? "") { items, error in
             if error != nil { return }
             
             guard let items = items?.data else { return }

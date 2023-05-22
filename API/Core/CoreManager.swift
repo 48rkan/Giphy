@@ -13,7 +13,7 @@ public class CoreManager {
                         parameters: Parameters? = nil,
                         encoding: ParameterEncoding = URLEncoding.default,
                         headers: HTTPHeaders? = nil,
-                                    completion: @escaping (T?,Error?)->()) {
+                        completion: @escaping (T?,Error?)->()) {
         
         AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "",
                    method: method,

@@ -4,17 +4,22 @@
 
 import Foundation
 
-class SearchManager {
+class SearchManager: SearchProtocol {
     
-    static func fetchRelativeChannel(query: String,completion: @escaping (RelativeChannel?,Error?)->()) {
-        CoreManager.request(type: RelativeChannel.self, url: CoreHelper.shared.url(path: "/channels/search") + "&q=\(query)") { items, error in
-            print(CoreHelper.shared.url(path: "/channels/search") + "&q=\(query)")
+    static func fetchMatchesGifs(text: String,
+                                 completion: @escaping (Trending?,Error?)->()) {
+        
+        CoreManager.request(type: Trending.self,
+                            url: HomeEndPoint.common.path() + "&q=\(text)") { items, error in
             completion(items,error)
         }
     }
     
-    static func fetchMatchesGifs(text: String,completion: @escaping (Trending?,Error?)->()) {
-        CoreManager.request(type: Trending.self, url: CoreHelper.shared.url(path: "/gifs/search") + "&q=\(text)") { items, error in
+    static func fetchRelativeChannel(query: String,
+                                     completion: @escaping (RelativeChannel?,Error?)->()) {
+        
+        CoreManager.request(type: RelativeChannel.self,
+                            url: HomeEndPoint.common.path() + "&q=\(query)") { items, error in
             completion(items,error)
         }
     }
