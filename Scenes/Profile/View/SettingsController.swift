@@ -74,7 +74,14 @@ class SettingsController: UIViewController {
     
     func configure() {
         guard let gifURL = viewModel?.gifURL else { return }
-        imageView.setGifFromURL(gifURL, showLoader: true)
+        
+        if gifURL.pathComponents.contains("media") {
+            imageView.setGifFromURL(gifURL,levelOfIntegrity: .highestNoFrameSkipping)
+        } else {
+            imageView.sd_setImage(with: gifURL)
+
+        }
+
         titleLabel.text = viewModel?.userName  }
     
     //MARK: - Helpers

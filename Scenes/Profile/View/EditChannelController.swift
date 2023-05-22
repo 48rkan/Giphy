@@ -20,10 +20,11 @@ class EditChannelController: UIViewController {
         return iv
     }()
     
-    private let profileImageView: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .blue
-        
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentPicker)))
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -43,9 +44,31 @@ class EditChannelController: UIViewController {
     }
     
     //MARK: - Actions
+    
+    @objc fileprivate func presentPicker() {
+        viewModel?.imagePickerConfiguration(completion: { imagePicker in
+            
+            self.present(imagePicker, animated: true)
+            
+            imagePicker.didFinishPicking { items, cancelled in
+                self.dismiss(animated: false) {
+                    // secdiyimiz tek sekile bele catiriq
+                    guard let image = items.singlePhoto?.image else { return }
+                    self.profileImageView.image = image
+                    ImageUploader.changePhoto(image: image)
+                }
+            }
+        })
+    }
     func configure() {
         guard let gifURL = viewModel?.gifURL else { return }
-        profileImageView.setGifFromURL(gifURL, showLoader: true)
+        
+        if gifURL.pathComponents.contains("media") {
+            profileImageView.setGifFromURL(gifURL,levelOfIntegrity: .highestNoFrameSkipping)
+        } else {
+            profileImageView.sd_setImage(with: gifURL)
+        }
+        
         userNameTextField.text = viewModel?.userName
     }
     

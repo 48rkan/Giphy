@@ -21,7 +21,7 @@ class AccountController: UIViewController {
         return iv
     }()
     
-    private let profileImageView: UIImageView = {
+    private var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .blue
         return iv
@@ -73,11 +73,10 @@ class AccountController: UIViewController {
     //MARK: - Actions
     @objc fileprivate func tappedSettings() {
         guard let viewModel = viewModel  else { return }
+        
         let controller = SettingsController()
         controller.viewModel = SettingsViewModel(items: viewModel.items)
         navigationController?.show(controller, sender: nil)
-        
-       
     }
     
     //MARK: - Helper
@@ -115,9 +114,14 @@ class AccountController: UIViewController {
         guard let profileUrl = viewModel?.profileImageURL else { return }
         
         bannerImageView.sd_setImage(with: bannerUrl)
-        profileImageView.setGifFromURL(profileUrl,levelOfIntegrity: .highestNoFrameSkipping)
-
-        userNameLabel.text = viewModel?.userName
+        
+        if profileUrl.pathComponents.contains("giphy") {
+            profileImageView.setGifFromURL(profileUrl)
+        } else {
+            profileImageView.sd_setImage(with: profileUrl)
+        }
+        
+        userNameLabel.text    = viewModel?.userName
         displayNameLabel.text = viewModel?.displaName
     }
 }
