@@ -19,8 +19,15 @@ struct UserService {
             guard let username = dictionary["username"] as? String else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             guard let banner = dictionary["banner"] as? String else { return }
-
+            
             completion(Account(email: email, username: username, profilimage: gif, uid: uid, banner: banner))
         }
+    }
+    
+    static func updateUserName(newUsername: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        Firestore.firestore().collection("user").document(uid).updateData(["username" : newUsername])
+        
     }
 }

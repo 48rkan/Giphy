@@ -33,6 +33,14 @@ class AccountController: UIViewController {
     private let displayNameLabel = CustomLabel(text: "@motoGP",
                                                size: 14)
     
+    private lazy var settingsButton: UIButton = {
+        let b = UIButton()
+        b.setImage(UIImage(systemName: "person.fill"), for: .normal)
+        b.tintColor = .black
+        b.addTarget(self, action: #selector(tappedSettings), for: .touchUpInside)
+        return b
+    }()
+    
     private lazy var collection: UICollectionView = {
         let l = PinterestLayout()
         l.numberOfColumns = 2
@@ -49,16 +57,27 @@ class AccountController: UIViewController {
     //MARK: - Lifecylce
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         
         viewModel?.fetchOwnerGifs()
         viewModel?.fetchFavouritedGifs()
         viewModel?.successCallBack = { self.collection.reloadData() }
+        
+        configureUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel?.fetchFavouritedGifs()
+    }
+    
+    //MARK: - Actions
+    @objc fileprivate func tappedSettings() {
+        guard let viewModel = viewModel  else { return }
+        let controller = SettingsController()
+        controller.viewModel = SettingsViewModel(items: viewModel.items)
+        navigationController?.show(controller, sender: nil)
+        
+       
     }
     
     //MARK: - Helper
@@ -83,7 +102,12 @@ class AccountController: UIViewController {
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           right: view.rightAnchor,paddingTop: 12,
                           paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
-
+        
+        if viewModel?.type == .own {
+            view.addSubview(settingsButton)
+            settingsButton.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,paddingTop: 8,paddingLeft: 8)
+            settingsButton.setDimensions(height: 28, width: 28)
+        } else { return }
     }
     
     func configure() {
@@ -109,6 +133,7 @@ extension AccountController: PinterestLayoutDelegate {
 extension AccountController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
+        
         let controller = GiphyDetailController()
         if viewModel.type == .other {
             controller.viewModel = GiphyDetailViewModel(items: viewModel.ownerGifs[indexPath.row])
@@ -125,7 +150,7 @@ extension AccountController: UICollectionViewDataSource {
         guard let viewModel = viewModel else { return 0 }
         
         return viewModel.type == .other ? viewModel.ownerGifs.count
-                                  : viewModel.favouritedGifs.count
+                                        : viewModel.favouritedGifs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
