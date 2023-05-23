@@ -7,7 +7,6 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct AuthService {
-    
     static func logUserIn(email: String,password: String,
                           completion: @escaping (AuthDataResult?,Error?) ->()) {
         
