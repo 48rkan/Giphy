@@ -13,9 +13,8 @@ class SearchManager: SearchProtocol {
         var url = ""
         
         switch type {
-        case .common:
-            url = HomeEndPoint.common.path() + "&q=\(text)"
-        default: break
+        case .common: url = HomeEndPoint.common.path() + "&q=\(text)"
+        case _      : break
         }
         
         CoreManager.request(type: Trending.self,

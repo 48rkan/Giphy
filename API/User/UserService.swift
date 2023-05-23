@@ -10,10 +10,10 @@ struct UserService {
     static func fetchUser(completion: @escaping (Account)->()) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Firestore.firestore().collection("user")
+        COLLECTION_USER
             .document(uid)
             .getDocument { documentSnapshot, error in
-            
+                
             guard let dictionary = documentSnapshot?.data() else { return }
             
             completion(Account(dictionary: dictionary))
@@ -23,7 +23,7 @@ struct UserService {
     static func updateUserName(newUsername: String) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Firestore.firestore().collection("user")
+        COLLECTION_USER
             .document(uid)
             .updateData(["username" : newUsername])
     }

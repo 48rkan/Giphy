@@ -37,7 +37,7 @@ struct AuthService {
                 "banner": defaultPhotoGif
             ]
     
-            Firestore.firestore().collection("user")
+            COLLECTION_USER
                 .document(uid)
                 .setData(data,completion: completion)
         }

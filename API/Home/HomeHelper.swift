@@ -20,5 +20,5 @@ public enum HomeEndPoint: String {
     case emoji     = "/emoji"
     case common    = "/gifs/search"
     
-    public func path() -> String { return CoreHelper.shared.url(path: self.rawValue) }
+    public func path() -> String { CoreHelper.shared.url(path: self.rawValue) }
 }

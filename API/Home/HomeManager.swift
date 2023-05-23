@@ -13,20 +13,13 @@ class HomeManager: HomeManagerProtocol {
         var url = ""
                 
         switch type {
-        case .trending:
-            url = HomeEndPoint.trending.path() + "&limit=\(limit)"
-        case .stickers:
-            url = HomeEndPoint.stickers.path() + "&limit=\(limit)"
-        case .emoji:
-            url = HomeEndPoint.emoji.path()    + "&limit=\(limit)"
-        case .cats:
-            url = HomeEndPoint.common.path()   + "&q=\(query)"
-        case .dogs:
-            url = HomeEndPoint.common.path()   + "&q=\(query)"
-        case .reactions:
-            url = HomeEndPoint.common.path()   + "&q=\(query)"
-        case .memes:
-            url = HomeEndPoint.common.path()   + "&q=\(query)"
+        case .trending : url = HomeEndPoint.trending.path() + "&limit=\(limit)"
+        case .stickers : url = HomeEndPoint.stickers.path() + "&limit=\(limit)"
+        case .emoji    : url = HomeEndPoint.emoji.path()    + "&limit=\(limit)"
+        case .cats     : url = HomeEndPoint.common.path()   + "&q=\(query)"
+        case .dogs     : url = HomeEndPoint.common.path()   + "&q=\(query)"
+        case .reactions: url = HomeEndPoint.common.path()   + "&q=\(query)"
+        case .memes    : url = HomeEndPoint.common.path()   + "&q=\(query)"
         }
         
         CoreManager.request(type: Trending.self,

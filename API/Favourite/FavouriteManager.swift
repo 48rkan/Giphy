@@ -14,20 +14,20 @@ class FavouriteManager {
             "gifID" : gifID
         ]
         
-        Firestore.firestore().collection("favourite")
+        COLLECTION_FAVOURITE
             .document(gifID)
             .setData(data)
     }
     
     static func unFavouriteGif(gifID: String) {
-        
-        Firestore.firestore().collection("favourite")
+
+        COLLECTION_FAVOURITE
             .document(gifID)
             .delete()
     }
     
     static func fetchFavouritesGifs(completion: @escaping ([Gif])->()) {
-        Firestore.firestore().collection("favourite")
+        COLLECTION_FAVOURITE
             .getDocuments { querySnapshot, error in
                 
             guard let documents = querySnapshot?.documents else { return }
@@ -43,7 +43,7 @@ class FavouriteManager {
     
     static func checkFavourite(id: String , completion : @escaping (Bool)->()) {
                 
-        Firestore.firestore().collection("favourite")
+        COLLECTION_FAVOURITE
             .document(id)
             .getDocument { documentSnapshot, error in
             guard let isFollowed = documentSnapshot?.exists else { return }
