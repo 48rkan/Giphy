@@ -24,6 +24,10 @@ class GiphyCell: UICollectionViewCell {
         configureUI()
     }
     
+//    override func prepareForReuse() {
+//        gifView.backgroundColor = UIColor(hexString: "#6a18ff")
+//    }
+    
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been") }
     
     //MARK: - Helper

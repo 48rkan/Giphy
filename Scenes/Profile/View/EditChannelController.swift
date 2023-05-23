@@ -15,8 +15,8 @@ class EditChannelController: UIViewController {
     
     private let defaultBannerImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .red
-        
+        iv.backgroundColor = UIColor(hexString: "#353935")
+
         return iv
     }()
     
@@ -30,11 +30,7 @@ class EditChannelController: UIViewController {
     
     private let usernameTitle = CustomLabel(text: "Username", size: 16)
     
-    private let userNameTextField: CustomTextField = {
-        let tf = CustomTextField(placeholder: "")
-        
-        return tf
-    }()
+    private let userNameTextField = CustomTextField(placeholder: "")
     
     //MARK: - Lifecylce
     override func viewDidLoad() {

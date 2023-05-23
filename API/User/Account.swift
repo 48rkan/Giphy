@@ -21,7 +21,6 @@ struct Account {
 }
 
 extension Account: CommonData {
-    var isFavourite: Bool? { false }
     
     var gifID_      : String? { nil }
     var gifURL_     : String? { profilimage }

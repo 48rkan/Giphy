@@ -8,6 +8,9 @@
 import Foundation
 
 class SettingsViewModel {
+    
+    var tableTitles = ["Account Settings", "Set Up Keyboard", "Support" , "Privacy & Safety", "Rate the App" , "Acknowledgements"]
+    
     var items: CommonData
     
     init(items: CommonData) {

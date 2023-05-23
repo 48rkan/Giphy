@@ -15,23 +15,24 @@ class SettingsController: UIViewController {
     }
     private let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .red
+        iv.backgroundColor = .lightGray
         
         return iv
     }()
     
-    private let titleLabel =  CustomLabel(text: "zzzz", size: 16)
+    private let titleLabel =  CustomLabel(text: "",hexCode: "#F0EAD6",size: 16,
+                                          font: "Poppins-SemiBold")
     
     private let editButton: UIButton = {
         let b = UIButton()
         b.setTitle("Edit", for: .normal)
-        
+        b.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16)
         return b
     }()
     
     private lazy var customView: UIView = {
         let v = UIView()
-        v.backgroundColor = .lightGray
+        v.backgroundColor = UIColor(hexString: "#353935")
         v.layer.cornerRadius = 12
         v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showEditScene)))
         v.isUserInteractionEnabled = true
@@ -42,8 +43,20 @@ class SettingsController: UIViewController {
         let b = UIButton()
         b.setTitleColor(UIColor.red, for: .normal)
         b.setTitle("Log Out", for: .normal)
+        b.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 16)
         b.addTarget(self, action: #selector(tappedLogOut), for: .touchUpInside)
         return b
+    }()
+    
+    private lazy var table: UITableView = {
+        let t = UITableView()
+        t.rowHeight  = 64
+        t.register(LabelCell.self, forCellReuseIdentifier: "\(LabelCell.self)")
+        t.backgroundColor = .black
+        t.delegate   = self
+        t.dataSource = self
+        
+        return t
     }()
     
     //MARK: - Lifecycle
@@ -107,6 +120,29 @@ class SettingsController: UIViewController {
 
         view.addSubview(logOutButton)
         logOutButton.anchor(top: customView.bottomAnchor,left: view.leftAnchor,paddingTop: 12,paddingLeft: 12)
+        
+        view.addSubview(table)
+        table.anchor(top: logOutButton.bottomAnchor,
+                     left: view.leftAnchor,
+                     bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                     right: view.rightAnchor,paddingTop: 4,paddingLeft: 4,
+                     paddingBottom: 4,paddingRight: 4)
+    }
+    
+    
+}
+
+extension SettingsController: UITableViewDelegate { }
+
+extension SettingsController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel?.tableTitles.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = table.dequeueReusableCell(withIdentifier: "\(LabelCell.self)") as! LabelCell
+        cell.viewModel = LabelCellViewModel(item: (viewModel?.tableTitles[indexPath.row])!)
+        return cell
     }
     
     

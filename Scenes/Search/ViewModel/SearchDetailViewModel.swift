@@ -16,7 +16,7 @@ class SearchDetailViewModel {
     }
     
     func fetchMatchesGifs(text: String) {
-        SearchManager.fetchMatchesGifs(text: text) { items, error in
+        SearchManager.fetchMatchesGifs(text: text, type: .common) { items, error in
             if error != nil { return }
             
             guard let items = items?.data else { return }
@@ -26,7 +26,7 @@ class SearchDetailViewModel {
     }
     
     func fetchRelativeChannel(query: String) {
-        SearchManager.fetchRelativeChannel(query: query) { items, error in
+        SearchManager.fetchRelativeChannel(query: query, type: .relativeChannels) { items, error in
             if error != nil { return }
 
             guard let items = items?.data else { return }

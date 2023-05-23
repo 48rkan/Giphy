@@ -5,4 +5,11 @@
 
 import Foundation
 
-struct SearchHelper { }
+//enum SearchType: String {
+//    case relativeChannels = "RelativeChannels"
+//}
+
+enum SearchEndPoint: String {
+case relativeChannels = "/channels/search"
+    
+    public func path() -> String { return CoreHelper.shared.url(path: self.rawValue) }}
