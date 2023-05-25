@@ -4,6 +4,8 @@
 
 import UIKit
 import FirebaseAuth
+import MessageUI
+import SafariServices
 
 class SettingsController: UIViewController {
     
@@ -128,11 +130,52 @@ class SettingsController: UIViewController {
                      right: view.rightAnchor,paddingTop: 4,paddingLeft: 4,
                      paddingBottom: 4,paddingRight: 4)
     }
-    
-    
 }
 
-extension SettingsController: UITableViewDelegate { }
+extension SettingsController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            // Modify following variables with your text / recipient
+            let recipientEmail = "test@email.com"
+            let subject = "Multi client email support"
+            let body = "This code supports sending email via multiple different email apps on iOS! :)"
+            
+            // Show default mail composer
+            if MFMailComposeViewController.canSendMail() {
+                let mail = MFMailComposeViewController()
+                mail.mailComposeDelegate = self
+                mail.setToRecipients([recipientEmail])
+                mail.setSubject(subject)
+                mail.setMessageBody(body, isHTML: false)
+                
+                present(mail, animated: true)
+            
+            // Show third party email composer if default Mail app is not present
+            } else if let emailUrl = createEmailUrl(to: recipientEmail, subject: subject, body: body) {
+                UIApplication.shared.open(emailUrl)
+            }
+        }
+        else if indexPath.row == 1 {
+            guard let url = URL(string: "https://support.giphy.com/hc/en-us") else { return }
+            
+            let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
+        }
+        
+        else if indexPath.row == 2 {
+            // bu appdan linkle sayta getmekdir
+            guard let url = URL(string: "https://support.giphy.com/hc/en-us") else { return }
+            
+            UIApplication.shared.open(url,completionHandler: nil)
+        }
+        else if indexPath.row == 4 {
+            guard let url = URL(string: "itms-apps://itunes.apple.com/us/app/apple-store/974748812?mt=8") else { return }
+
+            UIApplication.shared.open(url,completionHandler: nil)
+
+        }
+    }
+}
 
 extension SettingsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -144,6 +187,33 @@ extension SettingsController: UITableViewDataSource {
         cell.viewModel = LabelCellViewModel(item: (viewModel?.tableTitles[indexPath.row])!)
         return cell
     }
+}
+
+extension SettingsController:  MFMailComposeViewControllerDelegate {
+    private func createEmailUrl(to: String, subject: String, body: String) -> URL? {
+        let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        let gmailUrl = URL(string: "googlegmail://co?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let outlookUrl = URL(string: "ms-outlook://compose?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let yahooMail = URL(string: "ymail://mail/compose?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let sparkUrl = URL(string: "readdle-spark://compose?recipient=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let defaultUrl = URL(string: "mailto:\(to)?subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        
+        if let gmailUrl = gmailUrl, UIApplication.shared.canOpenURL(gmailUrl) {
+            return gmailUrl
+        } else if let outlookUrl = outlookUrl, UIApplication.shared.canOpenURL(outlookUrl) {
+            return outlookUrl
+        } else if let yahooMail = yahooMail, UIApplication.shared.canOpenURL(yahooMail) {
+            return yahooMail
+        } else if let sparkUrl = sparkUrl, UIApplication.shared.canOpenURL(sparkUrl) {
+            return sparkUrl
+        }
+        
+        return defaultUrl
+    }
     
-    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
 }

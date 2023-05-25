@@ -41,6 +41,8 @@ class HomeController: UIViewController {
             self.showLoader(false)
             self.collection.reloadData()
         }
+        
+
     }
     
     //MARK: - Actions
