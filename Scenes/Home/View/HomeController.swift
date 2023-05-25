@@ -61,7 +61,6 @@ class HomeController: UIViewController {
     }
     
     //MARK: - Helper
-
     func configureUI() {
         view.addSubview(customView)
         customView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
@@ -104,6 +103,7 @@ class HomeController: UIViewController {
 
 extension HomeController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            
         let controller = GiphyDetailController()
         controller.viewModel = GiphyDetailViewModel(items: viewModel.items[indexPath.row])
         navigationController?.show(controller, sender: nil)

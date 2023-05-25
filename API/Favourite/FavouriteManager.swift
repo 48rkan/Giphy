@@ -20,10 +20,7 @@ class FavouriteManager {
     }
     
     static func unFavouriteGif(gifID: String) {
-
-        COLLECTION_FAVOURITE
-            .document(gifID)
-            .delete()
+        COLLECTION_FAVOURITE.document(gifID).delete()
     }
     
     static func fetchFavouritesGifs(completion: @escaping ([Gif])->()) {
@@ -43,8 +40,7 @@ class FavouriteManager {
     
     static func checkFavourite(id: String , completion : @escaping (Bool)->()) {
                 
-        COLLECTION_FAVOURITE
-            .document(id)
+        COLLECTION_FAVOURITE.document(id)
             .getDocument { documentSnapshot, error in
             guard let isFollowed = documentSnapshot?.exists else { return }
             

@@ -1,4 +1,3 @@
-//
 //  Giphy.swift
 //  Giphy
 //  Created by Erkan Emir on 21.05.23.

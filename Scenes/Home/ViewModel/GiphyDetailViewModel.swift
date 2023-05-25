@@ -2,17 +2,16 @@
 //  Giphy
 //  Created by Erkan Emir on 17.05.23.
 
-import Foundation
+import UIKit
 
 class GiphyDetailViewModel {
 
     let items: CommonData
     var relatedItems = [CommonData]()
-    
     var succesCallBack: (()->())?
-    
     var isFavourite = false
     
+    var controller: UIViewController?
     init(items: CommonData) {
         self.items = items
     }
@@ -39,5 +38,20 @@ class GiphyDetailViewModel {
             self.isFavourite = isFavourite
             completion(isFavourite)
         }
+    }
+    
+    func alert(title: String,completion: (UIAlertController)->()) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: title,
+                                      style: .default,
+                                      handler: { _ in
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel",
+                                      style: .default,
+                                      handler: nil))
+
+        completion(alert)
     }
 }

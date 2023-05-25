@@ -7,6 +7,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct AuthService {
+        
     static func logUserIn(email: String,password: String,
                           completion: @escaping (AuthDataResult?,Error?) ->()) {
         
@@ -26,14 +27,12 @@ struct AuthService {
             
             guard let uid = result?.user.uid else { return }
             
-            let defaultPhotoGif = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjQ2Yzg5YzcxNTRhM2FhNjYzMjg2ZWE0ZmZlMGZkZmFlNGM4YTBjZSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/Fc0krhDnpoMw2TWYoz/giphy.gif"
-            
             let data: [String:Any] = [
-                "email": credential.email,
+                "email"   : credential.email,
                 "username": credential.username.lowercased(),
-                "uid": uid,
-                "gif" : defaultPhotoGif,
-                "banner": defaultPhotoGif
+                "uid"     : uid,
+                "gif"     : AuthHelper.defaultPhotoGif,
+                "banner"  : AuthHelper.defaultPhotoGif
             ]
     
             COLLECTION_USER

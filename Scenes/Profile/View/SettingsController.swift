@@ -134,13 +134,19 @@ class SettingsController: UIViewController {
 
 extension SettingsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
+        switch viewModel?.tableTitles[indexPath.row].type {
+            
+        case .account:
+            let sms = "sms:+1234567890&body=Hello Abc How are You I am ios developer."
+            let strURL = sms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            UIApplication.shared.open(URL(string: strURL)!, options: [:], completionHandler: nil)
+            
+        case .email:
             // Modify following variables with your text / recipient
             let recipientEmail = "test@email.com"
             let subject = "Multi client email support"
             let body = "This code supports sending email via multiple different email apps on iOS! :)"
             
-            // Show default mail composer
             if MFMailComposeViewController.canSendMail() {
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
@@ -150,29 +156,29 @@ extension SettingsController: UITableViewDelegate {
                 
                 present(mail, animated: true)
             
-            // Show third party email composer if default Mail app is not present
             } else if let emailUrl = createEmailUrl(to: recipientEmail, subject: subject, body: body) {
                 UIApplication.shared.open(emailUrl)
             }
-        }
-        else if indexPath.row == 1 {
-            guard let url = URL(string: "https://support.giphy.com/hc/en-us") else { return }
             
+        case .privacy:
+            guard let url = URL(string: "https://support.giphy.com/hc/en-us/sections/360003012792-Privacy-and-Safety") else { return }
+
             let vc = SFSafariViewController(url: url)
             present(vc, animated: true)
-        }
-        
-        else if indexPath.row == 2 {
+            
+        case .rateTheApp:
+            guard let url = URL(string: "itms-apps://itunes.apple.com/us/app/apple-store/974748812?mt=8") else { return }
+            UIApplication.shared.open(url,completionHandler: nil)
+            
+        case .acknowLedgements:
+            return
+            
+        case .support:
             // bu appdan linkle sayta getmekdir
             guard let url = URL(string: "https://support.giphy.com/hc/en-us") else { return }
-            
-            UIApplication.shared.open(url,completionHandler: nil)
-        }
-        else if indexPath.row == 4 {
-            guard let url = URL(string: "itms-apps://itunes.apple.com/us/app/apple-store/974748812?mt=8") else { return }
 
             UIApplication.shared.open(url,completionHandler: nil)
-
+        case _: break
         }
     }
 }
@@ -184,7 +190,7 @@ extension SettingsController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = table.dequeueReusableCell(withIdentifier: "\(LabelCell.self)") as! LabelCell
-        cell.viewModel = LabelCellViewModel(item: (viewModel?.tableTitles[indexPath.row])!)
+        cell.viewModel = LabelCellViewModel(item: (viewModel?.tableTitles[indexPath.row].title)!)
         return cell
     }
 }

@@ -17,7 +17,6 @@ class HomeViewModel {
             if error != nil { return }
 
             guard let items = items?.data else { return }
-            
             self.items = items
             
             self.successCallBack?()

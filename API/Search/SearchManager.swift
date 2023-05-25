@@ -29,9 +29,8 @@ class SearchManager: SearchProtocol {
         var url = ""
         
         switch type {
-        case .relativeChannels:
-            url = SearchEndPoint.relativeChannels.path() + "&q=\(query)"
-        default: break
+        case .relativeChannels: url = SearchEndPoint.relativeChannels.path() + "&q=\(query)"
+        case _                : break
         }
         
         CoreManager.request(type: RelativeChannel.self,

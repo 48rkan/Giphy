@@ -4,7 +4,7 @@
 
 import UIKit
 import SDWebImage
-
+import Photos
 class GiphyDetailController: UIViewController {
     
     //MARK: - Properties
@@ -15,7 +15,17 @@ class GiphyDetailController: UIViewController {
         }
     }
     
-    private let giphyImageView = UIImageView()
+    private lazy var giphyImageView: UIImageView =  {
+        let iv = UIImageView()
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        gesture.numberOfTouchesRequired = 1
+        gesture.allowableMovement = 10
+        gesture.minimumPressDuration = 1
+        iv.addGestureRecognizer(gesture)
+        iv.isUserInteractionEnabled = true
+        
+        return iv
+    }()
     
     private lazy var userNamePhoto: UIImageView = {
         let iv = UIImageView()
@@ -62,6 +72,9 @@ class GiphyDetailController: UIViewController {
 //        viewModel?.fetchFavouritesGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
         configFavouriteButton()
+        
+        viewModel?.controller = self
+        guard let image  = giphyImageView.image else { return }
     }
     
     //MARK: - Actions
@@ -74,9 +87,19 @@ class GiphyDetailController: UIViewController {
         })
     }
     
+    @objc fileprivate func longPressed() {
+        guard let image = giphyImageView.image else { return }
+        viewModel?.alert(title: "Save To Camera Roll", completion: { alert  in
+            UIImageWriteToSavedPhotosAlbum(image , self, #selector(self.imagee(_:didFinishSavingWithError:contextInfo:)), nil)
+            
+            present(alert, animated: true, completion: nil)
+
+        })
+    }
+    
     @objc fileprivate func tappedFavouriteButton() {
-        guard let viewModel = viewModel             else { return }
-        guard let gifURL    = viewModel.gifURL      else { return }
+        guard let viewModel = viewModel              else { return }
+        guard let gifURL    = viewModel.gifURL       else { return }
         guard let gifID     = viewModel.items.gifID_ else { return }
 
         if viewModel.isFavourite {
@@ -99,6 +122,12 @@ class GiphyDetailController: UIViewController {
     }
     
     // MARK:- Helper
+    
+    @objc func imagee(_ image: UIImage, didFinishSavingWithError error: Error?,contextInfo: UnsafeRawPointer) {
+        if  error != nil { print("\(error?.localizedDescription)")}
+
+    }
+    
     func configureUI() {
         view.addSubview(giphyImageView)
         giphyImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 4,paddingLeft: 24,paddingRight: 24)
@@ -149,6 +178,7 @@ class GiphyDetailController: UIViewController {
 
 extension GiphyDetailController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
         let controller = GiphyDetailController()
         controller.viewModel = GiphyDetailViewModel(items: (viewModel?.relatedItems[indexPath.row])!)
         navigationController?.show(controller, sender: nil)

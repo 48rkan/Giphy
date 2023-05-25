@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleIdentifier</key>
-	<string></string>
-	<key></key>
-	<string></string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Icazə verin</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -16,7 +10,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.253113966225-d9pdsiani9qnolg74u90ctl8h097mt29</string>
-				<string>LSApplicationQueriesSchemes</string>
 			</array>
 		</dict>
 	</array>
