@@ -77,25 +77,23 @@ class GiphyDetailController: UIViewController {
     
     //MARK: - Lifecycle
     
-    @objc func single() {
-        print("single")
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         
         viewModel?.fetchRelatedGifs()
-//        viewModel?.fetchFavouritesGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
         configFavouriteButton()
     }
     
     //MARK: - Actions
     
+    @objc func single() { }
+
     private func configFavouriteButton() {
         viewModel?.checkGifsIfFavourite(completion: { isFavourite in
             
-            isFavourite ? self.favouriteButton.setImage(UIImage(named: "favourite")  ,for: .normal)
+            isFavourite ? self.favouriteButton.setImage(UIImage(named:  "favourite" ),for: .normal)
                         : self.favouriteButton.setImage(UIImage(named: "unFavourite"),for: .normal)
         })
     }
@@ -191,9 +189,10 @@ class GiphyDetailController: UIViewController {
     
     func configure() {
         guard let gifURL = viewModel?.gifURL else { return }
+        print(gifURL)
         guard let userPhotoURL = viewModel?.userNamePhotoURL else { return }
         
-        giphyImageView.setGifFromURL(gifURL,levelOfIntegrity: .highestNoFrameSkipping)
+        giphyImageView.setGifFromURL(gifURL)
         userNamePhoto.sd_setImage(with: userPhotoURL)
         userNameLabel.text = viewModel?.userNameText
         displayNameLabel.text = viewModel?.displayNameText
