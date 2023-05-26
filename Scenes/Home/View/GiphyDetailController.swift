@@ -17,11 +17,23 @@ class GiphyDetailController: UIViewController {
     
     private lazy var giphyImageView: UIImageView =  {
         let iv = UIImageView()
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
-        gesture.numberOfTouchesRequired = 1
-        gesture.allowableMovement = 10
-        gesture.minimumPressDuration = 1
-        iv.addGestureRecognizer(gesture)
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        longGesture.numberOfTouchesRequired = 1
+        longGesture.allowableMovement = 10
+        longGesture.minimumPressDuration = 1
+        
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(single))
+
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedFavouriteButton))
+        doubleTapGesture.numberOfTapsRequired = 2
+    
+        singleTapGesture.require(toFail: doubleTapGesture)
+        singleTapGesture.delaysTouchesBegan = true
+        doubleTapGesture.delaysTouchesBegan = true
+        
+        iv.addGestureRecognizer(longGesture)
+        iv.addGestureRecognizer(doubleTapGesture)
+        iv.addGestureRecognizer(singleTapGesture)
         iv.isUserInteractionEnabled = true
         
         return iv
@@ -64,6 +76,10 @@ class GiphyDetailController: UIViewController {
     }()
     
     //MARK: - Lifecycle
+    
+    @objc func single() {
+        print("single")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -72,9 +88,6 @@ class GiphyDetailController: UIViewController {
 //        viewModel?.fetchFavouritesGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
         configFavouriteButton()
-        
-        viewModel?.controller = self
-        guard let image  = giphyImageView.image else { return }
     }
     
     //MARK: - Actions
@@ -89,12 +102,23 @@ class GiphyDetailController: UIViewController {
     
     @objc fileprivate func longPressed() {
         guard let image = giphyImageView.image else { return }
-        viewModel?.alert(title: "Save To Camera Roll", completion: { alert  in
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Save To Camera Roll",
+                                      style: .default,
+                                      handler: { _ in
+            self.showLoader(true)
             UIImageWriteToSavedPhotosAlbum(image , self, #selector(self.imagee(_:didFinishSavingWithError:contextInfo:)), nil)
-            
-            present(alert, animated: true, completion: nil)
+            self.showLoader(false)
 
-        })
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel",
+                                      style: .default,
+                                      handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+
     }
     
     @objc fileprivate func tappedFavouriteButton() {

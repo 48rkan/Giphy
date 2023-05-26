@@ -80,8 +80,17 @@ class AccountController: UIViewController {
         navigationController?.show(controller, sender: nil)
     }
     
+    @objc fileprivate func refreshing() {
+        viewModel?.fetchFavouritedGifs()
+        self.collection.refreshControl?.endRefreshing()
+    }
+    
     //MARK: - Helper
     private func configureUI() {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(refreshing), for: .valueChanged)
+        self.collection.refreshControl = refresh
+        self.collection.refreshControl?.tintColor = .white
         view.addSubview(bannerImageView)
         bannerImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingRight: 0)
         bannerImageView.setHeight(100)
