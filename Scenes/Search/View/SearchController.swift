@@ -8,6 +8,8 @@ import SwiftyGif
 class SearchController: UIViewController {
     
     //MARK: - Properties
+    var coordinator: AppCoordinator?
+    
     var viewModel = SearchViewModel()
     
     private lazy var searchView: CustomSearchView = {
@@ -33,6 +35,9 @@ class SearchController: UIViewController {
         configureUI()
         configureNavigationBar()
         viewModel.successCallBack = { self.table.reloadData() }
+        
+        guard let nav = navigationController else { return }
+        coordinator = AppCoordinator(navigationController: nav)
     }
     
     //MARK: - Helpers
@@ -57,9 +62,8 @@ class SearchController: UIViewController {
 //MARK: - UITableViewDelegate
 extension SearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = AccountController()
-        controller.viewModel = AccountViewModel(items: viewModel.items[indexPath.row], type: .other)
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showAccount(items: viewModel.items[indexPath.row],
+                                 type: .other)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { 50 }
@@ -108,9 +112,8 @@ extension SearchController: CustomSearchViewDelegate {
     }
     
     func searchIconClicked(_ view: CustomSearchView) {
-        let controller = SearchDetailController()
-        controller.viewModel = SearchDetailViewModel(items: viewModel.items)
-        controller.viewModel?.text = viewModel.currentText
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showSearchDetail(items: viewModel.items,
+                                      text: viewModel.currentText)
+        
     }
 }

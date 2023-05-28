@@ -10,6 +10,8 @@ class HomeController: UIViewController {
     //MARK: - Properties
     var viewModel = HomeViewModel()
     
+    var coordinator: AppCoordinator?
+    
     private lazy var customView: CollectionInUIView = {
         let cv = CollectionInUIView()
         cv.delegate = self
@@ -35,24 +37,22 @@ class HomeController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configureNavigationBar()
+        addNavToCoordinator()
         
         viewModel.getGifs(type: .trending)
         viewModel.successCallBack = {
             self.showLoader(false)
             self.collection.reloadData()
         }
+        
     }
     
     //MARK: - Actions
     
     @objc private func tappedLogOutButton() {
         do {
-            let controller = LoginController()
-            controller.delegate = tabBarController as? MainTabBarController
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .fullScreen
-            self.present(nav , animated: false)
-            
+            coordinator?.showLogOut(tabBar: (tabBarController as? MainTabBarController)!)
+        
             try Auth.auth().signOut()
             
         } catch { print("DEBUG: Error") }
@@ -95,15 +95,17 @@ class HomeController: UIViewController {
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: buttonTwo),logOutButton]
         buttonTwo.setDimensions(height: 36, width: 36)
     }
+    
+    func addNavToCoordinator() {
+        guard let nav = navigationController else { return }
+        coordinator = AppCoordinator(navigationController: nav)
+    }
 }
 
 //MARK: - UICollectionViewDelegate
 extension HomeController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            
-        let controller = GiphyDetailController()
-        controller.viewModel = GiphyDetailViewModel(items: viewModel.items[indexPath.row])
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showGiphyDetail(items: viewModel.items[indexPath.row])
     }
 }
 

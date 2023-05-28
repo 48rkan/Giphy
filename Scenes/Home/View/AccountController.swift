@@ -8,6 +8,8 @@ import SDWebImage
 class AccountController: UIViewController {
     
     //MARK: - Properties
+    var coordinator: AppCoordinator?
+    
     var viewModel: AccountViewModel? {
         didSet {
             configure()
@@ -57,12 +59,12 @@ class AccountController: UIViewController {
     //MARK: - Lifecylce
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        configCoordinator()
         
         viewModel?.fetchOwnerGifs()
         viewModel?.fetchFavouritedGifs()
         viewModel?.successCallBack = { self.collection.reloadData() }
-        
-        configureUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,13 +73,11 @@ class AccountController: UIViewController {
         viewModel?.fetchFavouritedGifs()
     }
     
+    
     //MARK: - Actions
     @objc fileprivate func tappedSettings() {
         guard let viewModel = viewModel  else { return }
-        
-        let controller = SettingsController()
-        controller.viewModel = SettingsViewModel(items: viewModel.items)
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showSettings(items: viewModel.items)
     }
     
     @objc fileprivate func refreshing() {
@@ -134,6 +134,12 @@ class AccountController: UIViewController {
         userNameLabel.text    = viewModel?.userName
         displayNameLabel.text = viewModel?.displaName
     }
+    
+    func configCoordinator() {
+        guard let nav = navigationController else { return }
+        coordinator = AppCoordinator(navigationController: nav)
+    }
+
 }
 
 //MARK: - PinterestLayoutDelegate

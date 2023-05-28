@@ -10,6 +10,8 @@ import SafariServices
 class SettingsController: UIViewController {
     
     //MARK: - Properties
+    var coordinator: AppCoordinator?
+    
     var viewModel: SettingsViewModel? {
         didSet {
             configure()
@@ -65,24 +67,20 @@ class SettingsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+        guard let nav = navigationController else { return }
+        coordinator = AppCoordinator(navigationController: nav)
     }
     
     //MARK: - Actions
     @objc fileprivate func showEditScene() {
         guard let viewModel = viewModel else { return }
-        let controller = EditChannelController()
-        controller.viewModel = EditsChannelViewModel(items: viewModel.items)
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showEditScene(items: viewModel.items)
     }
     
     @objc fileprivate func tappedLogOut() {
         do {
-            let controller = LoginController()
-            controller.delegate = tabBarController as? MainTabBarController
-
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .fullScreen
-            self.present(nav , animated: false)
+            coordinator?.showLogOut(tabBar: (tabBarController as? MainTabBarController)!)
             
             try Auth.auth().signOut()
             
@@ -93,13 +91,13 @@ class SettingsController: UIViewController {
         guard let gifURL = viewModel?.gifURL else { return }
         
         if gifURL.pathComponents.contains("media") {
-            imageView.setGifFromURL(gifURL,levelOfIntegrity: .highestNoFrameSkipping)
+            imageView.setGifFromURL(gifURL)
         } else {
             imageView.sd_setImage(with: gifURL)
-
         }
 
-        titleLabel.text = viewModel?.userName  }
+        titleLabel.text = viewModel?.userName
+    }
     
     //MARK: - Helpers
     func configureUI() {

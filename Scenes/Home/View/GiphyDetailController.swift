@@ -9,6 +9,8 @@ import Photos
 class GiphyDetailController: UIViewController {
     
     //MARK: - Properties
+    var coordinator: AppCoordinator? 
+    
     var viewModel: GiphyDetailViewModel? {
         didSet {
             configure()
@@ -41,14 +43,17 @@ class GiphyDetailController: UIViewController {
     }()
     
     //MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        
+        configureNavigationController()
+
         viewModel?.fetchRelatedGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
-    }
         
+    }
+
     // MARK:- Helper
     func configureUI() {
         configureGiphyImageView()
@@ -57,6 +62,13 @@ class GiphyDetailController: UIViewController {
         configureButtons()
         configureCollection()
     }
+    
+    func configureNavigationController() {
+        
+//        guard let nav = tabBarController?.viewControllers![0] as? UINavigationController else { return }
+        guard let nav = navigationController else { return }
+        coordinator = AppCoordinator(navigationController: nav)
+        }
     
     private func configureGiphyView() {
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
@@ -186,9 +198,7 @@ class GiphyDetailController: UIViewController {
     @objc fileprivate func showAccount() {
         guard let viewModel = viewModel else { return }
         
-        let controller = AccountController()
-        controller.viewModel = AccountViewModel(items: viewModel.items,type: .other)
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showAccount(items: viewModel.items, type: .other)
     }
     
     @objc func imagee(_ image: UIImage, didFinishSavingWithError error: Error?,contextInfo: UnsafeRawPointer) {
@@ -199,9 +209,9 @@ class GiphyDetailController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension GiphyDetailController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let controller = GiphyDetailController()
-        controller.viewModel = GiphyDetailViewModel(items: (viewModel?.relatedItems[indexPath.row])!)
-        navigationController?.show(controller, sender: nil)
+        guard let relatedItems = viewModel?.relatedItems else { return }
+        
+        coordinator?.showGiphyDetail(items: relatedItems[indexPath.row])
     }
 }
 

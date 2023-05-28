@@ -7,6 +7,8 @@ import UIKit
 class SearchDetailController: UIViewController {
    
     //MARK: - Properties
+    var coordinator: AppCoordinator?
+    
     var viewModel: SearchDetailViewModel? {
         didSet {
             collection.reloadData()
@@ -44,6 +46,9 @@ class SearchDetailController: UIViewController {
             self.collection.reloadData()
             self.showLoader(false)
         }
+        
+        guard let nav = navigationController else { return }
+        coordinator = AppCoordinator(navigationController: nav)
     }
         
     //MARK: - Helper
@@ -65,10 +70,7 @@ class SearchDetailController: UIViewController {
 extension SearchDetailController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
-        let controller = GiphyDetailController()
-        controller.viewModel = GiphyDetailViewModel(items: viewModel.items[indexPath.row])
-        
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showGiphyDetail(items: viewModel.items[indexPath.row])
     }
 }
 
@@ -111,17 +113,11 @@ extension SearchDetailController: UICollectionViewDelegateFlowLayout {
 //MARK: - SearchHeaderDelegate
 extension SearchDetailController: SearchHeaderDelegate {
     func header(_ header: SearchHeader, wantsToShowDetail data: CommonData) {
-        let controller = GiphyDetailController()
-        controller.viewModel =  GiphyDetailViewModel(items: data)
-        
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showGiphyDetail(items: data)
     }
     
     func header(_ header: SearchHeader, wantsToShowAccount data: Datums) {
-        let controller = AccountController()
-        controller.viewModel = AccountViewModel(items: data,type: .other)
-        
-        navigationController?.show(controller, sender: nil)
+        coordinator?.showAccount(items: data, type: .other)
     }
 }
 
