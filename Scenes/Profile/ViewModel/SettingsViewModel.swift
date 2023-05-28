@@ -6,6 +6,8 @@ import Foundation
 
 class SettingsViewModel {
     
+    var items: CommonData
+    
     var tableTitles: [Settings] =  [
         .init(title: "Account Settings", type: .account),
         .init(title: "Send Email" , type: .email),
@@ -15,18 +17,11 @@ class SettingsViewModel {
         .init(title: "Acknowledgements", type: .acknowLedgements)
     ]
     
-//    var tableTitles = [
-//        "Account Settings", "Set Up Keyboard",
-//        "Support" , "Privacy & Safety",
-//        "Rate the App" , "Acknowledgements"
-//    ]
-    
-    var items: CommonData
-    
     init(items: CommonData) {
         self.items = items
     }
     
     var gifURL  : URL?   { URL(string: items.gifURL_ ?? "") }
     var userName: String { items.userName ?? "" }
+    
 }

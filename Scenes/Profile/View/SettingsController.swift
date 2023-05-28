@@ -24,7 +24,8 @@ class SettingsController: UIViewController {
         return iv
     }()
     
-    private let titleLabel =  CustomLabel(text: "",hexCode: "#F0EAD6",size: 16,
+    private let titleLabel =  CustomLabel(text: "",
+                                          hexCode: "#F0EAD6",size: 16,
                                           font: "Poppins-SemiBold")
     
     private let editButton: UIButton = {
@@ -132,8 +133,8 @@ class SettingsController: UIViewController {
 
 extension SettingsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         switch viewModel?.tableTitles[indexPath.row].type {
-            
         case .account:
             let sms = "sms:+1234567890&body=Hello Abc How are You I am ios developer."
             let strURL = sms.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!

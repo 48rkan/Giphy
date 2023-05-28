@@ -12,7 +12,7 @@ class LabelCell: UITableViewCell {
         }
     }
     
-    private lazy var label = CustomLabel(text: "AA",
+    private lazy var label = CustomLabel(text: "",
                                          textColor: .white,
                                          size: 16, font: "Poppins-Bold")
     
