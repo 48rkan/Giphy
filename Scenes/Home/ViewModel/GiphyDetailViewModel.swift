@@ -8,10 +8,9 @@ class GiphyDetailViewModel {
 
     let items: CommonData
     var relatedItems = [CommonData]()
-    var succesCallBack: (()->())?
     var isFavourite = false
-    
-    var controller: UIViewController?
+    var succesCallBack: (()->())?
+
     init(items: CommonData) {
         self.items = items
     }
@@ -29,7 +28,6 @@ class GiphyDetailViewModel {
             self.relatedItems = items
             
             self.succesCallBack?()
-            
         }
     }
 
@@ -40,19 +38,4 @@ class GiphyDetailViewModel {
         }
     }
     
-//    func alert(title: String,completion: (UIAlertController)->()) {
-//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        
-//        alert.addAction(UIAlertAction(title: title,
-//                                      style: .default,
-//                                      handler: { _ in
-//            
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Cancel",
-//                                      style: .default,
-//                                      handler: nil))
-//
-//        completion(alert)
-//    }
 }

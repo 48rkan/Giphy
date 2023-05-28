@@ -1,6 +1,6 @@
 //
-//  AppDelegate.swift
-//  Giphy
+//  GiphyApp.swift
+//  GiphyApp
 //  Created by Erkan Emir on 13.05.23.
 
 import UIKit
@@ -8,8 +8,7 @@ import FirebaseCore
 import GoogleSignIn
 //import GiphyUISDK
 
-@main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+@main class GiphyApp: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

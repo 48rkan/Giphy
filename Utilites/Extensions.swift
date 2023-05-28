@@ -15,7 +15,6 @@ extension UIViewController {
     
     func showLoader(_ show: Bool) {
         view.endEditing(true)
-        
         if show {
             UIViewController.hud.show(in: view)
         } else {
@@ -28,6 +27,25 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
+    func showMessageActionSheet(title: String,completion: @escaping ()->()) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: title,
+                                      style: .default,
+                                      handler: { _ in
+            completion()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel",
+                                      style: .default,
+                                      handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+
+    }
+    
+
 }
 
 extension UIButton {

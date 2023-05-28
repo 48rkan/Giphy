@@ -16,7 +16,7 @@ class HomeController: UIViewController {
         return cv
     }()
     
-    private lazy var collection: UICollectionView = {
+    private lazy var collection: UICollectionView   = {
         let l = PinterestLayout()
         l.numberOfColumns = 2
         l.delegate = self
@@ -41,8 +41,6 @@ class HomeController: UIViewController {
             self.showLoader(false)
             self.collection.reloadData()
         }
-        
-
     }
     
     //MARK: - Actions
@@ -61,7 +59,7 @@ class HomeController: UIViewController {
     }
     
     //MARK: - Helper
-    func configureUI() {
+    func configureUI () {
         view.addSubview(customView)
         customView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           left: view.leftAnchor, right: view.rightAnchor,
@@ -100,7 +98,6 @@ class HomeController: UIViewController {
 }
 
 //MARK: - UICollectionViewDelegate
-
 extension HomeController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             
@@ -111,7 +108,6 @@ extension HomeController: UICollectionViewDelegate {
 }
 
 //MARK: - UICollectionViewDataSource
-
 extension HomeController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.items.count
@@ -126,7 +122,6 @@ extension HomeController: UICollectionViewDataSource {
 }
 
 //MARK: - CustomViewDelegate
-
 extension HomeController: CustomViewDelegate {
     func category(_ name: String) {
         showLoader(true)
@@ -141,7 +136,6 @@ extension HomeController: CustomViewDelegate {
 }
 
 //MARK: - PinterestLayoutDelegate
-
 extension HomeController: PinterestLayoutDelegate {
     func collectionView(collectionView: UICollectionView, heightForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let random = arc4random_uniform(3) + 1

@@ -7,7 +7,6 @@ import UIKit
 class HomeViewModel {
     
     public var items = [Datum]()
-    
     public var successCallBack: (()->())?
      
     public func getGifs(type: GifsType, query: String = "") {
@@ -23,7 +22,4 @@ class HomeViewModel {
         }
     }
         
-    func resetData() {
-        items.removeAll()
-    }
 }

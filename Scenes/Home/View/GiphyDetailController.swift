@@ -5,6 +5,7 @@
 import UIKit
 import SDWebImage
 import Photos
+
 class GiphyDetailController: UIViewController {
     
     //MARK: - Properties
@@ -15,50 +16,15 @@ class GiphyDetailController: UIViewController {
         }
     }
     
-    private lazy var giphyImageView: UIImageView =  {
-        let iv = UIImageView()
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
-        longGesture.numberOfTouchesRequired = 1
-        longGesture.allowableMovement = 10
-        longGesture.minimumPressDuration = 1
-        
-        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(single))
+    private let gifImageView    = UIImageView()
+    private let userImageView   = UIImageView()
+    private let favouriteButton = UIButton()
 
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedFavouriteButton))
-        doubleTapGesture.numberOfTapsRequired = 2
-    
-        singleTapGesture.require(toFail: doubleTapGesture)
-        singleTapGesture.delaysTouchesBegan = true
-        doubleTapGesture.delaysTouchesBegan = true
-        
-        iv.addGestureRecognizer(longGesture)
-        iv.addGestureRecognizer(doubleTapGesture)
-        iv.addGestureRecognizer(singleTapGesture)
-        iv.isUserInteractionEnabled = true
-        
-        return iv
-    }()
-    
-    private lazy var userNamePhoto: UIImageView = {
-        let iv = UIImageView()
-        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAccount)))
-        iv.isUserInteractionEnabled = true
-        return iv
-    }()
-    
-    private let userNameLabel = CustomLabel(text: "MotoGP",
+    private let userNameLabel    = CustomLabel(text: "",
                                             size: 14)
-    
-    private let displayNameLabel = CustomLabel(text: "@motoGP",
+    private let displayNameLabel = CustomLabel(text: "",
                                                size: 14)
-    
-    private lazy var favouriteButton: UIButton = {
-        let iv = UIButton()
-        iv.addTarget(self, action: #selector(tappedFavouriteButton), for: .touchUpInside)
-        return iv
-    }()
-    
-    private let titleLabel = CustomLabel(text: "Related GIFs",
+    private let collectionLabel  = CustomLabel(text: "Related GIFs",
                                          size: 16)
     
     private lazy var collection: UICollectionView = {
@@ -71,25 +37,117 @@ class GiphyDetailController: UIViewController {
                    forCellWithReuseIdentifier: "\(GiphyCell.self)")
         c.delegate   = self
         c.dataSource = self
-        c.backgroundColor = .black
         return c
     }()
     
     //MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         
         viewModel?.fetchRelatedGifs()
         viewModel?.succesCallBack = { self.collection.reloadData() }
+    }
+        
+    // MARK:- Helper
+    func configureUI() {
+        configureGiphyImageView()
+        configureUserNameImageView()
+        configureUserDetail()
+        configureButtons()
+        configureCollection()
+    }
+    
+    private func configureGiphyView() {
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        longGesture.numberOfTouchesRequired = 1
+        longGesture.allowableMovement = 10
+        longGesture.minimumPressDuration = 1
+        
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: nil)
+
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedFavouriteButton))
+        doubleTapGesture.numberOfTapsRequired = 2
+    
+        singleTapGesture.require(toFail: doubleTapGesture)
+        singleTapGesture.delaysTouchesBegan = true
+        doubleTapGesture.delaysTouchesBegan = true
+        
+        gifImageView.addGestureRecognizer(longGesture)
+        gifImageView.addGestureRecognizer(doubleTapGesture)
+        gifImageView.addGestureRecognizer(singleTapGesture)
+        gifImageView.isUserInteractionEnabled = true
+    }
+    
+    private func configureGiphyImageView() {
+        view.addSubview(gifImageView)
+        gifImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,
+                              right: view.rightAnchor,
+                              paddingTop: 4,paddingLeft: 24,paddingRight: 24)
+        gifImageView.setHeight(180)
+        
+        configureGiphyView()
+    }
+    
+    private func configureUserNameImageView() {
+        view.addSubview(userImageView)
+        userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAccount)))
+        userImageView.isUserInteractionEnabled = true
+        userImageView.anchor(top: gifImageView.bottomAnchor,left: view.leftAnchor,paddingTop: 8,paddingLeft: 24)
+        userImageView.setDimensions(height: 48, width: 48)
+        
+    }
+    
+    private func configureUserDetail() {
+        let stack = UIStackView(arrangedSubviews: [userNameLabel,
+                                                   displayNameLabel])
+        
+        userNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAccount)))
+        userNameLabel.isUserInteractionEnabled = true
+        
+        displayNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAccount)))
+        displayNameLabel.isUserInteractionEnabled = true
+        
+        view.addSubview(stack)
+        stack.axis = .vertical
+        userNameLabel.textAlignment = .left
+        displayNameLabel.textAlignment = .left
+        
+        stack.anchor(top: gifImageView.bottomAnchor,left: userImageView.rightAnchor,paddingTop: 8,paddingLeft: 4)
+        stack.setDimensions(height: 48, width: view.frame.width)
+        
+        view.addSubview(collectionLabel)
+        collectionLabel.anchor(top: stack.bottomAnchor,left: view.leftAnchor,paddingTop: 20,paddingLeft: 4)
+    }
+    
+    private func configureCollection() {
+        view.addSubview(collection)
+        collection.backgroundColor = .black
+        collection.anchor(top: collectionLabel.bottomAnchor,left: view.leftAnchor,bottom: view.safeAreaLayoutGuide.bottomAnchor,right: view.rightAnchor,paddingTop: 4,paddingLeft: 2,paddingBottom: 0,paddingRight: 2)
+    }
+    
+    private func configureButtons() {
+        view.addSubview(favouriteButton)
+        favouriteButton.addTarget(self, action: #selector(tappedFavouriteButton), for: .touchUpInside)
+
+        favouriteButton.anchor(top: gifImageView.bottomAnchor,right: view.rightAnchor,paddingTop: 8,paddingRight: 28)
+        favouriteButton.setDimensions(height: 36, width: 36)
+        
         configFavouriteButton()
+    }
+
+    private func configure() {
+        guard let gifURL = viewModel?.gifURL else { return }
+        guard let userPhotoURL = viewModel?.userNamePhotoURL else { return }
+        
+        gifImageView.setGifFromURL(gifURL)
+        userImageView.sd_setImage(with: userPhotoURL)
+        userNameLabel.text = viewModel?.userNameText
+        displayNameLabel.text = viewModel?.displayNameText
     }
     
     //MARK: - Actions
     
-    @objc func single() { }
-
     private func configFavouriteButton() {
         viewModel?.checkGifsIfFavourite(completion: { isFavourite in
             
@@ -98,26 +156,16 @@ class GiphyDetailController: UIViewController {
         })
     }
     
-    @objc fileprivate func longPressed() {
-        guard let image = giphyImageView.image else { return }
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Save To Camera Roll",
-                                      style: .default,
-                                      handler: { _ in
+    @objc private func longPressed() {
+        guard let image = gifImageView.image else { return }
+
+        showMessageActionSheet(title: "Save To Camera Roll") {
             self.showLoader(true)
             UIImageWriteToSavedPhotosAlbum(image , self, #selector(self.imagee(_:didFinishSavingWithError:contextInfo:)), nil)
             self.showLoader(false)
-
-        }))
-
-        alert.addAction(UIAlertAction(title: "Cancel",
-                                      style: .default,
-                                      handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-
+        }
     }
+    
     
     @objc fileprivate func tappedFavouriteButton() {
         guard let viewModel = viewModel              else { return }
@@ -143,71 +191,21 @@ class GiphyDetailController: UIViewController {
         navigationController?.show(controller, sender: nil)
     }
     
-    // MARK:- Helper
-    
     @objc func imagee(_ image: UIImage, didFinishSavingWithError error: Error?,contextInfo: UnsafeRawPointer) {
-        if  error != nil { print("\(error?.localizedDescription)")}
-
-    }
-    
-    func configureUI() {
-        view.addSubview(giphyImageView)
-        giphyImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor,paddingTop: 4,paddingLeft: 24,paddingRight: 24)
-        giphyImageView.setHeight(180)
-        
-        view.addSubview(userNamePhoto)
-        userNamePhoto.anchor(top: giphyImageView.bottomAnchor,left: view.leftAnchor,paddingTop: 8,paddingLeft: 24)
-        userNamePhoto.setDimensions(height: 48, width: 48)
-        
-        let stack = UIStackView(arrangedSubviews: [userNameLabel,
-                                                   displayNameLabel])
-        
-        userNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAccount)))
-        userNameLabel.isUserInteractionEnabled = true
-        
-        displayNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAccount)))
-        displayNameLabel.isUserInteractionEnabled = true
-        
-        view.addSubview(stack)
-        stack.axis = .vertical
-        userNameLabel.textAlignment = .left
-        displayNameLabel.textAlignment = .left
-        
-        stack.anchor(top: giphyImageView.bottomAnchor,left: userNamePhoto.rightAnchor,paddingTop: 8,paddingLeft: 4)
-        stack.setDimensions(height: 48, width: view.frame.width)
-        
-        view.addSubview(favouriteButton)
-        favouriteButton.anchor(top: giphyImageView.bottomAnchor,right: view.rightAnchor,paddingTop: 8,paddingRight: 28)
-        favouriteButton.setDimensions(height: 36, width: 36)
-        
-        view.addSubview(titleLabel)
-        titleLabel.anchor(top: stack.bottomAnchor,left: view.leftAnchor,paddingTop: 20,paddingLeft: 4)
-        
-        view.addSubview(collection)
-        collection.anchor(top: titleLabel.bottomAnchor,left: view.leftAnchor,bottom: view.safeAreaLayoutGuide.bottomAnchor,right: view.rightAnchor,paddingTop: 4,paddingLeft: 2,paddingBottom: 0,paddingRight: 2)
-    }
-    
-    func configure() {
-        guard let gifURL = viewModel?.gifURL else { return }
-        print(gifURL)
-        guard let userPhotoURL = viewModel?.userNamePhotoURL else { return }
-        
-        giphyImageView.setGifFromURL(gifURL)
-        userNamePhoto.sd_setImage(with: userPhotoURL)
-        userNameLabel.text = viewModel?.userNameText
-        displayNameLabel.text = viewModel?.displayNameText
+        if error != nil { return }
     }
 }
 
+//MARK: - UICollectionViewDelegate
 extension GiphyDetailController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         let controller = GiphyDetailController()
         controller.viewModel = GiphyDetailViewModel(items: (viewModel?.relatedItems[indexPath.row])!)
         navigationController?.show(controller, sender: nil)
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension GiphyDetailController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel?.relatedItems.count ?? 0
