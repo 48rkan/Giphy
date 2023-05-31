@@ -3,6 +3,7 @@
 //  Created by Erkan Emir on 16.05.23.
 
 import UIKit
+import SwiftyGif
 
 class GiphyCell: UICollectionViewCell {
     
@@ -23,10 +24,6 @@ class GiphyCell: UICollectionViewCell {
         super.init(frame: frame)
         configureUI()
     }
-    
-//    override func prepareForReuse() {
-//        gifView.backgroundColor = UIColor(hexString: "#6a18ff")
-//    }
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been") }
     
