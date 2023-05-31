@@ -91,7 +91,6 @@ class HomeController: UIViewController {
         
         let logOutButton = UIBarButtonItem(title: "Log out", style: .done, target: self, action: #selector(tappedLogOutButton))
 
-        
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: buttonTwo),logOutButton]
         buttonTwo.setDimensions(height: 36, width: 36)
     }

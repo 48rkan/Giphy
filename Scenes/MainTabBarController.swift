@@ -39,23 +39,23 @@ class MainTabBarController: UITabBarController {
     }
     
     func configureViewControllers() {
-        tabBar.backgroundColor = .white
-        
+        self.setTabBarAppearance()
+
         let feed = templateNavigationController(viewController: HomeController(),
                                                 selectedImage: UIImage(named: "home_selected")!,
-                                                unselectedImage: UIImage(named: "home_selected")!)
+                                                unselectedImage: UIImage(named: "home_unselected")!)
         
         let search = templateNavigationController(viewController: SearchController(),
-                                                  selectedImage: UIImage(named: "home_selected")!,
-                                                  unselectedImage: UIImage(named: "home_selected")!)
+                                                  selectedImage: UIImage(named: "search_selected")!,
+                                                  unselectedImage: UIImage(named: "search_unselected")!)
         
         guard let ownAccount = ownAccount else { return }
         let account = AccountController()
         account.viewModel = AccountViewModel(items: ownAccount, type: .own)
         
         let profile = templateNavigationController(viewController: account,
-                                                   selectedImage: UIImage(named: "home_selected")!,
-                                                   unselectedImage: UIImage(named: "home_selected")!)
+                                                   selectedImage: UIImage(named: "profile_selected")!,
+                                                   unselectedImage: UIImage(named: "profile_unselected")!)
         
         viewControllers = [ feed , search, profile ]
     }
@@ -66,6 +66,35 @@ class MainTabBarController: UITabBarController {
         nav.tabBarItem.image = unselectedImage
         
         return nav
+    }
+    
+    func setTabBarAppearance() {
+        let positionOnX: CGFloat = 30
+        let positionOnY: CGFloat = 0
+        
+        let width  = tabBar.bounds.width  - positionOnX * 2
+        let height = tabBar.bounds.height + positionOnY * 2
+        
+        let roundLayer = CAShapeLayer()
+        
+        let bezierPath = UIBezierPath(
+            roundedRect: CGRect(x: positionOnX,
+                                y: tabBar.bounds.minY - positionOnY - 20 ,
+                                width: width,
+                                height: height - 12),
+            cornerRadius: height / 20)
+        
+        roundLayer.path = bezierPath.cgPath
+        
+        tabBar.layer.insertSublayer(roundLayer, at: 0)
+        
+        tabBar.itemWidth = width / 5
+        
+        tabBar.itemPositioning = .centered
+        
+        roundLayer.fillColor = UIColor.black.cgColor
+        tabBar.tintColor = UIColor.white
+        tabBar.unselectedItemTintColor = UIColor.white
     }
 }
 
