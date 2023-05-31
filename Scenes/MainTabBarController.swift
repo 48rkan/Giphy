@@ -81,7 +81,7 @@ class MainTabBarController: UITabBarController {
             roundedRect: CGRect(x: positionOnX,
                                 y: tabBar.bounds.minY - positionOnY - 20 ,
                                 width: width,
-                                height: height - 12),
+                                height: height),
             cornerRadius: height / 20)
         
         roundLayer.path = bezierPath.cgPath
