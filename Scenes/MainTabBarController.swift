@@ -17,8 +17,10 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         configureUI()
         configureViewControllers()
+//        self.setTabBarAppearance()
         fetchOwnAccount()
     }
+    
     
     func configureUI() {
         DispatchQueue.main.async {
@@ -38,7 +40,7 @@ class MainTabBarController: UITabBarController {
         }
     }
     
-    func configureViewControllers() {
+    private func configureViewControllers() {
         self.setTabBarAppearance()
 
         let feed = templateNavigationController(viewController: HomeController(),
@@ -60,7 +62,9 @@ class MainTabBarController: UITabBarController {
         viewControllers = [ feed , search, profile ]
     }
     
-    func templateNavigationController(viewController:UIViewController,selectedImage: UIImage ,unselectedImage: UIImage) -> UINavigationController {
+    private func templateNavigationController(viewController:UIViewController,
+                                              selectedImage: UIImage ,
+                                              unselectedImage: UIImage) -> UINavigationController {
         let nav = UINavigationController(rootViewController: viewController)
         nav.tabBarItem.selectedImage = selectedImage
         nav.tabBarItem.image = unselectedImage
@@ -68,7 +72,7 @@ class MainTabBarController: UITabBarController {
         return nav
     }
     
-    func setTabBarAppearance() {
+    private func setTabBarAppearance() {
         let positionOnX: CGFloat = 30
         let positionOnY: CGFloat = 0
         
@@ -82,7 +86,7 @@ class MainTabBarController: UITabBarController {
                                 y: tabBar.bounds.minY - positionOnY - 20 ,
                                 width: width,
                                 height: height),
-            cornerRadius: height / 20)
+            cornerRadius: height / 10 )
         
         roundLayer.path = bezierPath.cgPath
         
@@ -93,7 +97,7 @@ class MainTabBarController: UITabBarController {
         tabBar.itemPositioning = .centered
         
         roundLayer.fillColor = UIColor.black.cgColor
-        tabBar.tintColor = UIColor.white
+        tabBar.tintColor     = UIColor.white
         tabBar.unselectedItemTintColor = UIColor.white
     }
 }
