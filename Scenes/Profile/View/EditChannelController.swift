@@ -73,7 +73,7 @@ class EditChannelController: UIViewController {
         UserService.updateUserName(newUsername: userNameText)
         
         let tabBar = tabBarController as? MainTabBarController
-        tabBar?.fetchOwnAccount()
+//        tabBar?.fetchOwnAccount()
         navigationController?.popToRootViewController(animated: true)
     }
     

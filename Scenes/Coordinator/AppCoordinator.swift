@@ -30,14 +30,14 @@ class AppCoordinator: Coordinator {
     }
     
     func showAccount(items: CommonData,type: AccountType) {
-        let controller = AccountController()
-        controller.viewModel = AccountViewModel(items: items,type: type)
+        let controller = AccountController(viewModel: .init(items: items, type: type))
+//        controller.viewModel = AccountViewModel(items: items,type: type)
         navigationController.show(controller, sender: nil)
     }
     
     func showLogOut(tabBar: MainTabBarController) {
         let controller = LoginController()
-        controller.delegate = tabBar
+//        controller.delegate = tabBar
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         

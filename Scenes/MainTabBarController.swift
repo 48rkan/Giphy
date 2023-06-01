@@ -6,19 +6,19 @@ import UIKit
 import FirebaseAuth
 
 class MainTabBarController: UITabBarController {
-    
-    var ownAccount: CommonData? {
-        didSet {
-            configureViewControllers()
-        }
-    }
+        
+//    var ownAccount: CommonData? {
+//        didSet {
+////            configureViewControllers()
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureViewControllers()
-//        self.setTabBarAppearance()
-        fetchOwnAccount()
+        setTabBarAppearance()
+//        fetchOwnAccount()
     }
     
     
@@ -26,7 +26,7 @@ class MainTabBarController: UITabBarController {
         DispatchQueue.main.async {
             if Auth.auth().currentUser == nil {
                 let controller = LoginController()
-                controller.delegate = self
+//                controller.delegate = self
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: false)
@@ -34,15 +34,13 @@ class MainTabBarController: UITabBarController {
         }
     }
     
-    func fetchOwnAccount() {
-        UserService.fetchUser { account in
-            self.ownAccount = account
-        }
-    }
+//    func fetchOwnAccount() {
+//        UserService.fetchUser { account in
+//            self.ownAccount = account
+//        }
+//    }
     
     private func configureViewControllers() {
-        self.setTabBarAppearance()
-
         let feed = templateNavigationController(viewController: HomeController(),
                                                 selectedImage: UIImage(named: "home_selected")!,
                                                 unselectedImage: UIImage(named: "home_unselected")!)
@@ -51,9 +49,10 @@ class MainTabBarController: UITabBarController {
                                                   selectedImage: UIImage(named: "search_selected")!,
                                                   unselectedImage: UIImage(named: "search_unselected")!)
         
-        guard let ownAccount = ownAccount else { return }
-        let account = AccountController()
-        account.viewModel = AccountViewModel(items: ownAccount, type: .own)
+//        guard let ownAccount = ownAccount else { return }
+        let account = AccountController(viewModel: .init(items: nil, type: .own))
+
+//        let account = AccountController(viewModel: AccountViewModel(items: nil, type: .own))
         
         let profile = templateNavigationController(viewController: account,
                                                    selectedImage: UIImage(named: "profile_selected")!,
@@ -77,7 +76,7 @@ class MainTabBarController: UITabBarController {
         let positionOnY: CGFloat = 0
         
         let width  = tabBar.bounds.width  - positionOnX * 2
-        let height = tabBar.bounds.height + positionOnY * 2
+        let height = CGFloat(88)// + positionOnY * 2
         
         let roundLayer = CAShapeLayer()
         
@@ -97,13 +96,13 @@ class MainTabBarController: UITabBarController {
         tabBar.itemPositioning = .centered
         
         roundLayer.fillColor = UIColor.black.cgColor
-        tabBar.tintColor     = UIColor.white
+        tabBar.tintColor     = UIColor(hexString: "#6a18ff")
         tabBar.unselectedItemTintColor = UIColor.white
     }
 }
 
-extension MainTabBarController: LoginControllerDelegate {
-    func authenticationDidComplete() {
-        fetchOwnAccount()
-    }
-}
+//extension MainTabBarController: LoginControllerDelegate {
+//    func authenticationDidComplete() {
+//        fetchOwnAccount()
+//    }
+//}

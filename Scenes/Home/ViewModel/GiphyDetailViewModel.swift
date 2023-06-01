@@ -17,7 +17,9 @@ class GiphyDetailViewModel {
     
     var userNameText: String    { items.userName ?? ""}
     var displayNameText: String { items.displayName_ ?? ""}
-    var userNamePhotoURL: URL?  { URL(string: items.imageURL ?? "")}
+    var userNamePhotoURL: URL?  {
+        URL(string: items.imageURL ?? "")        
+    }
     var gifURL: URL?            { URL(string: items.gifURL_ ?? "" )}
     
     func fetchRelatedGifs() {

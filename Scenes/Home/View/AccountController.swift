@@ -10,12 +10,14 @@ class AccountController: UIViewController {
     //MARK: - Properties
     var coordinator: AppCoordinator?
     
-    var viewModel: AccountViewModel? {
-        didSet {
-            configure()
-            collection.reloadData()
-        }
-    }
+//    var viewModel: AccountViewModel? {
+//        didSet {
+//            configure()
+//            collection.reloadData()
+//        }
+//    }
+    
+    var viewModel: AccountViewModel
     
     let bannerImageView: UIImageView = {
         let iv = UIImageView()
@@ -56,32 +58,46 @@ class AccountController: UIViewController {
         return c
     }()
     
+    init(viewModel: AccountViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) { fatalError("init(coder:)") }
+    
     //MARK: - Lifecylce
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configCoordinator()
         
-        viewModel?.fetchOwnerGifs()
-        viewModel?.fetchFavouritedGifs()
-        viewModel?.successCallBack = { self.collection.reloadData() }
+//        viewModel.getProfile()
+        
+        viewModel.successCallBack = {
+            self.configure()
+            self.collection.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.getProfile()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        viewModel?.fetchFavouritedGifs()
+//        viewModel.fetchFavouritedGifs()
+//        viewModel.fetchOwnAccount()
+//        viewModel.getProfile()
     }
-    
     
     //MARK: - Actions
     @objc fileprivate func tappedSettings() {
-        guard let viewModel = viewModel  else { return }
-        coordinator?.showSettings(items: viewModel.items)
+        guard let items = viewModel.reusableData else { return }
+        coordinator?.showSettings(items: items)
     }
     
     @objc fileprivate func refreshing() {
-        viewModel?.fetchFavouritedGifs()
+        viewModel.fetchOwnProfileFavouritedGifs()
         self.collection.refreshControl?.endRefreshing()
     }
     
@@ -112,7 +128,7 @@ class AccountController: UIViewController {
                           right: view.rightAnchor,paddingTop: 12,
                           paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
         
-        if viewModel?.type == .own {
+        if viewModel.type == .own {
             view.addSubview(settingsButton)
             settingsButton.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,paddingTop: 8,paddingLeft: 8)
             settingsButton.setDimensions(height: 28, width: 28)
@@ -120,26 +136,25 @@ class AccountController: UIViewController {
     }
     
     func configure() {
-        guard let bannerUrl = viewModel?.bannerURL else { return }
-        guard let profileUrl = viewModel?.profileImageURL else { return }
+        userNameLabel.text    = viewModel.userName
+        displayNameLabel.text = viewModel.displaName
         
-        bannerImageView.sd_setImage(with: bannerUrl)
+//        guard let bannerUrl = viewModel.bannerURL else { return }
+        guard let profileUrl = viewModel.profileImageURL else { return }
+        
+        bannerImageView.sd_setImage(with: viewModel.bannerURL ?? URL(string: ""))
         
         if profileUrl.pathComponents.contains("giphy") {
-            profileImageView.setGifFromURL(profileUrl)
+            profileImageView.setGifFromURL((viewModel.bannerURL ?? URL(string: ""))!)
         } else {
             profileImageView.sd_setImage(with: profileUrl)
         }
-        
-        userNameLabel.text    = viewModel?.userName
-        displayNameLabel.text = viewModel?.displaName
     }
     
     func configCoordinator() {
         guard let nav = navigationController else { return }
         coordinator = AppCoordinator(navigationController: nav)
     }
-
 }
 
 //MARK: - PinterestLayoutDelegate
@@ -152,13 +167,13 @@ extension AccountController: PinterestLayoutDelegate {
 
 extension AccountController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let viewModel = viewModel else { return }
+//        guard let viewModel = viewModel else { return }
         
         let controller = GiphyDetailController()
         if viewModel.type == .other {
-            controller.viewModel = GiphyDetailViewModel(items: viewModel.ownerGifs[indexPath.row])
+            controller.viewModel = GiphyDetailViewModel(items: viewModel.otherProfileOwnerGifs[indexPath.row])
         } else {
-            controller.viewModel = GiphyDetailViewModel(items: viewModel.favouritedGifs[indexPath.row])
+            controller.viewModel = GiphyDetailViewModel(items: viewModel.ownProfileFavouritedGifs[indexPath.row])
         }
         
         navigationController?.show(controller, sender: nil)
@@ -167,21 +182,21 @@ extension AccountController: UICollectionViewDelegate {
 
 extension AccountController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let viewModel = viewModel else { return 0 }
+//        guard let viewModel = viewModel else { return 0 }
         
-        return viewModel.type == .other ? viewModel.ownerGifs.count
-                                        : viewModel.favouritedGifs.count
+        return viewModel.type == .other ? viewModel.otherProfileOwnerGifs.count
+                                        : viewModel.ownProfileFavouritedGifs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let viewModel = viewModel else { return UICollectionViewCell()}
+//        guard let viewModel = viewModel else { return UICollectionViewCell()}
         
         let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)", for: indexPath) as! GiphyCell
         
         if viewModel.type == .other {
-            cell.viewModel = GiphyCellViewModel(items: viewModel.ownerGifs[indexPath.row])
+            cell.viewModel = GiphyCellViewModel(items: viewModel.otherProfileOwnerGifs[indexPath.row])
         } else {
-            cell.viewModel = GiphyCellViewModel(items: viewModel.favouritedGifs[indexPath.row])
+            cell.viewModel = GiphyCellViewModel(items: viewModel.ownProfileFavouritedGifs[indexPath.row])
         }
         return cell
     }

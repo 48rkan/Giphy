@@ -5,45 +5,60 @@
 import Foundation
 
 enum AccountType {
-    case own
-    case other
+    case own,other
 }
 
 class AccountViewModel {
-    var items: CommonData
-    var ownerGifs = [Datum]()
-    var favouritedGifs = [Gif]()
-    
+    var reusableData: CommonData?
+    var otherProfileOwnerGifs  = [Datum]()
+    var ownProfileFavouritedGifs = [Gif]()
+    var ownAccountData: CommonData?
+    var type: AccountType
+
     var successCallBack: (()->())?
     
-    var type: AccountType
+    var bannerURL      : URL?   { URL(string: reusableData?.bannerURL ?? "")}
+    var profileImageURL: URL?   { URL(string: reusableData?.imageURL ?? "")}
+    var userName       : String { reusableData?.userName ?? "" }
+    var displaName     : String { reusableData?.displayName_ ?? ""}
     
-    init(items: CommonData,type: AccountType) {
-        self.items = items
+    init(items: CommonData?, type: AccountType) {
+        self.reusableData = items
         self.type = type
     }
-        
-    var bannerURL: URL? { URL(string: items.bannerURL ?? "")}
-    var profileImageURL: URL? { URL(string: items.imageURL ?? "")}
-    var userName: String { items.userName ?? ""}
-    var displaName: String { items.displayName_ ?? ""}
-
-    func fetchOwnerGifs() {
-        guard let username = items.userName else { return }
+    
+    func getProfile() {
+        if type == .own {
+            fetchOwnAccountData()
+            fetchOwnProfileFavouritedGifs()
+        } else {
+            fetchOtherProfileOwnerGifs()
+        }
+    }
+    
+    func fetchOtherProfileOwnerGifs() {
+        guard let username = reusableData?.userName else { return }
         
         HomeManager.fetchRelatedGifs(query: "@\(username)") { items, error in
             if error != nil { return }
             
             guard let items = items?.data else { return }
-            self.ownerGifs = items
+            self.otherProfileOwnerGifs = items
             
             self.successCallBack?()
         }
     }
     
-    func fetchFavouritedGifs() {
+    func fetchOwnProfileFavouritedGifs() {
         FavouriteManager.fetchFavouritesGifs { gifs in
-            self.favouritedGifs = gifs
+            self.ownProfileFavouritedGifs = gifs
+            self.successCallBack?()
+        }
+    }
+    
+    func fetchOwnAccountData() {
+        UserService.fetchUser { account in
+            self.reusableData = account
             self.successCallBack?()
         }
     }

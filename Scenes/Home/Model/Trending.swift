@@ -21,7 +21,7 @@ struct Trending: Codable {
 }
 
 // MARK: - Datum
-struct Datum: Codable,CommonData {
+struct Datum: Codable, CommonData {
     
     var gifID_      : String? { id ?? ""}
     var bannerURL   : String? { user?.bannerURL ?? ""  }

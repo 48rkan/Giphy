@@ -149,13 +149,14 @@ class GiphyDetailController: UIViewController {
     }
 
     private func configure() {
-        guard let gifURL = viewModel?.gifURL else { return }
-        guard let userPhotoURL = viewModel?.userNamePhotoURL else { return }
-        
-        gifImageView.setGifFromURL(gifURL)
-        userImageView.sd_setImage(with: userPhotoURL)
+//        guard let gifURL = viewModel?.gifURL else { return }
+//        guard let userPhotoURL = viewModel?.userNamePhotoURL else { return }
         userNameLabel.text = viewModel?.userNameText
         displayNameLabel.text = viewModel?.displayNameText
+        
+        gifImageView.setGifFromURL((viewModel?.gifURL ?? URL(string: ""))!)
+        userImageView.sd_setImage(with: viewModel?.userNamePhotoURL ?? URL(string: ""))
+  
     }
     
     //MARK: - Actions
