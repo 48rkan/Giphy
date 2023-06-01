@@ -41,7 +41,7 @@ class MainTabBarController: UITabBarController {
                                                    selectedImage: UIImage(named: "profile_selected")!,
                                                    unselectedImage: UIImage(named: "profile_unselected")!)
         
-        viewControllers = [ feed , search, profile ]
+        viewControllers = [ feed , search , profile ]
     }
     
     private func templateNavigationController(viewController:UIViewController,
@@ -90,6 +90,5 @@ extension MainTabBarController: LoginControllerDelegate {
         guard let account = nav.viewControllers.first as? AccountController else { return }
     
         account.viewModel.getProfile()
-
     }
 }
