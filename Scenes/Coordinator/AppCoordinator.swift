@@ -37,7 +37,7 @@ class AppCoordinator: Coordinator {
     
     func showLogOut(tabBar: MainTabBarController) {
         let controller = LoginController()
-//        controller.delegate = tabBar
+        controller.delegate = tabBar
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         

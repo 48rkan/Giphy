@@ -6,39 +6,25 @@ import UIKit
 import FirebaseAuth
 
 class MainTabBarController: UITabBarController {
-        
-//    var ownAccount: CommonData? {
-//        didSet {
-////            configureViewControllers()
-//        }
-//    }
-    
+            
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureViewControllers()
         setTabBarAppearance()
-//        fetchOwnAccount()
     }
-    
     
     func configureUI() {
         DispatchQueue.main.async {
             if Auth.auth().currentUser == nil {
                 let controller = LoginController()
-//                controller.delegate = self
+                controller.delegate = self
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: false)
             }
         }
     }
-    
-//    func fetchOwnAccount() {
-//        UserService.fetchUser { account in
-//            self.ownAccount = account
-//        }
-//    }
     
     private func configureViewControllers() {
         let feed = templateNavigationController(viewController: HomeController(),
@@ -49,10 +35,7 @@ class MainTabBarController: UITabBarController {
                                                   selectedImage: UIImage(named: "search_selected")!,
                                                   unselectedImage: UIImage(named: "search_unselected")!)
         
-//        guard let ownAccount = ownAccount else { return }
         let account = AccountController(viewModel: .init(items: nil, type: .own))
-
-//        let account = AccountController(viewModel: AccountViewModel(items: nil, type: .own))
         
         let profile = templateNavigationController(viewController: account,
                                                    selectedImage: UIImage(named: "profile_selected")!,
@@ -101,8 +84,12 @@ class MainTabBarController: UITabBarController {
     }
 }
 
-//extension MainTabBarController: LoginControllerDelegate {
-//    func authenticationDidComplete() {
-//        fetchOwnAccount()
-//    }
-//}
+extension MainTabBarController: LoginControllerDelegate {
+    func authenticationDidComplete() {
+        guard let nav = viewControllers?.first as? UINavigationController else { return }
+        guard let account = nav.viewControllers.first as? AccountController else { return }
+    
+        account.viewModel.getProfile()
+
+    }
+}
