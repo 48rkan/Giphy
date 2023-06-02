@@ -179,7 +179,6 @@ class GiphyDetailController: UIViewController {
         }
     }
     
-    
     @objc fileprivate func tappedFavouriteButton() {
         guard let viewModel = viewModel              else { return }
         guard let gifURL    = viewModel.gifURL       else { return }

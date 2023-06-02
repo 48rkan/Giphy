@@ -23,11 +23,11 @@ struct Trending: Codable {
 // MARK: - Datum
 struct Datum: Codable, CommonData {
     
-    var gifID_      : String? { id ?? ""}
-    var bannerURL   : String? { user?.bannerURL ?? ""  }
-    var imageURL    : String? { user?.avatarURL ?? ""  }
-    var userName    : String? { user?.username ?? ""   }
-    var displayName_: String? { user?.displayName ?? ""}
+    var gifID_      : String? { id                    ?? ""}
+    var bannerURL   : String? { user?.bannerURL       ?? ""}
+    var imageURL    : String? { user?.avatarURL       ?? ""}
+    var userName    : String? { user?.username        ?? ""}
+    var displayName_: String? { user?.displayName     ?? ""}
     var gifURL_     : String? { images?.original?.url ?? ""}
 
     let type: String?

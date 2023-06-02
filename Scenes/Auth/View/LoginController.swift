@@ -12,7 +12,6 @@ protocol LoginControllerDelegate: AnyObject {
     func authenticationDidComplete()
 }
 
-
 class LoginController: UIViewController {
     
     //MARK: - Properties

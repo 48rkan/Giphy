@@ -10,13 +10,6 @@ class AccountController: UIViewController {
     //MARK: - Properties
     var coordinator: AppCoordinator?
     
-//    var viewModel: AccountViewModel? {
-//        didSet {
-//            configure()
-//            collection.reloadData()
-//        }
-//    }
-    
     var viewModel: AccountViewModel
     
     let bannerImageView: UIImageView = {
@@ -32,10 +25,10 @@ class AccountController: UIViewController {
     }()
     
     public let userNameLabel = CustomLabel(text: "MotoGP",
-                                            size: 18)
+                                            size: 18,font: "Poppins-Medium")
     
     private let displayNameLabel = CustomLabel(text: "@motoGP",
-                                               size: 14)
+                                               size: 14,font: "Poppins-Medium")
     
     private lazy var settingsButton: UIButton = {
         let b = UIButton()
@@ -44,6 +37,10 @@ class AccountController: UIViewController {
         b.addTarget(self, action: #selector(tappedSettings), for: .touchUpInside)
         return b
     }()
+        
+    private let favouriteLabel = CustomLabel(text: "Favourited Gifs",
+                                         textColor: .white,
+                                         size: 16)
     
     private lazy var collection: UICollectionView = {
         let l = PinterestLayout()
@@ -70,9 +67,7 @@ class AccountController: UIViewController {
         super.viewDidLoad()
         configureUI()
         configCoordinator()
-        
-//        viewModel.getProfile()
-        
+                
         viewModel.successCallBack = {
             self.configure()
             self.collection.reloadData()
@@ -82,14 +77,7 @@ class AccountController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         viewModel.getProfile()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-//        viewModel.fetchFavouritedGifs()
-//        viewModel.fetchOwnAccount()
-//        viewModel.getProfile()
-    }
-    
+        
     //MARK: - Actions
     @objc fileprivate func tappedSettings() {
         guard let items = viewModel.reusableData else { return }
@@ -125,13 +113,16 @@ class AccountController: UIViewController {
         collection.anchor(top: displayNameLabel.bottomAnchor,
                           left: view.leftAnchor,
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                          right: view.rightAnchor,paddingTop: 12,
+                          right: view.rightAnchor,paddingTop: 20,
                           paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
         
         if viewModel.type == .own {
             view.addSubview(settingsButton)
             settingsButton.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,paddingTop: 8,paddingLeft: 8)
             settingsButton.setDimensions(height: 28, width: 28)
+            
+            view.addSubview(favouriteLabel)
+            favouriteLabel.anchor(top: displayNameLabel.bottomAnchor,left: view.leftAnchor,paddingTop: 0,paddingLeft: 4)
         } else { return }
     }
     
@@ -173,7 +164,7 @@ extension AccountController: UICollectionViewDelegate {
         if viewModel.type == .other {
             controller.viewModel = GiphyDetailViewModel(items: viewModel.otherProfileOwnerGifs[indexPath.row])
         } else {
-            controller.viewModel = GiphyDetailViewModel(items: viewModel.ownProfileFavouritedGifs[indexPath.row])
+            return
         }
         
         navigationController?.show(controller, sender: nil)
