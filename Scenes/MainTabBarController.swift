@@ -59,7 +59,7 @@ class MainTabBarController: UITabBarController {
         let positionOnY: CGFloat = 0
         
         let width  = tabBar.bounds.width  - positionOnX * 2
-        let height = CGFloat(88)// + positionOnY * 2
+        let height = CGFloat(76)// + positionOnY * 2
         
         let roundLayer = CAShapeLayer()
         

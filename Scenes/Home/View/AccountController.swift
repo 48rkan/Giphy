@@ -24,10 +24,10 @@ class AccountController: UIViewController {
         return iv
     }()
     
-    public let userNameLabel = CustomLabel(text: "MotoGP",
+    public let userNameLabel = CustomLabel(text: "",
                                             size: 18,font: "Poppins-Medium")
     
-    private let displayNameLabel = CustomLabel(text: "@motoGP",
+    private let displayNameLabel = CustomLabel(text: "",
                                                size: 14,font: "Poppins-Medium")
     
     private lazy var settingsButton: UIButton = {
