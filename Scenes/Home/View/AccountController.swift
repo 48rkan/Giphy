@@ -24,11 +24,13 @@ class AccountController: UIViewController {
         return iv
     }()
     
-    public let userNameLabel = CustomLabel(text: "",
-                                            size: 18,font: "Poppins-Medium")
+    public let userNameLabel     = CustomLabel(text: "",
+                                               size: 18,
+                                               font: "Poppins-Medium")
     
     private let displayNameLabel = CustomLabel(text: "",
-                                               size: 14,font: "Poppins-Medium")
+                                               size: 14,
+                                               font: "Poppins-Medium")
     
     private lazy var settingsButton: UIButton = {
         let b = UIButton()
@@ -37,10 +39,10 @@ class AccountController: UIViewController {
         b.addTarget(self, action: #selector(tappedSettings), for: .touchUpInside)
         return b
     }()
-        
+    
     private let favouriteLabel = CustomLabel(text: "Favourited Gifs",
-                                         textColor: .white,
-                                         size: 16)
+                                             textColor: .white,
+                                             size: 18)
     
     private lazy var collection: UICollectionView = {
         let l = PinterestLayout()
