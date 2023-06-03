@@ -4,6 +4,7 @@
 
 import UIKit
 import FirebaseAuth
+import AVFoundation
 
 class HomeController: UIViewController {
     
@@ -12,6 +13,8 @@ class HomeController: UIViewController {
     
     var coordinator: AppCoordinator?
     
+//    var player: AVAudioPlayer?
+
     private lazy var customView: CollectionInUIView = {
         let cv = CollectionInUIView()
         cv.delegate = self
@@ -39,14 +42,17 @@ class HomeController: UIViewController {
         configureNavigationBar()
         addNavToCoordinator()
         
+        SoundHandler.playSound(name: "welcome", type: "mp3")
+
+        
         viewModel.getGifs(type: .trending)
         viewModel.successCallBack = {
             self.showLoader(false)
             self.collection.reloadData()
+            
         }
-        
     }
-    
+
     //MARK: - Actions
     
     @objc private func tappedLogOutButton() {
@@ -104,6 +110,7 @@ class HomeController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension HomeController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         coordinator?.showGiphyDetail(items: viewModel.items[indexPath.row])
     }
 }

@@ -192,8 +192,11 @@ class GiphyDetailController: UIViewController {
             favouriteButton.setImage(UIImage(named: "favourite"), for: .normal)
             FavouriteManager.favouriteGif(gifID: gifID, gifURL: "\(gifURL)")
         }
-        
+                
         viewModel.isFavourite.toggle()
+        
+        SoundHandler.playSound(name: "mixkit", type: "wav")
+
     }
     
     @objc fileprivate func showAccount() {
