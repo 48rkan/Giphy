@@ -95,15 +95,14 @@ class LoginController: UIViewController {
     var signUpClicked: Bool = false
     
     //MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
     //MARK: - Actions
-    
-    func configureUI() {
+    private func configureUI() {
+        
         view.addSubview(titleLabel)
         titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           left: view.leftAnchor,right: view.rightAnchor,
@@ -191,7 +190,7 @@ class LoginController: UIViewController {
         lastTitleLabel.anchor(left: view.leftAnchor,bottom: view.safeAreaLayoutGuide.bottomAnchor,right: view.rightAnchor,paddingLeft: 24,paddingBottom: 40,paddingRight: 24)
     }
     
-    @objc func tappedLogIn() {
+    @objc private func tappedLogIn() {
         usernameHeightConstraint.constant = 0
         viewLeadingConstraint.constant = 12
 
@@ -203,7 +202,7 @@ class LoginController: UIViewController {
         UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
     }
     
-    @objc func tappedSignUp() {
+    @objc private func tappedSignUp() {
         usernameHeightConstraint.constant = 44
         viewLeadingConstraint.constant = 201
         userNameTextField.isHidden = false
@@ -213,7 +212,7 @@ class LoginController: UIViewController {
         UIView.animate(withDuration: 0.3) { self.view.layoutIfNeeded() }
     }
     
-    @objc func buttonClicked() {
+    @objc private func buttonClicked() {
         guard let email    = emailTextField.text?.lowercased()    else { return }
         guard let password = passwordTextField.text?.lowercased() else { return }
         guard let username = userNameTextField.text?.lowercased() else { return }
@@ -241,7 +240,7 @@ class LoginController: UIViewController {
         }
     }
     
-    @objc func tappedGoggle() {
+    @objc private func tappedGoggle() {
         viewModel.tappedGoggle(view: self) {
             self.delegate?.authenticationDidComplete()
             self.dismiss(animated: true)
@@ -250,11 +249,12 @@ class LoginController: UIViewController {
     
     //MARK:- Helpers
     
-    func setButtonTitle() {
-        signUpClicked ? commonButton.setTitle("Sign Up", for: .normal) : commonButton.setTitle("Log In", for: .normal)
+    private func setButtonTitle() {
+        signUpClicked ? commonButton.setTitle("Sign Up", for: .normal)
+                      : commonButton.setTitle("Log In" , for: .normal)
     }
 
-    func refreshDatas() {
+    private func refreshDatas() {
         emailTextField.text    = nil
         userNameTextField.text = nil
         passwordTextField.text = nil

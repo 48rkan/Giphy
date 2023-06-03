@@ -49,7 +49,7 @@ class ProfileCell: UITableViewCell {
     
     func configure() {
         guard let profileURL = viewModel?.profilePhotoURL else { return }
-        profilImage.setGifFromURL(profileURL,levelOfIntegrity: .highestNoFrameSkipping)
+        setGifFromURL(imageView: profilImage, url: profileURL)
         userNameLabel.text = viewModel?.username
         displayNameLabel.text = viewModel?.displayName
     }

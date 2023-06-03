@@ -7,7 +7,8 @@ import UIKit
 
 class CustomTextField: UITextField {
     
-    init(placeholder: String,secure: Bool = false) {
+    init(placeholder: String,
+         secure: Bool = false) {
         super.init(frame: .zero)
         
         textColor = .white

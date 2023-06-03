@@ -14,9 +14,7 @@ class FavouriteManager {
             "gifID" : gifID
         ]
         
-        COLLECTION_FAVOURITE
-            .document(gifID)
-            .setData(data)
+        COLLECTION_FAVOURITE.document(gifID).setData(data)
     }
     
     static func unFavouriteGif(gifID: String) {

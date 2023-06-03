@@ -17,7 +17,7 @@ class SearchController: UIViewController {
         iv.delegate = self
         return iv
     }()
-        
+    
     private lazy var table: UITableView = {
         let t = UITableView()
         t.register(ProfileCell.self, forCellReuseIdentifier: "\(ProfileCell.self)")
@@ -41,16 +41,20 @@ class SearchController: UIViewController {
     }
     
     //MARK: - Helpers
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(searchView)
-        searchView.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,right: view.rightAnchor)
+        searchView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          left: view.leftAnchor,right: view.rightAnchor)
         searchView.setHeight(48)
         
         view.addSubview(table)
-        table.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,bottom: view.bottomAnchor,right: view.rightAnchor,paddingTop: 0,paddingLeft: 0,paddingBottom: 0,paddingRight: 0)
+        table.anchor(top: searchView.bottomAnchor,left: view.leftAnchor,
+                     bottom: view.bottomAnchor,right: view.rightAnchor,
+                     paddingTop: 0,paddingLeft: 0,
+                     paddingBottom: 0,paddingRight: 0)
     }
     
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "searchFilter"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
@@ -70,7 +74,7 @@ extension SearchController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if !viewModel.items.isEmpty  {
+        if !viewModel.items.isEmpty {
             let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0,
                                                             width: tableView.frame.width,
                                                             height: 50))
@@ -86,9 +90,10 @@ extension SearchController: UITableViewDelegate {
             headerView.addSubview(label)
             
             return headerView
+        } else {
+            return UIView()
         }
-        return UIView()
-        }
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -114,6 +119,5 @@ extension SearchController: CustomSearchViewDelegate {
     func searchIconClicked(_ view: CustomSearchView) {
         coordinator?.showSearchDetail(items: viewModel.items,
                                       text: viewModel.currentText)
-        
     }
 }

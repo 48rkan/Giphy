@@ -59,7 +59,7 @@ class HomeController: UIViewController {
     }
     
     //MARK: - Helper
-    func configureUI () {
+    private func configureUI () {
         view.addSubview(customView)
         customView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           left: view.leftAnchor, right: view.rightAnchor,
@@ -75,7 +75,7 @@ class HomeController: UIViewController {
                           paddingRight: 4)
     }
     
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         //Left Bar Button Item
         let button = UIButton(type: .custom)
         button.imageView?.contentMode = .scaleAspectFill
@@ -95,7 +95,7 @@ class HomeController: UIViewController {
         buttonTwo.setDimensions(height: 36, width: 36)
     }
     
-    func addNavToCoordinator() {
+    private func addNavToCoordinator() {
         guard let nav = navigationController else { return }
         coordinator = AppCoordinator(navigationController: nav)
     }

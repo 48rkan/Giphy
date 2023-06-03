@@ -10,14 +10,15 @@ class CustomCollectionView: UICollectionView {
     
     init(scroll: UICollectionView.ScrollDirection,
          spacing: CGFloat) {
-        super.init(frame: .zero, collectionViewLayout: layout)
+        super.init(frame: .zero,
+                   collectionViewLayout: layout)
         layout.scrollDirection = scroll
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         
         configureCollectionView()
     }
-        
+    
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been") }
     
     func configureCollectionView() {

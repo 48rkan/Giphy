@@ -154,7 +154,8 @@ class GiphyDetailController: UIViewController {
         userNameLabel.text = viewModel?.userNameText
         displayNameLabel.text = viewModel?.displayNameText
         
-        gifImageView.setGifFromURL((viewModel?.gifURL ?? URL(string: ""))!)
+        setGifFromURL(imageView: gifImageView,
+                      url: (viewModel?.gifURL ?? URL(string: ""))!)
         userImageView.sd_setImage(with: viewModel?.userNamePhotoURL ?? URL(string: ""))
   
     }
@@ -201,14 +202,17 @@ class GiphyDetailController: UIViewController {
         coordinator?.showAccount(items: viewModel.items, type: .other)
     }
     
-    @objc func imagee(_ image: UIImage, didFinishSavingWithError error: Error?,contextInfo: UnsafeRawPointer) {
+    @objc func imagee(_ image: UIImage,
+                      didFinishSavingWithError error: Error?,
+                      contextInfo: UnsafeRawPointer) {
         if error != nil { return }
     }
 }
 
 //MARK: - UICollectionViewDelegate
 extension GiphyDetailController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
         guard let relatedItems = viewModel?.relatedItems else { return }
         
         coordinator?.showGiphyDetail(items: relatedItems[indexPath.row])
@@ -217,12 +221,17 @@ extension GiphyDetailController: UICollectionViewDelegate {
 
 //MARK: - UICollectionViewDataSource
 extension GiphyDetailController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         viewModel?.relatedItems.count ?? 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)", for: indexPath) as! GiphyCell
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collection.dequeueReusableCell(withReuseIdentifier: "\(GiphyCell.self)",
+                                                  for: indexPath) as! GiphyCell
+        
         cell.viewModel = GiphyCellViewModel(items: (viewModel?.relatedItems[indexPath.row])!)
         
         return cell
@@ -231,7 +240,8 @@ extension GiphyDetailController: UICollectionViewDataSource {
 
 //MARK: - PinterestLayoutDelegate
 extension GiphyDetailController: PinterestLayoutDelegate {
-    func collectionView(collectionView: UICollectionView, heightForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func collectionView(collectionView: UICollectionView,
+                        heightForItemAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let random = arc4random_uniform(3) + 1
         return CGFloat(random * 100)
     }

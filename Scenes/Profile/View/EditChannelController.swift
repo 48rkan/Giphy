@@ -60,7 +60,7 @@ class EditChannelController: UIViewController {
         guard let gifURL = viewModel?.gifURL else { return }
         
         if gifURL.pathComponents.contains("media") {
-            profileImageView.setGifFromURL(gifURL)
+            setGifFromURL(imageView: profileImageView, url: gifURL)
         } else {
             profileImageView.sd_setImage(with: gifURL)
         }
@@ -72,7 +72,7 @@ class EditChannelController: UIViewController {
         guard let userNameText = userNameTextField.text else { return }
         UserService.updateUserName(newUsername: userNameText)
         
-        let tabBar = tabBarController as? MainTabBarController
+//        let tabBar = tabBarController as? MainTabBarController
 //        tabBar?.fetchOwnAccount()
         navigationController?.popToRootViewController(animated: true)
     }

@@ -92,7 +92,7 @@ class SettingsController: UIViewController {
         guard let gifURL = viewModel?.gifURL else { return }
         
         if gifURL.pathComponents.contains("media") {
-            imageView.setGifFromURL(gifURL)
+            setGifFromURL(imageView: imageView, url: gifURL)
         } else {
             imageView.sd_setImage(with: gifURL)
         }

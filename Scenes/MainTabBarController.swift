@@ -9,6 +9,7 @@ class MainTabBarController: UITabBarController {
             
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
         configureViewControllers()
         setTabBarAppearance()
@@ -41,16 +42,15 @@ class MainTabBarController: UITabBarController {
                                                    selectedImage: UIImage(named: "profile_selected")!,
                                                    unselectedImage: UIImage(named: "profile_unselected")!)
         
-        viewControllers = [ feed , search , profile ]
+        viewControllers = [feed, search, profile]
     }
     
     private func templateNavigationController(viewController:UIViewController,
-                                              selectedImage: UIImage ,
+                                              selectedImage: UIImage,
                                               unselectedImage: UIImage) -> UINavigationController {
         let nav = UINavigationController(rootViewController: viewController)
-        nav.tabBarItem.selectedImage = selectedImage
         nav.tabBarItem.image = unselectedImage
-        
+        nav.tabBarItem.selectedImage = selectedImage
         return nav
     }
     

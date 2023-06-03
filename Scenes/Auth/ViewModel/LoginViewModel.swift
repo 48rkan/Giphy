@@ -7,15 +7,15 @@ import GoogleSignIn
 import FirebaseCore
 import FirebaseAuth
 
-struct LoginViewModel {
+public struct LoginViewModel {
     
-    let titleOne = "Create an Account"
+    public let titleOne = "Create an Account"
     
-    let titleTwo = "A GIPHY account lets you Favorite, Create,  & Collect all the GIFs!"
+    public let titleTwo = "A GIPHY account lets you Favorite, Create,  & Collect all the GIFs!"
     
-    let titleThree = "By logging in you agree to GIPHY's Terms of Service and Privacy Policy"
+    public let titleThree = "By logging in you agree to GIPHY's Terms of Service and Privacy Policy"
     
-    func registerUser(credential:AuthCredential,
+    internal func registerUser(credential:AuthCredential,
                       completion: @escaping (Error?)->()) {
         let credential = AuthCredential(email: credential.email,
                                         password: credential.password,
@@ -26,14 +26,14 @@ struct LoginViewModel {
         }
     }
     
-    func logUserIn(email: String,password: String,
+    public func logUserIn(email: String,password: String,
                    completion: @escaping (AuthDataResult?,Error?)->()) {
         AuthService.logUserIn(email: email, password: password) { data, error in
             completion(data,error)
         }
     }
     
-    func tappedGoggle(view: UIViewController,completion: @escaping ()->()) {
+    public func tappedGoggle(view: UIViewController,completion: @escaping ()->()) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
     
         let config = GIDConfiguration(clientID: clientID)
@@ -48,7 +48,7 @@ struct LoginViewModel {
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
             
             AuthService.registerUser(credential: AuthCredential(email: user.fetcherAuthorizer.userEmail ?? "" , password: "***************", username: "User-\(Int.random(in: 1000...5000))")) { error in
-                if error != nil { print("\(error?.localizedDescription)")}
+                if error != nil { print("\(error?.localizedDescription ?? "")")}
                 return
             }
             

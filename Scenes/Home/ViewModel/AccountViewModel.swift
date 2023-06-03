@@ -30,7 +30,6 @@ class AccountViewModel {
     func getProfile() {
         if type == .own {
             fetchOwnAccountData()
-            fetchOwnProfileFavouritedGifs()
         } else {
             fetchOtherProfileOwnerGifs()
         }
@@ -59,7 +58,7 @@ class AccountViewModel {
     func fetchOwnAccountData() {
         UserService.fetchUser { account in
             self.reusableData = account
-            self.successCallBack?()
+            self.fetchOwnProfileFavouritedGifs()
         }
     }
 }

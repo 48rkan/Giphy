@@ -9,10 +9,11 @@ struct Gif {
     let gifID : String
     var isFavourite = false
     
-    init(dictionary: [String : Any]) {
+    init(dictionary: [String: Any]) {
         self.gifURL = dictionary["gifURL"] as? String ?? ""
         self.gifID  = dictionary["gifID"]  as? String ?? ""
-    }}
+    }
+}
 
 extension Gif: CommonData {
     var gifURL_     : String? { gifURL }

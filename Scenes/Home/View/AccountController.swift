@@ -9,7 +9,7 @@ class AccountController: UIViewController {
     
     //MARK: - Properties
     var coordinator: AppCoordinator?
-    
+
     var viewModel: AccountViewModel
     
     let bannerImageView: UIImageView = {
@@ -67,6 +67,7 @@ class AccountController: UIViewController {
     //MARK: - Lifecylce
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
         configCoordinator()
                 
@@ -138,7 +139,7 @@ class AccountController: UIViewController {
         bannerImageView.sd_setImage(with: viewModel.bannerURL ?? URL(string: ""))
         
         if profileUrl.pathComponents.contains("giphy") {
-            profileImageView.setGifFromURL((viewModel.bannerURL ?? URL(string: ""))!)
+            setGifFromURL(imageView: profileImageView, url: (viewModel.bannerURL ?? URL(string: ""))!)
         } else {
             profileImageView.sd_setImage(with: profileUrl)
         }

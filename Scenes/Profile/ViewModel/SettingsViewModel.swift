@@ -10,7 +10,7 @@ class SettingsViewModel {
     
     var tableTitles: [Settings] =  [
         .init(title: "Account Settings", type: .account),
-        .init(title: "Send Email" , type: .email),
+        .init(title: "Send Email"      , type: .email),
         .init(title: "Support"         , type: .support),
         .init(title: "Privacy & Safety", type: .privacy),
         .init(title: "Rate the App"    , type: .rateTheApp),

@@ -3,7 +3,6 @@
 //  Created by Erkan Emir on 16.05.23.
 
 import UIKit
-import SwiftyGif
 
 class GiphyCell: UICollectionViewCell {
     
@@ -25,6 +24,11 @@ class GiphyCell: UICollectionViewCell {
         configureUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        gifView.image = nil
+    }
+    
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been") }
     
     //MARK: - Helper
@@ -38,6 +42,6 @@ class GiphyCell: UICollectionViewCell {
     
     func configure() {
         guard let url = viewModel?.gifURL else { return }
-        gifView.setGifFromURL(url,levelOfIntegrity: .highestNoFrameSkipping,showLoader: false)
+        setGifFromURL(imageView: gifView, url: url)
     }
 }

@@ -13,8 +13,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        coordinator = AppCoordinator(window: window!)
-        coordinator?.start() 
+        
+        coordinator = AppCoordinator(navigationController: UINavigationController())
+        coordinator?.start(window: window!)
     }
 
     func sceneDidDisconnect(_ scene: UIScene)       { }

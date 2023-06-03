@@ -6,21 +6,14 @@ import UIKit
 
 class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
-    var window: UIWindow?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.window = nil
     }
     
-    convenience init(window: UIWindow) {
-        self.init(navigationController: UINavigationController())
-        self.window = window
-    }
-    
-    func start () {
-        window?.rootViewController = MainTabBarController()
-        window?.makeKeyAndVisible()
+    func start(window: UIWindow) {
+        window.rootViewController = MainTabBarController()
+        window.makeKeyAndVisible()
     }
     
     func showGiphyDetail(items: CommonData) {

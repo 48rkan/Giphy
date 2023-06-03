@@ -31,7 +31,7 @@ class LabelCell: UITableViewCell {
     
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been") }
     
-    func configureUI() {
+    private func configureUI() {
         backgroundColor = .black
         selectionStyle  = .none
         
@@ -48,7 +48,8 @@ class LabelCell: UITableViewCell {
         button.setDimensions(height: 32, width: 32)
         
     }
-    func configure() {
+    
+    private func configure() {
         label.text = viewModel?.item
     }
 }

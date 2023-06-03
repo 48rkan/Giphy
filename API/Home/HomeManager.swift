@@ -9,7 +9,7 @@ class HomeManager: HomeManagerProtocol {
     static func fetchGifs(limit: Int,
                           type: GifsType,
                           query: String = "",
-                          completion: @escaping (Trending?,Error?)->()) {
+                          completion: @escaping (Trending?, Error?)->()) {
         var url = ""
                 
         switch type {
@@ -29,7 +29,7 @@ class HomeManager: HomeManagerProtocol {
     }
     
     static func fetchRelatedGifs(query: String,
-                                 completion: @escaping (Trending?,Error?)->()) {
+                                 completion: @escaping (Trending?, Error?)->()) {
         
         CoreManager.request(type: Trending.self,
                             url: HomeEndPoint.common.path() + "&q=\(query)") { items, error in
