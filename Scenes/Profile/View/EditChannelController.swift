@@ -56,6 +56,7 @@ class EditChannelController: UIViewController {
             }
         })
     }
+    
     func configure() {
         guard let gifURL = viewModel?.gifURL else { return }
         
@@ -72,8 +73,12 @@ class EditChannelController: UIViewController {
         guard let userNameText = userNameTextField.text else { return }
         UserService.updateUserName(newUsername: userNameText)
         
-//        let tabBar = tabBarController as? MainTabBarController
-//        tabBar?.fetchOwnAccount()
+
+        guard let tabBar = tabBarController as? MainTabBarController else { return }
+        guard let nav = tabBar.viewControllers?[2] as? UINavigationController else { return }
+        guard let account = nav.viewControllers.first as? AccountController else { return }
+        account.viewModel.getProfile()
+        
         navigationController?.popToRootViewController(animated: true)
     }
     

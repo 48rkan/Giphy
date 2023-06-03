@@ -18,7 +18,7 @@ class HomeController: UIViewController {
         return cv
     }()
     
-    private lazy var collection: UICollectionView   = {
+    private lazy var collection: UICollectionView = {
         let l = PinterestLayout()
         l.numberOfColumns = 2
         l.delegate = self

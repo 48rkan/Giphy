@@ -23,8 +23,8 @@ class AppCoordinator: Coordinator {
     }
     
     func showAccount(items: CommonData,type: AccountType) {
-        let controller = AccountController(viewModel: .init(items: items, type: type))
-//        controller.viewModel = AccountViewModel(items: items,type: type)
+        let controller = AccountController(viewModel: .init(items: items,
+                                                            type: type))
         navigationController.show(controller, sender: nil)
     }
     
