@@ -70,10 +70,12 @@ class AccountController: UIViewController {
         
         configureUI()
         configCoordinator()
-                
+        
+        showLoader(true)
         viewModel.successCallBack = {
             self.configure()
             self.collection.reloadData()
+            self.showLoader(false)
         }
     }
     

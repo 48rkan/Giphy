@@ -7,7 +7,9 @@ import UIKit
 class GiphyCell: UICollectionViewCell {
     
     var viewModel: GiphyCellViewModel? {
-        didSet { configure() }
+        didSet {
+            configure()
+        }
     }
     
     //MARK: - Properties

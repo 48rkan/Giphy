@@ -9,7 +9,6 @@ import Foundation
 import AVFoundation
 
 class SoundHandler {
-    
     static var player: AVAudioPlayer?
 
     static func playSound(name: String, type: String) {

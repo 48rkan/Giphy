@@ -117,6 +117,7 @@ extension SearchController: CustomSearchViewDelegate {
     }
     
     func searchIconClicked(_ view: CustomSearchView) {
+        if viewModel.currentText.first == " " || viewModel.currentText.isEmpty  { return }
         coordinator?.showSearchDetail(items: viewModel.items,
                                       text: viewModel.currentText)
     }
