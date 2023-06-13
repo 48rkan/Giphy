@@ -13,8 +13,6 @@ class HomeController: UIViewController {
     
     var coordinator: AppCoordinator?
     
-//    var player: AVAudioPlayer?
-
     private lazy var customView: CollectionInUIView = {
         let cv = CollectionInUIView()
         cv.delegate = self
@@ -110,7 +108,7 @@ class HomeController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension HomeController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         coordinator?.showGiphyDetail(items: viewModel.items[indexPath.row])
     }
 }
@@ -163,8 +161,7 @@ struct MainPreview: PreviewProvider {
         func makeUIViewController(context: Context) -> some UIViewController {
             UINavigationController(rootViewController: HomeController())
         }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
+        
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
     }
 }

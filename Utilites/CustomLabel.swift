@@ -7,9 +7,11 @@ import UIKit
 
 class CustomLabel: UILabel {
     
-    init(text: String,textColor: UIColor? = .white,
-         hexCode: String? = nil ,
-         size: CGFloat,font: String = "Helvetica Neue") {
+    init(text     : String,
+         textColor: UIColor? = .white,
+         hexCode  : String?  = nil,
+         size     : CGFloat,
+         font     : String   = "Helvetica Neue") {
         super.init(frame: .zero)
         
         if let hexCode = hexCode {

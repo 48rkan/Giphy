@@ -17,7 +17,9 @@ public class CoreManager {
         
         AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "",
                    method: method,
-                   parameters: parameters).responseDecodable(of: T.self) { object in
+                   parameters: parameters,
+                   encoding: encoding,
+                   headers: headers).responseDecodable(of: T.self) { object in
             switch object.result {
             case .success(let items):
                 completion(items,nil)

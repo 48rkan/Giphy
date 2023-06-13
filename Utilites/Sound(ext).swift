@@ -11,7 +11,8 @@ import AVFoundation
 class SoundHandler {
     static var player: AVAudioPlayer?
 
-    static func playSound(name: String, type: String) {
+    static func playSound(name: String,
+                          type: String) {
         guard let path = Bundle.main.path(forResource: name,
                                           ofType: type) else { return }
         let url = URL(fileURLWithPath: path)

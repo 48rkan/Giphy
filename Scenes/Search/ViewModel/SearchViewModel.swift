@@ -12,7 +12,8 @@ class SearchViewModel {
     var currentText = String()
     
     func fetchRelativeChannel(query: String) {
-        SearchManager.fetchRelativeChannel(query: query, type: .relativeChannels) { items, error in
+        SearchManager.fetchRelativeChannel(query: query,
+                                           type: .relativeChannels) { items, error in
             if error != nil { return }
             
             guard let items = items?.data else { return }

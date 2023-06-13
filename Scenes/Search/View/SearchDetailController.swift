@@ -37,7 +37,12 @@ class SearchDetailController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-
+        configNav()
+        configViewModel()
+    }
+        
+    //MARK: - Helper
+    private func configViewModel() {
         guard let viewModel else { return }
         viewModel.fetchMatchesGifs(text: viewModel.text)
         viewModel.fetchRelativeChannel(query: viewModel.text)
@@ -46,13 +51,14 @@ class SearchDetailController: UIViewController {
             self.collection.reloadData()
             self.showLoader(false)
         }
-        
+    }
+    
+    private func configNav() {
         guard let nav = navigationController else { return }
         coordinator = AppCoordinator(navigationController: nav)
     }
-        
-    //MARK: - Helper
-    func configureUI() {
+    
+    private func configureUI() {
         view.addSubview(searchView)
         searchView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           left: view.leftAnchor,right: view.rightAnchor)
@@ -78,7 +84,7 @@ extension SearchDetailController: UICollectionViewDelegate {
 extension SearchDetailController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel?.items.count ?? 0
-    }
+    } 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let viewModel else { return UICollectionViewCell()}

@@ -13,7 +13,7 @@ class ProfileCellViewModel {
     
     var profilePhotoURL: URL? { URL(string: items.user?.avatarURL ?? "") }
     
-    var username: String { items.user?.username ?? ""}
+    var username: String { items.user?.username ?? "" }
     
     var displayName: String { items.displayName ?? "" }
 }

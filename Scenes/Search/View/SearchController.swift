@@ -111,13 +111,16 @@ extension SearchController: UITableViewDataSource {
 
 //MARK: - CustomSearchViewDelegate
 extension SearchController: CustomSearchViewDelegate {
-    func view(_ searchView: CustomSearchView, editingChangedTextField text: String) {
+    func view(_ searchView: CustomSearchView,
+              editingChangedTextField text: String) {
         viewModel.currentText = text
         viewModel.fetchRelativeChannel(query: text)
     }
     
     func searchIconClicked(_ view: CustomSearchView) {
-        if viewModel.currentText.first == " " || viewModel.currentText.isEmpty  { return }
+        if viewModel.currentText.first == " " ||
+           viewModel.currentText.isEmpty  { return }
+        
         coordinator?.showSearchDetail(items: viewModel.items,
                                       text: viewModel.currentText)
     }

@@ -40,6 +40,7 @@ class AppCoordinator: Coordinator {
     func showSettings(items: CommonData) {
         let controller = SettingsController()
         controller.viewModel = SettingsViewModel(items: items)
+        
         navigationController.show(controller, sender: nil)
     }
     
@@ -47,12 +48,14 @@ class AppCoordinator: Coordinator {
         let controller = SearchDetailController()
         controller.viewModel = SearchDetailViewModel(items: items)
         controller.viewModel?.text = text
+        
         navigationController.show(controller, sender: nil)
     }
     
     func showEditScene(items: CommonData) {
         let controller = EditChannelController()
         controller.viewModel = EditsChannelViewModel(items: items)
+        
         navigationController.show(controller, sender: nil)
     }
 }

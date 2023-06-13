@@ -40,7 +40,6 @@ class EditChannelController: UIViewController {
     }
     
     //MARK: - Actions
-    
     @objc fileprivate func presentPicker() {
         viewModel?.imagePickerConfiguration(completion: { imagePicker in
             
@@ -56,6 +55,21 @@ class EditChannelController: UIViewController {
             }
         })
     }
+        
+    @objc func tappedSave() {
+        guard let userNameText = userNameTextField.text else { return }
+        UserService.updateUserName(newUsername: userNameText)
+        
+        guard let tabBar  = tabBarController            as? MainTabBarController   else { return }
+        guard let nav     = tabBar.viewControllers?[2]  as? UINavigationController else { return }
+        guard let account = nav.viewControllers.first   as? AccountController      else { return }
+//        (tabBarController?.viewControllers?[2] as? AccountController)?.viewModel.getProfile()
+//        account.viewModel.getProfile()
+        
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+        //MARK: - Helpers
     
     func configure() {
         guard let gifURL = viewModel?.gifURL else { return }
@@ -68,21 +82,7 @@ class EditChannelController: UIViewController {
         
         userNameTextField.text = viewModel?.userName
     }
-    
-    @objc func tappedSave() {
-        guard let userNameText = userNameTextField.text else { return }
-        UserService.updateUserName(newUsername: userNameText)
-        
 
-        guard let tabBar = tabBarController as? MainTabBarController else { return }
-        guard let nav = tabBar.viewControllers?[2] as? UINavigationController else { return }
-        guard let account = nav.viewControllers.first as? AccountController else { return }
-        account.viewModel.getProfile()
-        
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-        //MARK: - Helpers
     func configureNavigationBar() {
         let button = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(tappedSave))
         navigationItem.rightBarButtonItem = button

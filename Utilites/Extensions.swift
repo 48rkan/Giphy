@@ -163,6 +163,7 @@ extension UIColor {
         let scanner = Scanner(string: hexString)
         if (hexString.hasPrefix("#")) {
             scanner.scanLocation = 1
+//            scanner.currentIndex = hexString.startIndex
         }
         var color: UInt32 = 0
         scanner.scanHexInt32(&color)
@@ -175,6 +176,7 @@ extension UIColor {
         let blue  = CGFloat(b) / 255.0
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
+    
     func toHexString() -> String {
         var r:CGFloat = 0
         var g:CGFloat = 0
@@ -207,7 +209,7 @@ extension CVarArg {
         label.lineBreakMode = .byWordWrapping
         label.setHeight(height)
 //        label.setWidth(width)
-        
+
         return label.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
     }
 }
@@ -215,8 +217,13 @@ extension CVarArg {
 // yalniz bir hisseye corner radius vermek
 
 extension UIView {
-   func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+   func roundCorners(corners: UIRectCorner,
+                     radius: CGFloat) {
+       
+        let path = UIBezierPath(roundedRect: bounds,
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius,
+                                                    height: radius))
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         layer.mask = mask

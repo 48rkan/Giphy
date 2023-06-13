@@ -5,7 +5,8 @@
 import UIKit
 
 protocol CustomSearchViewDelegate: AnyObject {
-    func view(_ searchView: CustomSearchView, editingChangedTextField text: String)
+    func view(_ searchView: CustomSearchView,
+              editingChangedTextField text: String)
     func searchIconClicked(_ view: CustomSearchView)
 }
 
@@ -46,7 +47,7 @@ class CustomSearchView: UIView {
     
     @objc private func changedTextFieldAction() {
         guard let searchText = textField.text?.lowercased() else { return }
-        delegate?.view(self, editingChangedTextField: searchText)
+        delegate?.view(self,editingChangedTextField: searchText)
     }
     
     //MARK: - Lifecycle
