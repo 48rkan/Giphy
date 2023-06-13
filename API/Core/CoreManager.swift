@@ -19,7 +19,8 @@ public class CoreManager {
                    method: method,
                    parameters: parameters,
                    encoding: encoding,
-                   headers: headers).responseDecodable(of: T.self) { object in
+                   headers: headers)
+        .responseDecodable(of: T.self) { object in
             switch object.result {
             case .success(let items):
                 completion(items,nil)
