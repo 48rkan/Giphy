@@ -20,7 +20,7 @@ class CustomSearchView: UIView {
         tf.attributedPlaceholder = NSAttributedString(
             string: " Search GIPHY",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
-        tf.font = UIFont(name: "Poppins-ExtraLight", size: 16)
+        tf.font = Font.pExtraLight.font(size: 16)
         tf.clearButtonMode = UITextField.ViewMode.whileEditing
         tf.backgroundColor = .white
         tf.delegate = self

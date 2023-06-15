@@ -14,7 +14,7 @@ struct ImageUploader {
         guard let imageData = image.jpegData(compressionQuality: 0.75) else { return }
         let fileName = NSUUID().uuidString
         
-        //buara referans yaradiriq bir nov bos bir referans
+        //burada referans yaradiriq bir nov bos bir referans
         let ref = Storage.storage().reference(withPath: "/profile/images/\(fileName)")
         
         // burada ise hemin bos referansa data qoyuruq

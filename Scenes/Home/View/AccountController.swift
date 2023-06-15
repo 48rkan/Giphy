@@ -14,7 +14,7 @@ class AccountController: UIViewController {
     
     let bannerImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = UIColor(hexString: "#6a18ff")
+        iv.backgroundColor = Color.midnightBlue.color()
         return iv
     }()
     
@@ -26,17 +26,25 @@ class AccountController: UIViewController {
     
     public let userNameLabel     = CustomLabel(text: "",
                                                size: 18,
-                                               font: "Poppins-Medium")
+                                               font: Font.pMedium.rawValue)
     
     private let displayNameLabel = CustomLabel(text: "",
                                                size: 14,
-                                               font: "Poppins-Medium")
+                                               font: Font.pMedium.rawValue)
     
     private lazy var settingsButton: UIButton = {
         let b = UIButton()
         b.setImage(UIImage(systemName: "person.fill"), for: .normal)
         b.tintColor = .black
         b.addTarget(self, action: #selector(tappedSettings), for: .touchUpInside)
+        return b
+    }()
+    
+    private lazy var infoButton: UIButton = {
+        let b = UIButton()
+        b.setImage(UIImage(systemName: "info.circle.fill"), for: .normal)
+        b.tintColor = .black
+        b.addTarget(self, action: #selector(tappedInfo), for: .touchUpInside)
         return b
     }()
     
@@ -89,12 +97,18 @@ class AccountController: UIViewController {
         coordinator?.showSettings(items: items)
     }
     
+    @objc fileprivate func tappedInfo() {
+        let controller = AccountStatisticsController(viewModel: AccountStatisticsViewModel(accountData: viewModel.reusableData!, favouritedGifsCount: viewModel.ownProfileFavouritedGifs.count))
+        navigationController?.presentPanModal(controller)
+//        navigationController?.show(controller, sender: nil)
+    }
+    
     @objc fileprivate func refreshing() {
         viewModel.fetchOwnProfileFavouritedGifs()
         viewModel.fetchOwnAccountData()
         self.collection.refreshControl?.endRefreshing()
     }
-    
+        
     //MARK: - Helper
     private func configureUI() {
         let refresh = UIRefreshControl()
@@ -125,7 +139,11 @@ class AccountController: UIViewController {
         if viewModel.type == .own {
             view.addSubview(settingsButton)
             settingsButton.anchor(top: view.safeAreaLayoutGuide.topAnchor,left: view.leftAnchor,paddingTop: 8,paddingLeft: 8)
-            settingsButton.setDimensions(height: 28, width: 28)
+            settingsButton.setDimensions(height: 32, width: 32)
+            
+            view.addSubview(infoButton)
+            infoButton.anchor(top: view.safeAreaLayoutGuide.topAnchor,right: view.rightAnchor,paddingTop: 8,paddingRight: 8)
+            infoButton.setDimensions(height: 32, width: 32)
             
             view.addSubview(favouriteLabel)
             favouriteLabel.anchor(top: displayNameLabel.bottomAnchor,left: view.leftAnchor,paddingTop: 0,paddingLeft: 4)

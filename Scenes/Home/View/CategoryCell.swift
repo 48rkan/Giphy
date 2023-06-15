@@ -13,12 +13,12 @@ class CategoryCell: UICollectionViewCell {
     }
     
     private let title = CustomLabel(text: "",
-                                              hexCode: "#e5e5e5",
-                                              size: 16,
-                                              font: "Poppins-SemiBold")
+                                    hexCode: Color.gray.rawValue,
+                                    size: 16,
+                                    font: Font.pSemiBold.rawValue)
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(hexString: "#333333")
+        backgroundColor = Color.darkCharcoal.color()
         layer.cornerRadius = 12
         configureUI()
     }

@@ -14,7 +14,7 @@ class LabelCell: UITableViewCell {
     
     private lazy var label = CustomLabel(text: "",
                                          textColor: .white,
-                                         size: 16, font: "Poppins-Bold")
+                                         size: 16, font: Font.pBold.rawValue)
     
     private let button: UIButton = {
         let b = UIButton()

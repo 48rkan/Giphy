@@ -18,7 +18,7 @@ class HorizontalCollectionInUIView: UIView {
     private lazy var collection: CustomCollectionView = {
         let c = CustomCollectionView(scroll: .horizontal, spacing: 4)
         c.register(GiphyCell.self, forCellWithReuseIdentifier: "\(GiphyCell.self)")
-        c.backgroundColor = UIColor(hexString: "#191919")
+        c.backgroundColor = Color.nero.color()
         c.delegate   = self
         c.dataSource = self
         return c

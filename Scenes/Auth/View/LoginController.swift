@@ -21,18 +21,18 @@ class LoginController: UIViewController {
     
     private lazy var titleLabel = CustomLabel(text: viewModel.titleOne,
                                          textColor: .white,
-                                         size: 32,font: "Poppins-Bold")
+                                              size: 32,font: Font.pBold.rawValue)
     
     private lazy var titleLabelOther = CustomLabel(text: viewModel.titleTwo,
                                               textColor: .white,
                                               size: 16,
-                                              font: "Poppins-SemiBold")
+                                              font: Font.pSemiBold.rawValue)
     
     private lazy var logInButton: CustomButton = {
         let b = CustomButton(backgroundColor: .systemBlue,
                              title: "",
                              titleColor: .black,
-                             font: "Poppins-Medium",
+                             font: Font.pMedium.rawValue,
                              size: 16,
                              cornerRadius: 12)
         b.addTarget(self, action: #selector(tappedLogIn), for: .touchUpInside)
@@ -44,7 +44,7 @@ class LoginController: UIViewController {
         let b = CustomButton(backgroundColor: .lightGray,
                              title: "",
                              titleColor: .black,
-                             font: "Poppins-Medium",
+                             font: Font.pMedium.rawValue,
                              size: 16,
                              cornerRadius: 12)
         b.addTarget(self, action: #selector(tappedSignUp), for: .touchUpInside)
@@ -54,7 +54,7 @@ class LoginController: UIViewController {
     
     private let customView: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor(hexString: "8050D7")
+        v.backgroundColor = Color.darkPink.color()
         v.layer.cornerRadius = 12
         
         return v
@@ -62,11 +62,11 @@ class LoginController: UIViewController {
     
     private let logInLabel  = CustomLabel(text: "Log in",
                                          textColor: .white,
-                                         size: 16,font: "Poppins-Medium")
+                                         size: 16,font: Font.pMedium.rawValue)
     
     private let signUpLabel = CustomLabel(text: "Sign up",
                                          textColor: .white,
-                                         size: 16,font: "Poppins-Medium")
+                                         size: 16,font: Font.pMedium.rawValue)
         
     private let emailTextField    = CustomTextField(placeholder: "Email")
     
@@ -75,9 +75,10 @@ class LoginController: UIViewController {
     private let passwordTextField = CustomTextField(placeholder: "Password", secure: true)
     
     private lazy var commonButton: UIButton = {
-        let b = CustomButton(hexCode: "8050D7",title: "",
+        let b = CustomButton(hexCode: Color.darkPink.rawValue,
+                             title: "",
                              titleColor: .white,
-                             font: "Poppins-Medium",
+                             font: Font.pMedium.rawValue,
                              size: 16)
         b.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         return b
@@ -92,7 +93,7 @@ class LoginController: UIViewController {
     
     private lazy var lastTitleLabel = CustomLabel(text: viewModel.titleThree,
                                                   textColor: .white,
-                                                  size: 12,font: "Poppins-Light")
+                                                  size: 12,font: Font.pLight.rawValue)
         
     private var usernameHeightConstraint = NSLayoutConstraint()
     

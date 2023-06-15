@@ -19,7 +19,7 @@ class CollectionInUIView: UIView {
     private lazy var collection: CustomCollectionView = {
         let c = CustomCollectionView(scroll: .horizontal, spacing: 4)
         c.register(CategoryCell.self, forCellWithReuseIdentifier: "\(CategoryCell.self)")
-        c.backgroundColor = UIColor(hexString: "#191919")
+        c.backgroundColor = Color.nero.color()
         c.delegate   = self
         c.dataSource = self
         return c

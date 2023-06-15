@@ -14,7 +14,7 @@ class ProfileCell: UITableViewCell {
     
     private let profilImage: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = UIColor(hexString: "8050D7")
+        iv.backgroundColor = Color.darkPink.color()
         return iv
     }()
     

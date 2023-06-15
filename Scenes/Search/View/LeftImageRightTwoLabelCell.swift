@@ -14,19 +14,19 @@ class LeftImageRightTwoLabelCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = UIColor(hexString: "8050D7")
+        iv.backgroundColor = Color.darkPink.color()
         return iv
     }()
     
     private let userNameLabel = CustomLabel(text: "GIPHY Clips",
                                             textColor: .white,
                                             size: 17,
-                                            font: "Poppins-Medium")
+                                            font: Font.pMedium.rawValue)
     
     private let displayNameLabel = CustomLabel(text: "GIPHY Clips",
-                                               hexCode: "#B2BEB5",
+                                               hexCode: Color.ashGrey.rawValue,
                                                size: 12,
-                                               font: "Poppins-ExtraLight")
+                                               font: Font.pExtraLight.rawValue)
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black

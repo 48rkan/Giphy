@@ -5,7 +5,6 @@
 import UIKit
 import FirebaseAuth
 import AVFoundation
-import PeekPop
 
 class HomeController: UIViewController {
     
@@ -37,9 +36,6 @@ class HomeController: UIViewController {
     private var nvActivityIndicator : UIActivityIndicatorView?
     
     private var collectionTopAnchor = NSLayoutConstraint()
-    
-    var peekPop: PeekPop?
-
 
     //MARK: - Lifecycle
     override func viewDidLoad() {

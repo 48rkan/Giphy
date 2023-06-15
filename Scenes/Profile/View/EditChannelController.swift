@@ -15,7 +15,7 @@ class EditChannelController: UIViewController {
     
     private let defaultBannerImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = UIColor(hexString: "#353935")
+        iv.backgroundColor = Color.lunarGreen.color()
 
         return iv
     }()

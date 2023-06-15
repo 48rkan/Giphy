@@ -15,7 +15,7 @@ class GiphyCell: UICollectionViewCell {
     //MARK: - Properties
     private let gifView: UIImageView = {
         let v = UIImageView()
-        v.backgroundColor = UIColor(hexString: "#6a18ff")
+        v.backgroundColor = Color.darkPink.color()
         
         return v
     }()

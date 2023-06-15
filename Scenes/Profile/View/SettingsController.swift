@@ -25,19 +25,20 @@ class SettingsController: UIViewController {
     }()
     
     private let titleLabel =  CustomLabel(text: "",
-                                          hexCode: "#F0EAD6",size: 16,
-                                          font: "Poppins-SemiBold")
+                                          hexCode: Color.eggshell.rawValue,
+                                          size: 16,
+                                          font: Font.pSemiBold.rawValue)
     
     private let editButton: UIButton = {
         let b = UIButton()
         b.setTitle("Edit", for: .normal)
-        b.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        b.titleLabel?.font = Font.pSemiBold.font(size: 16)
         return b
     }()
     
     private lazy var customView: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor(hexString: "#353935")
+        v.backgroundColor = Color.lunarGreen.color()
         v.layer.cornerRadius = 12
         v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showEditScene)))
         v.isUserInteractionEnabled = true
@@ -48,7 +49,7 @@ class SettingsController: UIViewController {
         let b = UIButton()
         b.setTitleColor(UIColor.red, for: .normal)
         b.setTitle("Log Out", for: .normal)
-        b.titleLabel?.font = UIFont(name: "Poppins-Bold", size: 16)
+        b.titleLabel?.font = Font.pBold.font(size: 16)
         b.addTarget(self, action: #selector(tappedLogOut), for: .touchUpInside)
         return b
     }()

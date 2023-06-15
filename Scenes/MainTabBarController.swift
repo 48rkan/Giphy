@@ -81,7 +81,7 @@ class MainTabBarController: UITabBarController {
         tabBar.itemPositioning = .centered
         
         roundLayer.fillColor = UIColor.black.cgColor
-        tabBar.tintColor     = UIColor(hexString: "#6a18ff")
+        tabBar.tintColor     = Color.midnightBlue.color()
         tabBar.unselectedItemTintColor = UIColor.white
     }
 }

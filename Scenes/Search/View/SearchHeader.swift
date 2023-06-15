@@ -40,12 +40,12 @@ class SearchHeader: UICollectionReusableView {
     private let giphyClipsTitle = CustomLabel(text: "GIPHY Clips",
                                            textColor: .white,
                                            size: 17,
-                                           font: "Poppins-Medium")
+                                           font: Font.pMedium.rawValue)
     
     private let allGifsTitle = CustomLabel(text: "All the GIFs",
                                            textColor: .white,
                                            size: 17,
-                                           font: "Poppins-Medium")
+                                           font: Font.pMedium.rawValue)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
