@@ -12,6 +12,7 @@ enum GifsType: String {
     case dogs        = "Dogs"
     case memes       = "Memes"
     case reactions   = "Reactions"
+    case none
 }
 
 public enum HomeEndPoint: String {

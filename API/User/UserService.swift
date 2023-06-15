@@ -10,9 +10,7 @@ struct UserService {
     static func fetchUser(completion: @escaping (Account)->()) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        COLLECTION_USER
-            .document(uid)
-            .getDocument { documentSnapshot, error in
+        COLLECTION_USER.document(uid).getDocument { documentSnapshot, error in
                 
             guard let dictionary = documentSnapshot?.data() else { return }
             
@@ -23,8 +21,6 @@ struct UserService {
     static func updateUserName(newUsername: String) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        COLLECTION_USER
-            .document(uid)
-            .updateData(["username" : newUsername])
+        COLLECTION_USER.document(uid).updateData(["username" : newUsername])
     }
 }

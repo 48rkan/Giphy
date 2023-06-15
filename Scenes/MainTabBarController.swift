@@ -6,7 +6,8 @@ import UIKit
 import FirebaseAuth
 
 class MainTabBarController: UITabBarController {
-            
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -15,6 +16,7 @@ class MainTabBarController: UITabBarController {
         setTabBarAppearance()
     }
     
+    //MARK: - Helper
     func configureUI() {
         DispatchQueue.main.async {
             if Auth.auth().currentUser == nil {
@@ -84,6 +86,7 @@ class MainTabBarController: UITabBarController {
     }
 }
 
+//MARK: - LoginControllerDelegate
 extension MainTabBarController: LoginControllerDelegate {
     func authenticationDidComplete() {
         guard let nav = viewControllers?.first as? UINavigationController else { return }

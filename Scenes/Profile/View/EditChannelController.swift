@@ -32,6 +32,8 @@ class EditChannelController: UIViewController {
     
     private let userNameTextField = CustomTextField(placeholder: "")
     
+    private var selectedImage = UIImage()
+    
     //MARK: - Lifecylce
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +52,7 @@ class EditChannelController: UIViewController {
                     // secdiyimiz tek sekile bele catiriq
                     guard let image = items.singlePhoto?.image else { return }
                     self.profileImageView.image = image
-                    ImageUploader.changePhoto(image: image)
+                    self.selectedImage = image
                 }
             }
         })
@@ -61,10 +63,14 @@ class EditChannelController: UIViewController {
         UserService.updateUserName(newUsername: userNameText)
         
         guard let tabBar  = tabBarController            as? MainTabBarController   else { return }
-        guard let nav     = tabBar.viewControllers?[2]  as? UINavigationController else { return }
+
+        guard let nav = tabBar.viewControllers?[2] as? UINavigationController else { return }
+        
         guard let account = nav.viewControllers.first   as? AccountController      else { return }
-//        (tabBarController?.viewControllers?[2] as? AccountController)?.viewModel.getProfile()
-//        account.viewModel.getProfile()
+        
+        ImageUploader.changePhoto(image: selectedImage)
+    
+        account.viewModel.getProfile()
         
         navigationController?.popToRootViewController(animated: true)
     }

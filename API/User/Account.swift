@@ -21,10 +21,10 @@ struct Account {
 }
 
 extension Account: CommonData {
-    var gifID_      : String? { nil }
     var gifURL_     : String? { profilimage }
     var imageURL    : String? { profilimage }
-    var userName    : String? { username }
-    var bannerURL   : String? { banner   }
-    var displayName_: String? { username }
+    var userName    : String? { username    }
+    var bannerURL   : String? { banner      }
+    var displayName_: String? { username    }
+    var gifID_      : String? { nil         }
 }

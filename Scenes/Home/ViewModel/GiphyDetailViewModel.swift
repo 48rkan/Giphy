@@ -15,10 +15,10 @@ class GiphyDetailViewModel {
         self.items = items
     }
     
-    var userNameText: String    { items.userName ?? ""}
-    var displayNameText: String { items.displayName_ ?? ""}
-    var userNamePhotoURL: URL?  { URL(string: items.imageURL ?? "")}
-    var gifURL: URL?            { URL(string: items.gifURL_ ?? "" )}
+    var userNameText    : String { items.userName             ?? ""  }
+    var displayNameText : String { items.displayName_         ?? ""  }
+    var userNamePhotoURL: URL?   { URL(string: items.imageURL ?? "" )}
+    var gifURL          : URL?   { URL(string: items.gifURL_  ?? "" )}
     
     func fetchRelatedGifs() {
         HomeManager.fetchRelatedGifs(query: items.userName ?? "") { items, error in

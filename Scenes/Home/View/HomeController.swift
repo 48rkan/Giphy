@@ -5,6 +5,7 @@
 import UIKit
 import FirebaseAuth
 import AVFoundation
+import PeekPop
 
 class HomeController: UIViewController {
     
@@ -33,22 +34,38 @@ class HomeController: UIViewController {
         return c
     }()
     
+    private var nvActivityIndicator : UIActivityIndicatorView?
+    
+    private var collectionTopAnchor = NSLayoutConstraint()
+    
+    var peekPop: PeekPop?
+
+
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureNavigationBar()
+        configRefreshController()
         addNavToCoordinator()
         
-        SoundHandler.playSound(name: "welcome", type: "mp3")
+//        SoundHandler.playSound(name: "welcome", type: "mp3")
 
-        
         viewModel.getGifs(type: .trending)
         viewModel.successCallBack = {
             self.showLoader(false)
             self.collection.reloadData()
+            self.collection.refreshControl?.endRefreshing()
             
+            UIView.animate(withDuration: 3) {
+                self.collectionTopAnchor.constant = 72
+                self.view.layoutIfNeeded()
+            }
         }
+        
+//        peekPop = PeekPop(viewController: self)
+//        peekPop?.registerForPreviewingWithDelegate(self,
+//                                                   sourceView: collection)
     }
 
     //MARK: - Actions
@@ -63,6 +80,7 @@ class HomeController: UIViewController {
     }
     
     //MARK: - Helper
+    
     private func configureUI () {
         view.addSubview(customView)
         customView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
@@ -71,12 +89,14 @@ class HomeController: UIViewController {
         customView.setHeight(56)
         
         view.addSubview(collection)
-        collection.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                          left: view.leftAnchor,
+        collection.anchor(left: view.leftAnchor,
                           bottom: view.bottomAnchor,
-                          right: view.rightAnchor,paddingTop: 72,
+                          right: view.rightAnchor,
                           paddingLeft: 4,paddingBottom: 0,
                           paddingRight: 4)
+        collectionTopAnchor = collection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                                              constant: 72)
+        collectionTopAnchor.isActive = true
     }
     
     private func configureNavigationBar() {
@@ -102,6 +122,42 @@ class HomeController: UIViewController {
     private func addNavToCoordinator() {
         guard let nav = navigationController else { return }
         coordinator = AppCoordinator(navigationController: nav)
+    }
+    
+    private func configRefreshController() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshing), for: .valueChanged)
+        self.collection.refreshControl = refreshControl
+        self.collection.refreshControl?.tintColor = .white
+        
+        let refreshImage      = UIImageView()
+        setGifFromURL(imageView: refreshImage,
+                      url: URL(string: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDIxZmEyOTNjNzQ5MDYxNzk4ZTYyOWY0MzIyYTU4ZDJjNWQyMThiOCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/xTkcEQACH24SMPxIQg/giphy.gif")!)
+        refreshControl.backgroundColor = UIColor.clear
+        refreshControl.tintColor       = UIColor.clear
+        refreshControl.addSubview(refreshImage)
+        
+        refreshImage.frame = refreshControl.bounds.offsetBy(
+            dx: view.frame.width / 2 - 20,
+            dy: 0)
+        refreshImage.frame.size.width  = 60
+        refreshImage.frame.size.height = 60
+        
+        collection.addSubview(refreshControl)
+        
+    }
+        
+    @objc func refreshing() {
+        nvActivityIndicator?.startAnimating()
+        
+        UIView.animate(withDuration: 3) {
+            self.collectionTopAnchor.constant = 160
+//            self.view.layoutIfNeeded()
+        }
+        
+        viewModel.getGifs(type: viewModel.currentSituation.0,
+                          query: viewModel.currentSituation.1)
+        
     }
 }
 
@@ -137,6 +193,7 @@ extension HomeController: CustomViewDelegate {
         
         viewModel.getGifs(type: GifsType(rawValue: name) ?? .trending,
                           query: name)
+        viewModel.currentSituation = (GifsType(rawValue: name) ?? .trending,name)
         collection.reloadData()
     }
 }
@@ -165,3 +222,15 @@ struct MainPreview: PreviewProvider {
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
     }
 }
+
+//extension HomeController: PeekPopPreviewingDelegate {
+//    func previewingContext(_ previewingContext: PreviewingContext, commitViewController viewControllerToCommit: UIViewController) {
+//        print("a")
+//    }
+//
+//    func previewingContext(_ previewingContext: PreviewingContext, viewControllerForLocation location: CGPoint) -> UIViewController? {
+////        previewingContext.sourceRect = CGRect(origin: CGPoint(x: view.frame.origin.x - 75.0, y: view.frame.origin.y - 75.0), size: CGSize(width: 150.0, height: 150.0))
+//        return HomeController()
+////        return HomeController()
+//    }
+//}

@@ -91,6 +91,7 @@ class AccountController: UIViewController {
     
     @objc fileprivate func refreshing() {
         viewModel.fetchOwnProfileFavouritedGifs()
+        viewModel.fetchOwnAccountData()
         self.collection.refreshControl?.endRefreshing()
     }
     

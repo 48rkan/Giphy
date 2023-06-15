@@ -8,23 +8,32 @@ import FirebaseFirestore
 
 class FavouriteManager {
     static func favouriteGif(gifID: String,gifURL: String) {
-        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        let dataRef = COLLECTION_FAVOURITE.document(uid).collection("giphy-favourite").document()
+
         let data: [String:Any] = [
             "gifURL": gifURL,
-            "gifID" : gifID
+            "gifID" : gifID,
+            "documentID": dataRef.documentID
         ]
-        
-        COLLECTION_FAVOURITE.document(gifID).setData(data)
+                
+        COLLECTION_FAVOURITE.document(uid).collection("giphy-favourite").document(gifID).setData(data)
+
     }
     
     static func unFavouriteGif(gifID: String) {
-        COLLECTION_FAVOURITE.document(gifID).delete()
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        COLLECTION_FAVOURITE.document(uid).collection("giphy-favourite").document(gifID).delete()
     }
     
     static func fetchFavouritesGifs(completion: @escaping ([Gif])->()) {
-        COLLECTION_FAVOURITE
-            .getDocuments { querySnapshot, error in
-                
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        COLLECTION_FAVOURITE.document(uid).collection("giphy-favourite").getDocuments { querySnapshot, error in
+            
             guard let documents = querySnapshot?.documents else { return }
             
             let datas = documents.map { queryDocumentSnapshot in
@@ -37,8 +46,10 @@ class FavouriteManager {
     }
     
     static func checkFavourite(id: String , completion : @escaping (Bool)->()) {
-                
-        COLLECTION_FAVOURITE.document(id)
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        COLLECTION_FAVOURITE.document(uid).collection("giphy-favourite").document(id)
+//        COLLECTION_FAVOURITE.document(id)
             .getDocument { documentSnapshot, error in
             guard let isFollowed = documentSnapshot?.exists else { return }
             

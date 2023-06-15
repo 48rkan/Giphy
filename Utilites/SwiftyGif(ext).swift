@@ -7,6 +7,7 @@ import Foundation
 import SwiftyGif
 
 extension CVarArg {
+    
     func setGifFromURL(imageView: UIImageView,
                        url: URL) {
         imageView.setGifFromURL(url,

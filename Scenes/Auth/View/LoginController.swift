@@ -27,22 +27,28 @@ class LoginController: UIViewController {
                                               textColor: .white,
                                               size: 16,
                                               font: "Poppins-SemiBold")
-
-    private lazy var logInButton: UIButton = {
-        let b = UIButton()
-        b.backgroundColor = .systemBlue
-        b.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 16)
-        b.layer.cornerRadius = 12
+    
+    private lazy var logInButton: CustomButton = {
+        let b = CustomButton(backgroundColor: .systemBlue,
+                             title: "",
+                             titleColor: .black,
+                             font: "Poppins-Medium",
+                             size: 16,
+                             cornerRadius: 12)
         b.addTarget(self, action: #selector(tappedLogIn), for: .touchUpInside)
+
         return b
     }()
     
-    private lazy var signUpButton: UIButton = {
-        let b = UIButton()
-        b.backgroundColor    = .lightGray
-        b.titleLabel?.font   = UIFont(name: "Poppins-Medium", size: 16)
-        b.layer.cornerRadius = 12
+    private lazy var signUpButton: CustomButton = {
+        let b = CustomButton(backgroundColor: .lightGray,
+                             title: "",
+                             titleColor: .black,
+                             font: "Poppins-Medium",
+                             size: 16,
+                             cornerRadius: 12)
         b.addTarget(self, action: #selector(tappedSignUp), for: .touchUpInside)
+
         return b
     }()
     
@@ -54,7 +60,7 @@ class LoginController: UIViewController {
         return v
     }()
     
-    private let logInLabel = CustomLabel(text: "Log in",
+    private let logInLabel  = CustomLabel(text: "Log in",
                                          textColor: .white,
                                          size: 16,font: "Poppins-Medium")
     
@@ -66,13 +72,13 @@ class LoginController: UIViewController {
     
     private let userNameTextField = CustomTextField(placeholder: "Username")
      
-    private let passwordTextField = CustomTextField(placeholder: "Password",
-                                                    secure: true)
-
+    private let passwordTextField = CustomTextField(placeholder: "Password", secure: true)
+    
     private lazy var commonButton: UIButton = {
-        let b = UIButton()
-        b.backgroundColor = UIColor(hexString: "8050D7")
-        b.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 16)
+        let b = CustomButton(hexCode: "8050D7",title: "",
+                             titleColor: .white,
+                             font: "Poppins-Medium",
+                             size: 16)
         b.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         return b
     }()
@@ -91,13 +97,16 @@ class LoginController: UIViewController {
     private var usernameHeightConstraint = NSLayoutConstraint()
     
     private var viewLeadingConstraint = NSLayoutConstraint()
-
+    
     var signUpClicked: Bool = false
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+        viewModel.adapter = LoginAdapter(controller: self)
+        
     }
     
     //MARK: - Actions
@@ -219,32 +228,53 @@ class LoginController: UIViewController {
         
         if signUpClicked {
             showLoader(true)
-            viewModel.registerUser(credential: AuthCredential(email: email, password: password, username: username)) { error in
-                self.showMessage(withTitle: error?.localizedDescription ?? "Ugurlu", message: "")
-                self.showLoader(false)
-                return
+            viewModel.register(credential: AuthCredential(email: email, password: password, username: username), type: .email) { error in
+                self.showMessage(withTitle: error?.localizedDescription ?? "Successfully registered", message: "")
+                 self.showLoader(false)
+                 return
             }
-        } else {
+        }
+        else {
             showLoader(true)
-            viewModel.logUserIn(email: email, password: password) { data, error in
+            
+            viewModel.login(credential: AuthCredential(email: email, password: password, username: username), type: .email) { data, error in
                 if error != nil {
                     self.showMessage(withTitle: error?.localizedDescription ?? "Success", message: "")
                     self.showLoader(false)
                     return
                 }
                 self.delegate?.authenticationDidComplete()
-
-                self.dismiss(animated: true)
                 
+                self.dismiss(animated: true)
             }
+            
+ 
+    
+//            viewModel.logUserIn(email: email, password: password) { data, error in
+//                if error != nil {
+//                    self.showMessage(withTitle: error?.localizedDescription ?? "Success", message: "")
+//                    self.showLoader(false)
+//                    return
+//                }
+//                self.delegate?.authenticationDidComplete()
+//
+//                self.dismiss(animated: true)
+//
+//            }
         }
     }
     
     @objc private func tappedGoggle() {
-        viewModel.tappedGoggle(view: self) {
+        viewModel.login(type: .google) { data, error in
             self.delegate?.authenticationDidComplete()
             self.dismiss(animated: true)
         }
+        
+
+//        viewModel.tappedGoggle(view: self) {
+//            self.delegate?.authenticationDidComplete()
+//            self.dismiss(animated: true)
+//        }
     }
     
     //MARK:- Helpers

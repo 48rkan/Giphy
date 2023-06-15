@@ -5,5 +5,7 @@
 import Foundation
 
 class AuthHelper {
-    static let defaultPhotoGif = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjQ2Yzg5YzcxNTRhM2FhNjYzMjg2ZWE0ZmZlMGZkZmFlNGM4YTBjZSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/Fc0krhDnpoMw2TWYoz/giphy.gif"
+    static let defaultPhotoGif = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTM2ZDdhMTMyMWViNWM0MjI3MmRiZDg4YWVjYmY2MzI4YjI5MmY5YiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/l3q2K5jinAlChoCLS/giphy.gif"
+    
+    static let bannerGif = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTIxMzc3NDI3MDExNDc5MGYxNDI1OGFjODMzMWNkNTExYTdlNTU4OSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/isqxY03RuhGxNbCPzY/giphy.gif"
 }

@@ -19,7 +19,8 @@ struct AuthService {
     static func registerUser(credential: AuthCredential,
                              completion: @escaping (Error?) -> ()) {
         
-        Auth.auth().createUser(withEmail: credential.email, password: credential.password) { result, error in
+        Auth.auth().createUser(withEmail: credential.email,
+                               password: credential.password) { result, error in
             if error != nil {
                 completion(error)
                 return
@@ -32,11 +33,10 @@ struct AuthService {
                 "username": credential.username.lowercased(),
                 "uid"     : uid,
                 "gif"     : AuthHelper.defaultPhotoGif,
-                "banner"  : AuthHelper.defaultPhotoGif
+                "banner"  : AuthHelper.bannerGif
             ]
             
-            COLLECTION_USER
-                .document(uid)
+            COLLECTION_USER.document(uid)
                 .setData(data,completion: completion)
         }
     }

@@ -8,7 +8,10 @@ class HomeViewModel {
     
     public var items = [Datum]()
     public var successCallBack: (()->())?
-     
+
+    var currentSituation: (GifsType,String) = (.trending ,
+                                               "Trending")
+    
     public func getGifs(type: GifsType, query: String = "") {
         HomeManager.fetchGifs(limit: 100,
                               type: type,

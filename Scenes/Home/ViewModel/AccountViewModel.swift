@@ -18,9 +18,9 @@ class AccountViewModel {
     var successCallBack: (()->())?
     
     var bannerURL      : URL?   { URL(string: reusableData?.bannerURL ?? "")}
-    var profileImageURL: URL?   { URL(string: reusableData?.imageURL ?? "")}
-    var userName       : String { reusableData?.userName ?? "" }
-    var displaName     : String { reusableData?.displayName_ ?? ""}
+    var profileImageURL: URL?   { URL(string: reusableData?.imageURL  ?? "")}
+    var userName       : String { reusableData?.userName              ?? "" }
+    var displaName     : String { reusableData?.displayName_          ?? "" }
     
     init(items: CommonData?, type: AccountType) {
         self.reusableData = items

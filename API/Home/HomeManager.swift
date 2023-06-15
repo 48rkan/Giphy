@@ -20,6 +20,7 @@ class HomeManager: HomeManagerProtocol {
         case .dogs     : url = HomeEndPoint.common.path()   + "&q=\(query)"
         case .reactions: url = HomeEndPoint.common.path()   + "&q=\(query)"
         case .memes    : url = HomeEndPoint.common.path()   + "&q=\(query)"
+        case .none     : break
         }
         
         CoreManager.request(type: Trending.self,
