@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  Giphy
+
+  Created by Erkan Emir on 16.06.23.
+  
+*/
+
+"Trending"         = "im Trend";
+"Stickers"         = "Aufkleber";
+"Emoji"            = "Emoji";
+"Reactions"        = "Reaktionen";
+"Memes"            = "Meme";
+"Cats"             = "Katzen";
+"Dogs"             = "Hunde";
+"Log out"          = "Ausloggent";
+"Favourited Gifs"  = "Lieblings Gifs";
+" Search GIPHY"    = "Suchen Sie nach GIPHY";

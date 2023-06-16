@@ -5,7 +5,6 @@
 import UIKit
 
 class HomeViewModel {
-    
     public var items = [Datum]()
     public var successCallBack: (()->())?
 
@@ -24,5 +23,4 @@ class HomeViewModel {
             self.successCallBack?()
         }
     }
-        
 }

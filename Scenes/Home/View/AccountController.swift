@@ -20,7 +20,7 @@ class AccountController: UIViewController {
     
     private var profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .blue
+        iv.backgroundColor = .black
         return iv
     }()
     
@@ -48,7 +48,7 @@ class AccountController: UIViewController {
         return b
     }()
     
-    private let favouriteLabel = CustomLabel(text: "Favourited Gifs",
+    private let favouriteLabel = CustomLabel(text: "Favourited Gifs".localize,
                                              textColor: .white,
                                              size: 18)
     

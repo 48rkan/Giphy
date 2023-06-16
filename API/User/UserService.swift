@@ -8,9 +8,18 @@ import FirebaseFirestore
 
 struct UserService {
     static func fetchUser(completion: @escaping (Account)->()) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+     
+        var id = ""
         
-        COLLECTION_USER.document(uid).getDocument { documentSnapshot, error in
+        if UserDefaults.standard.bool(forKey: "GOOGLE_SIGN_UP") == true {
+            let email = UserDefaults.standard.string(forKey: "GOOGLE_EMAIL")
+            id = email ?? ""
+        } else {
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            id = uid
+        }
+        
+        COLLECTION_USER.document(id).getDocument { documentSnapshot, error in
                 
             guard let dictionary = documentSnapshot?.data() else { return }
             

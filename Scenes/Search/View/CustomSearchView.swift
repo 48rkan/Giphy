@@ -18,7 +18,7 @@ class CustomSearchView: UIView {
     public lazy var textField: UITextField = {
         let tf = UITextField()
         tf.attributedPlaceholder = NSAttributedString(
-            string: " Search GIPHY",
+            string: " Search GIPHY".localize,
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         tf.font = Font.pExtraLight.font(size: 16)
         tf.clearButtonMode = UITextField.ViewMode.whileEditing

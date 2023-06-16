@@ -16,7 +16,7 @@ struct AuthService {
         }
     }
     
-    static func registerUser(credential: AuthCredential,
+    static func registerUserWithEmail(credential: AuthCredential,
                              completion: @escaping (Error?) -> ()) {
         
         Auth.auth().createUser(withEmail: credential.email,
@@ -38,6 +38,30 @@ struct AuthService {
             
             COLLECTION_USER.document(uid)
                 .setData(data,completion: completion)
+            
+            UserDefaults.standard.set(false, forKey: "GOOGLE_SIGN_UP")
+            
+
         }
+    }
+    
+    static func registerUserWithGoogle(credential: AuthCredential,
+                                       completion: @escaping (Error?) -> ()) {
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+                
+        let data: [String:Any] = [
+            "email"   : credential.email,
+            "username": credential.username.lowercased(),
+            "uid"     : credential.email,
+            "gif"     : AuthHelper.defaultPhotoGif,
+            "banner"  : AuthHelper.bannerGif
+        ]
+        
+        COLLECTION_USER.document(credential.email)
+            .setData(data,completion: completion)
+        
+        UserDefaults.standard.set(true, forKey: "GOOGLE_SIGN_UP")
+        UserDefaults.standard.set(credential.email, forKey: "GOOGLE_EMAIL")
+
     }
 }

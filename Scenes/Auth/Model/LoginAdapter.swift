@@ -16,7 +16,7 @@ enum LoginType {
 //adapter - controller,viewModel'i musteqillesirimeye xidmet edir.Controllerde viewmodelde bir deyisiklik oldugu teqdirde her yerde deyismeliyik.Amma bele
 
 class LoginAdapter {
-        
+
     var controller: LoginController
     
     init(controller: LoginController) {
@@ -42,20 +42,19 @@ class LoginAdapter {
         }
     }
     
-    
     private func registerWithEmail(credential:AuthCredential,
-                      completion: @escaping (Error?)->()) {
-        AuthService.registerUser(credential: credential) { error in
+                                   completion: @escaping (Error?)->()) {
+        AuthService.registerUserWithEmail(credential: credential) { error in
             completion(error)
         }
     }
     
     private func loginWithGoogle(view: UIViewController,completion: @escaping (AuthDataResult?, Error?)->()) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-    
+        
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-
+        
         GIDSignIn.sharedInstance.signIn(withPresenting: controller) { result, error in
             if error != nil { return }
             
@@ -66,28 +65,34 @@ class LoginAdapter {
                 withIDToken: idToken,
                 accessToken: user.accessToken.tokenString)
             
-            AuthService.registerUser(credential: AuthCredential(
-                email: user.fetcherAuthorizer.userEmail ?? "" ,
+            AuthService.registerUserWithGoogle(credential: .init(
+                email: user.profile?.email ?? "",
                 password: "***",
                 username: "User-\(Int.random(in: 1000...5000))")) { error in
-                if error != nil { print("\(error?.localizedDescription ?? "")")}
-                return
-            }
+                    if error != nil { print("\(error?.localizedDescription ?? "")")}
+                    return
+                }
+            
+//            AuthService.registerUserWithEmail(credential: AuthCredential(
+//                email: user.fetcherAuthorizer.userEmail ?? "" ,
+//                password: "***",
+//                username: "User-\(Int.random(in: 1000...5000))")) { error in
+//                    if error != nil { print("\(error?.localizedDescription ?? "")")}
+//                    return
+//                }
             
             Auth.auth().signIn(with: credential) { result, error in
                 if error != nil { return }
-                      
+                
                 completion(result,error)
             }
         }
     }
     
     private func loginWithEmail(email: String,password: String,
-                   completion: @escaping (AuthDataResult?,Error?)->()) {
+                                completion: @escaping (AuthDataResult?,Error?)->()) {
         AuthService.logUserIn(email: email, password: password) { data, error in
             completion(data,error)
         }
     }
-    
-    
 }

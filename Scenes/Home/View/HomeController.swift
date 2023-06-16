@@ -58,10 +58,6 @@ class HomeController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         }
-        
-//        peekPop = PeekPop(viewController: self)
-//        peekPop?.registerForPreviewingWithDelegate(self,
-//                                                   sourceView: collection)
     }
 
     //MARK: - Actions
@@ -76,6 +72,8 @@ class HomeController: UIViewController {
     }
     
     //MARK: - Helper
+    
+
     
     private func configureUI () {
         view.addSubview(customView)
@@ -106,10 +104,16 @@ class HomeController: UIViewController {
         
         //Right Bar Button Item(s)
         let buttonTwo = UIButton(type: .custom)
+        buttonTwo.addTarget(self,
+                            action: #selector(tappedButtonTwo),
+                            for: .touchUpInside)
         buttonTwo.setImage(UIImage(named: "addLogo"), for: .normal)
         buttonTwo.imageView?.contentMode = .scaleAspectFill
         
-        let logOutButton = UIBarButtonItem(title: "Log out", style: .done, target: self, action: #selector(tappedLogOutButton))
+        let logOutButton = UIBarButtonItem(title: "Log out".localize,
+                                           style: .done,
+                                           target: self,
+                                           action: #selector(tappedLogOutButton))
 
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: buttonTwo),logOutButton]
         buttonTwo.setDimensions(height: 36, width: 36)
@@ -140,7 +144,6 @@ class HomeController: UIViewController {
         refreshImage.frame.size.height = 60
         
         collection.addSubview(refreshControl)
-        
     }
         
     @objc func refreshing() {
@@ -154,6 +157,11 @@ class HomeController: UIViewController {
         viewModel.getGifs(type: viewModel.currentSituation.0,
                           query: viewModel.currentSituation.1)
         
+    }
+    
+    @objc func tappedButtonTwo() {
+        let controller = LanguageController()
+        presentPanModal(controller)
     }
 }
 

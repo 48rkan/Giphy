@@ -248,20 +248,6 @@ class LoginController: UIViewController {
                 
                 self.dismiss(animated: true)
             }
-            
- 
-    
-//            viewModel.logUserIn(email: email, password: password) { data, error in
-//                if error != nil {
-//                    self.showMessage(withTitle: error?.localizedDescription ?? "Success", message: "")
-//                    self.showLoader(false)
-//                    return
-//                }
-//                self.delegate?.authenticationDidComplete()
-//
-//                self.dismiss(animated: true)
-//
-//            }
         }
     }
     
@@ -270,12 +256,7 @@ class LoginController: UIViewController {
             self.delegate?.authenticationDidComplete()
             self.dismiss(animated: true)
         }
-        
-
-//        viewModel.tappedGoggle(view: self) {
-//            self.delegate?.authenticationDidComplete()
-//            self.dismiss(animated: true)
-//        }
+    
     }
     
     //MARK:- Helpers

@@ -12,7 +12,15 @@ class CollectionInUIView: UIView {
     
     //MARK: - Properties
     
-    var array = [ "Trending", "Stickers", "Emoji", "Reactions", "Memes", "Cats", "Dogs" ]
+    var array = [
+        "Trending".localize,
+        "Stickers".localize,
+        "Emoji".localize,
+        "Reactions".localize,
+        "Memes".localize,
+        "Cats".localize,
+        "Dogs".localize
+    ]
     
     weak var delegate: CustomViewDelegate?
     

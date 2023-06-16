@@ -3,7 +3,6 @@
 //  Giphy
 //
 //  Created by Erkan Emir on 15.06.23.
-//
 
 import UIKit
 
