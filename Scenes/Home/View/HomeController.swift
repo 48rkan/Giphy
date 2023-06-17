@@ -210,31 +210,19 @@ extension HomeController: PinterestLayoutDelegate {
     }
 }
 
-import SwiftUI
-
-struct MainPreview: PreviewProvider {
-    
-    static var previews: some View {
-        ContainView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainView: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            UINavigationController(rootViewController: HomeController())
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
-    }
-}
-
-//extension HomeController: PeekPopPreviewingDelegate {
-//    func previewingContext(_ previewingContext: PreviewingContext, commitViewController viewControllerToCommit: UIViewController) {
-//        print("a")
+//import SwiftUI
+//
+//struct MainPreview: PreviewProvider {
+//
+//    static var previews: some View {
+//        ContainView().edgesIgnoringSafeArea(.all)
 //    }
 //
-//    func previewingContext(_ previewingContext: PreviewingContext, viewControllerForLocation location: CGPoint) -> UIViewController? {
-////        previewingContext.sourceRect = CGRect(origin: CGPoint(x: view.frame.origin.x - 75.0, y: view.frame.origin.y - 75.0), size: CGSize(width: 150.0, height: 150.0))
-//        return HomeController()
-////        return HomeController()
+//    struct ContainView: UIViewControllerRepresentable {
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            UINavigationController(rootViewController: MainTabBarController())
+//        }
+//
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
 //    }
 //}
