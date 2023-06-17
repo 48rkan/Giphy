@@ -27,7 +27,6 @@ class LanguageController: UIViewController {
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                        action: #selector(tappedSauida)))
         iv.isUserInteractionEnabled = true
-        
         return iv
     }()
     
@@ -62,10 +61,23 @@ class LanguageController: UIViewController {
     func configCountry(country: String) {
         UserDefaults.standard.setValue(country, forKey: "appLanguage")
         
-        showLoader(true)
-        showMessage(withTitle: "restart your app",
-                    message: "")
-        self.showLoader(false)
+        showMessage(withTitle: "Restart your app",
+                    message: "") { alert in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                  exit(0)
+                 }
+            }
+        }
+        
+        // appi yeniden basladir bir nov proektden atir
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+//             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//              exit(0)
+//             }
+//        }
     }
     
     @objc func tappedUSA() {
