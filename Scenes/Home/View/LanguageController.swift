@@ -83,8 +83,7 @@ class LanguageController: UIViewController {
     }
     
     func configCountry(country: String) {
-        UserDefaults.standard.setValue(country,
-                                       forKey: "appLanguage")
+        UserDefaults.standard.setValue(country,forKey: "appLanguage")
         
         showMessage(withTitle: "Restart your app",
                     message: "") { _ in
@@ -103,23 +102,17 @@ class LanguageController: UIViewController {
     
     @objc func tappedGermany() {
         configCountry(country: "de")
-        
     }
     
     @objc func tappedSauida() {
         configCountry(country: "ar")
         UIView.appearance().semanticContentAttribute = .forceRightToLeft
-
-//        let flipped = originalImage.imageFlippedForRightToLeftLayoutDirection()
-
     }
 }
 
 extension LanguageController: PanModalPresentable {
-        var panScrollable: UIScrollView? { nil }
-        var shortFormHeight: PanModalHeight { .contentHeight(60)}
-        
-        var longFormHeight: PanModalHeight  { .maxHeightWithTopInset(40) }
-        
-        var cornerRadius: CGFloat { 16 }
+        var panScrollable  : UIScrollView?  { nil                        }
+        var shortFormHeight: PanModalHeight { .contentHeight(60)         }
+        var longFormHeight : PanModalHeight { .maxHeightWithTopInset(40) }
+        var cornerRadius   : CGFloat        { 16                         }
 }

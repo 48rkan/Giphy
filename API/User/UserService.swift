@@ -8,7 +8,6 @@ import FirebaseFirestore
 
 struct UserService {
     static func fetchUser(completion: @escaping (Account)->()) {
-     
         var id = ""
         
         if UserDefaults.standard.bool(forKey: "GOOGLE_SIGN_UP") == true {
@@ -20,7 +19,6 @@ struct UserService {
         }
         
         COLLECTION_USER.document(id).getDocument { documentSnapshot, error in
-                
             guard let dictionary = documentSnapshot?.data() else { return }
             
             completion(Account(dictionary: dictionary))

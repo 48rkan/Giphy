@@ -80,15 +80,11 @@ class AccountStatisticsController: UIViewController,PanModalPresentable {
             profileImageView.sd_setImage(with: profileUrl)
         }
     }
-    
-
 }
 
 extension AccountStatisticsController {
-    var panScrollable: UIScrollView? { nil }
-    var shortFormHeight: PanModalHeight { .contentHeight(300)}
-    
-    var longFormHeight: PanModalHeight  { .maxHeightWithTopInset(40) }
-    
-    var cornerRadius: CGFloat { 16 }
+    var cornerRadius   : CGFloat        { 16                         }
+    var panScrollable  : UIScrollView?  { nil                        }
+    var shortFormHeight: PanModalHeight { .contentHeight(300)        }
+    var longFormHeight : PanModalHeight { .maxHeightWithTopInset(40) }
 }

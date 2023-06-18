@@ -32,7 +32,6 @@ struct ImageUploader {
     }
     
     static func changePhoto(image: UIImage) {
-        
         ImageUploader.uploadImage(image: image) { imageUrl in
             guard let uid = Auth.auth().currentUser?.uid else { return }
             

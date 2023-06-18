@@ -19,7 +19,6 @@ class FavouriteManager {
         ]
                 
         COLLECTION_FAVOURITE.document(uid).collection("giphy-favourite").document(gifID).setData(data)
-
     }
     
     static func unFavouriteGif(gifID: String) {
@@ -29,7 +28,6 @@ class FavouriteManager {
     }
     
     static func fetchFavouritesGifs(completion: @escaping ([Gif])->()) {
-        
         guard let uid = Auth.auth().currentUser?.uid else { return }
 
         COLLECTION_FAVOURITE.document(uid).collection("giphy-favourite").getDocuments { querySnapshot, error in

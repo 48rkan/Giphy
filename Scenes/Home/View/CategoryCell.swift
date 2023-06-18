@@ -16,6 +16,7 @@ class CategoryCell: UICollectionViewCell {
                                     hexCode: Color.gray.rawValue,
                                     size: 16,
                                     font: Font.pSemiBold.rawValue)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.darkCharcoal.color()

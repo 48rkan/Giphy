@@ -31,7 +31,6 @@ class HomeManager: HomeManagerProtocol {
     
     static func fetchRelatedGifs(query: String,
                                  completion: @escaping (Trending?, Error?)->()) {
-        
         CoreManager.request(type: Trending.self,
                             url: HomeEndPoint.common.path() + "&q=\(query)") { items, error in
             completion(items,error)

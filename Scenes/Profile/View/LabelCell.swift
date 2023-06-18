@@ -46,7 +46,6 @@ class LabelCell: UITableViewCell {
         button.anchor(top: topAnchor,right: rightAnchor,
                       paddingTop: 4,paddingRight: 4)
         button.setDimensions(height: 32, width: 32)
-        
     }
     
     private func configure() {

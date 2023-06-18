@@ -28,11 +28,9 @@ class EditChannelController: UIViewController {
         return iv
     }()
     
-    private let usernameTitle = CustomLabel(text: "Username", size: 16)
-    
+    private let usernameTitle     = CustomLabel(text: "Username", size: 16)
     private let userNameTextField = CustomTextField(placeholder: "")
-    
-    private var selectedImage = UIImage()
+    private var selectedImage     = UIImage()
     
     //MARK: - Lifecylce
     override func viewDidLoad() {
@@ -44,7 +42,6 @@ class EditChannelController: UIViewController {
     //MARK: - Actions
     @objc fileprivate func presentPicker() {
         viewModel?.imagePickerConfiguration(completion: { imagePicker in
-            
             self.present(imagePicker, animated: true)
             
             imagePicker.didFinishPicking { items, cancelled in
@@ -63,9 +60,7 @@ class EditChannelController: UIViewController {
         UserService.updateUserName(newUsername: userNameText)
         
         guard let tabBar  = tabBarController            as? MainTabBarController   else { return }
-
-        guard let nav = tabBar.viewControllers?[2] as? UINavigationController else { return }
-        
+        guard let nav     = tabBar.viewControllers?[2]  as? UINavigationController else { return }
         guard let account = nav.viewControllers.first   as? AccountController      else { return }
         
         ImageUploader.changePhoto(image: selectedImage)

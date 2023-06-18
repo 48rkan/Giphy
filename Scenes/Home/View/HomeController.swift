@@ -10,8 +10,10 @@ class HomeController: UIViewController {
     
     //MARK: - Properties
     var viewModel = HomeViewModel()
-    
     var coordinator: AppCoordinator?
+    
+    private var nvActivityIndicator : UIActivityIndicatorView?
+    private var collectionTopAnchor = NSLayoutConstraint()
     
     private lazy var customView: CollectionInUIView = {
         let cv = CollectionInUIView()
@@ -32,11 +34,7 @@ class HomeController: UIViewController {
 
         return c
     }()
-    
-    private var nvActivityIndicator : UIActivityIndicatorView?
-    
-    private var collectionTopAnchor = NSLayoutConstraint()
-
+        
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,16 +63,28 @@ class HomeController: UIViewController {
     @objc private func tappedLogOutButton() {
         do {
             coordinator?.showLogOut(tabBar: (tabBarController as? MainTabBarController)!)
-        
             try Auth.auth().signOut()
-            
         } catch { print("DEBUG: Error") }
     }
+            
+    @objc func refreshing() {
+        nvActivityIndicator?.startAnimating()
+        
+        UIView.animate(withDuration: 3) { self.collectionTopAnchor.constant = 160 }
+        
+        viewModel.getGifs(type: viewModel.currentSituation.0,
+                          query: viewModel.currentSituation.1)
+    }
     
-    //MARK: - Helper
-    
+    @objc func tappedButtonTwo() {
+        let controller = LanguageController()
+        presentPanModal(controller)
+    }
+}
 
-    
+//Helper methods
+extension HomeController {
+    //MARK: - Helper
     private func configureUI () {
         view.addSubview(customView)
         customView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
@@ -104,9 +114,7 @@ class HomeController: UIViewController {
         
         //Right Bar Button Item(s)
         let buttonTwo = UIButton(type: .custom)
-        buttonTwo.addTarget(self,
-                            action: #selector(tappedButtonTwo),
-                            for: .touchUpInside)
+        buttonTwo.addTarget(self,action: #selector(tappedButtonTwo),for: .touchUpInside)
         buttonTwo.setImage(UIImage(named: "addLogo"), for: .normal)
         buttonTwo.imageView?.contentMode = .scaleAspectFill
         
@@ -132,7 +140,7 @@ class HomeController: UIViewController {
         
         let refreshImage      = UIImageView()
         setGifFromURL(imageView: refreshImage,
-                      url: URL(string: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDIxZmEyOTNjNzQ5MDYxNzk4ZTYyOWY0MzIyYTU4ZDJjNWQyMThiOCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/xTkcEQACH24SMPxIQg/giphy.gif")!)
+                      url: URL(string: viewModel.defaultGif)!)
         refreshControl.backgroundColor = UIColor.clear
         refreshControl.tintColor       = UIColor.clear
         refreshControl.addSubview(refreshImage)
@@ -144,24 +152,6 @@ class HomeController: UIViewController {
         refreshImage.frame.size.height = 60
         
         collection.addSubview(refreshControl)
-    }
-        
-    @objc func refreshing() {
-        nvActivityIndicator?.startAnimating()
-        
-        UIView.animate(withDuration: 3) {
-            self.collectionTopAnchor.constant = 160
-//            self.view.layoutIfNeeded()
-        }
-        
-        viewModel.getGifs(type: viewModel.currentSituation.0,
-                          query: viewModel.currentSituation.1)
-        
-    }
-    
-    @objc func tappedButtonTwo() {
-        let controller = LanguageController()
-        presentPanModal(controller)
     }
 }
 
@@ -226,3 +216,4 @@ extension HomeController: PinterestLayoutDelegate {
 //        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
 //    }
 //}
+

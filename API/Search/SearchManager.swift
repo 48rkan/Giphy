@@ -9,7 +9,6 @@ class SearchManager: SearchProtocol {
     static func fetchMatchesGifs(text: String,
                                  type:HomeEndPoint,
                                  completion: @escaping (Trending?,Error?)->()) {
-        
         var url = ""
         
         switch type {
@@ -17,8 +16,7 @@ class SearchManager: SearchProtocol {
         case _      : break
         }
         
-        CoreManager.request(type: Trending.self,
-                            url: url) { items, error in
+        CoreManager.request(type: Trending.self,url: url) { items, error in
             completion(items,error)
         }
     }
@@ -33,8 +31,7 @@ class SearchManager: SearchProtocol {
         case _                : break
         }
         
-        CoreManager.request(type: RelativeChannel.self,
-                            url: url ) { items, error in
+        CoreManager.request(type: RelativeChannel.self,url: url ) { items, error in
             completion(items,error)
         }
     }

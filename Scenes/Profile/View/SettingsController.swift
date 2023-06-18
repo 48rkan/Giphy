@@ -17,6 +17,7 @@ class SettingsController: UIViewController {
             configure()
         }
     }
+    
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .lightGray
@@ -24,10 +25,8 @@ class SettingsController: UIViewController {
         return iv
     }()
     
-    private let titleLabel =  CustomLabel(text: "",
-                                          hexCode: Color.eggshell.rawValue,
-                                          size: 16,
-                                          font: Font.pSemiBold.rawValue)
+    private let titleLabel =  CustomLabel(text: "", hexCode: Color.eggshell.rawValue,
+                                          size: 16, font: Font.pSemiBold.rawValue)
     
     private let editButton: UIButton = {
         let b = UIButton()
@@ -83,9 +82,7 @@ class SettingsController: UIViewController {
     @objc fileprivate func tappedLogOut() {
         do {
             coordinator?.showLogOut(tabBar: (tabBarController as? MainTabBarController)!)
-            
             try Auth.auth().signOut()
-            
         } catch { print("DEBUG: Error") }
     }
     
@@ -97,7 +94,7 @@ class SettingsController: UIViewController {
         } else {
             imageView.sd_setImage(with: gifURL)
         }
-
+        
         titleLabel.text = viewModel?.userName
     }
     
