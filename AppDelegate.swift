@@ -11,7 +11,6 @@ import GoogleSignIn
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         FirebaseApp.configure()
 //        Giphy.configure(apiKey: "Q2iBbB8Ny4bNBxHKES4oqjKB5oltjOz4")
         return true
